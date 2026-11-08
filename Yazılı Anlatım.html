@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yazılı Anlatım Dersi – Çince Yazma Portalı</title>
+<style>
+:root{--bg:#121212;--side:#1e1e1e;--card:#242424;--tx:#e0e0e0;--tx2:#aaa;--ac:#bb86fc;--bd:#333;--hl:#ffd54f;--ok:#2e7d32;--in:#1a1a1a;--sidebar-width:260px;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f4fa;--side:#fff;--card:#fff;--tx:#222;--tx2:#555;--ac:#6a32b8;--bd:#d8d2e4;--hl:#8a5a00;--ok:#2e7d32;--in:#f0edf6;color-scheme:light}}
+:root[data-theme="dark"]{color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;height:100dvh}
+body{font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;background:var(--bg);color:var(--tx);display:flex;line-height:1.5;overflow:hidden}
+
+/* Sidebar Styling */
+#side{width:var(--sidebar-width);background:var(--side);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);position:relative;z-index:10}
+#side .header-box{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--bd);background:var(--in);gap:10px}
+#side h1{font-size:1.1rem;color:var(--ac);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toggle-sidebar-btn{background:transparent;border:none;color:var(--ac);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.toggle-sidebar-btn:hover{background:var(--card)}
+
+#nav{overflow-y:auto;flex:1;padding:8px 0;-webkit-overflow-scrolling:touch}
+#nav a{display:flex;align-items:center;gap:10px;padding:12px 18px;color:var(--tx2);font-size:0.95rem;border-left:4px solid transparent;cursor:pointer;white-space:nowrap;overflow:hidden;text-decoration:none}
+#nav a:hover,#nav a.on{color:var(--ac);border-left-color:var(--ac);background:var(--in)}
+
+/* Collapsed Sidebar (Masaüstü) */
+#side.collapsed{width:60px}
+#side.collapsed h1, #side.collapsed #nav a span, #side.collapsed .exam-chip{display:none}
+#side.collapsed #nav a{justify-center;padding:12px 0;text-align:center;border-left:4px solid transparent}
+
+/* Main Content Area */
+#main{flex:1;overflow-y:auto;padding:28px;min-width:0;-webkit-overflow-scrolling:touch}
+.mod{display:none;max-width:1000px;margin:0 auto}.mod.on{display:block}
+h2{color:var(--ac);font-size:1.8rem;border-bottom:2px solid var(--bd);padding-bottom:8px;margin-bottom:6px}
+h3{color:var(--hl);margin:16px 0 8px;font-size:1.15rem;border-left:4px solid var(--hl);padding-left:10px}
+.sub{color:var(--tx2);font-size:0.95rem;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:18px;margin-bottom:16px;word-break:break-word}
+.ct{font-size:1.3rem;font-weight:bold;color:var(--ac);border-bottom:1px solid var(--bd);padding-bottom:6px;margin-bottom:12px}
+.tag{background:var(--ac);color:var(--bg);border-radius:10px;padding:2px 10px;font-size:0.85rem;margin-left:8px;vertical-align:middle;font-weight:bold}
+.zh,.zh td,td.zh,p.zh{font-family:"Kaiti","STKaiti","KaiTi","楷体",serif;font-size:1.2rem;line-height:1.7}
+textarea{width:100%;height:240px;background:var(--in);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:12px;font-family:"Kaiti","STKaiti","KaiTi","楷体",serif;font-size:1.2rem;line-height:1.7;resize:vertical;margin-top:8px}
+textarea:focus{outline:none;border-color:var(--ac)}
+.info-box{background:var(--in);border-left:4px solid var(--hl);padding:12px 14px;border-radius:0 6px 6px 0;margin-bottom:14px;font-size:0.95rem}
+.patterns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
+.p-badge{background:var(--in);border:1px solid var(--ac);color:var(--ac);padding:4px 10px;border-radius:6px;font-size:0.92rem;font-weight:bold;font-family:"Kaiti","STKaiti","KaiTi","楷体",serif}
+.counter{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:8px;font-size:0.9rem;color:var(--tx2)}
+.cstat{font-variant-numeric:tabular-nums}
+.saved{font-size:0.78rem;color:var(--tx2);opacity:.9}
+.cbtns{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.meter{position:relative;height:8px;background:var(--in);border:1px solid var(--bd);border-radius:999px;overflow:hidden;margin-top:10px}
+.meter-zone{position:absolute;top:0;bottom:0;left:75%;right:0;background:rgba(46,125,50,.2);border-left:1px dashed rgba(46,125,50,.55)}
+.meter-fill{position:relative;display:block;height:100%;width:0;background:var(--ac);transition:width .18s ease,background .18s ease}
+.plan{border:1px solid var(--bd);border-radius:8px;background:var(--in);margin:0 0 12px;overflow:hidden}
+.plan summary{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:0.9rem;font-weight:700;color:var(--ac);cursor:pointer;list-style:none}
+.plan summary::-webkit-details-marker{display:none}
+.plan summary::before{content:"\25B8";font-size:0.78rem;transition:transform .18s ease}
+.plan[open] summary::before{transform:rotate(90deg)}
+.plan .plan-body{padding:2px 14px 12px;border-top:1px dashed var(--bd)}
+.plan ol{margin:8px 0 0 18px;display:grid;gap:4px;font-size:0.9rem;color:var(--tx2);line-height:1.55}
+.plan ol b{color:var(--tx)}
+.plan .patterns{margin:12px 0 0}
+.kbd-hint{margin-top:8px;font-size:0.76rem;color:var(--tx2);opacity:.75}
+.btn.ghost{background:transparent;color:var(--tx2);border-color:var(--bd);font-size:0.82rem;padding:6px 11px;margin-top:0}
+.btn.ghost:hover{background:rgba(187,134,252,.08);color:var(--ac);border-color:var(--ac)}
+.btn.ghost.danger:hover{background:rgba(224,90,90,.08);color:#e05a5a;border-color:#e05a5a}
+#nav a.has-draft::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);margin-left:auto;flex:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,12px);z-index:99;background:var(--card);border:1px solid var(--ac);color:var(--tx);padding:10px 16px;border-radius:10px;font-size:0.9rem;box-shadow:0 10px 26px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.btn{background:var(--card);color:var(--ac);border:1px solid var(--ac);font-size:0.9rem;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold;margin-top:8px}
+.btn:hover{background:var(--ac);color:var(--bg)}
+
+/* Sınav Bilgileri */
+.exam-chip{font-size:.72rem;color:var(--hl);border:1px solid rgba(255,213,79,.35);border-radius:99px;padding:4px 8px;margin:8px 14px 0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.elist{list-style:none;display:grid;gap:8px;margin:0}
+.elist li{background:var(--in);border-left:3px solid var(--ac);border-radius:0 6px 6px 0;padding:9px 12px;font-size:.95rem}
+.elist li b{color:var(--hl)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px}
+.tcard{display:block;width:100%;text-align:left;background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;cursor:pointer;color:var(--tx);font-family:inherit;transition:border-color .15s,transform .15s}
+.tcard:hover{border-color:var(--ac);transform:translateY(-1px)}
+.tcard b{display:inline-block;background:var(--ac);color:var(--bg);border-radius:6px;padding:1px 8px;font-size:.78rem;margin-bottom:6px}
+.tcard span{display:block;font-family:"Kaiti","STKaiti","KaiTi","楷体",serif;font-size:1.22rem;line-height:1.5}
+.tcard small{display:block;color:var(--tx2);font-size:.82rem;margin-top:2px}
+
+/* Mobil ve Tablet Uyumu (Responsive) */
+@media(max-width:900px){
+  .cbtns{width:100%;margin-left:0}
+  .cbtns .btn{flex:1;text-align:center}
+}
+@media(max-width:800px){
+  body{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+  #side{width:100% !important;height:auto;max-height:250px;border-right:0;border-bottom:1px solid var(--bd)}
+  #side.collapsed #nav{display:none}
+  #side.collapsed h1{display:inline-block}
+  #nav{display:flex;flex-direction:row;overflow-x:auto;padding:0}
+  #nav a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:10px 14px;font-size:0.88rem}
+  #nav a.on,#nav a:hover{border-left-color:transparent;border-bottom-color:var(--ac)}
+  #main{padding:16px;flex:1;overflow-y:auto}
+  h2{font-size:1.4rem}
+  .saved{margin-left:0}
+  .cbtns{width:100%}
+  .cbtns .btn{flex:1}
+  textarea{height:300px}
+  .toast{left:16px;right:16px;bottom:16px;transform:translateY(12px)}
+  .toast.show{transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+
+<div id="side">
+  <div class="header-box">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" title="Menüyü Daralt/Genişlet">☰</button>
+    <h1>Yazılı Anlatım · 写作</h1>
+  </div>
+  <nav id="nav">
+    <a data-id="w0" class="on"><i>📌</i><span>1. Sınav Bilgileri</span></a>
+    <a data-id="w1"><i>✍️</i><span>2. 有一个朋友的特点</span></a>
+    <a data-id="w2"><i>✍️</i><span>3. 旅游与城市特色</span></a>
+    <a data-id="w3"><i>✍️</i><span>4. 如何保护眼睛</span></a>
+    <a data-id="w4"><i>✍️</i><span>5. 难忘的一次经历</span></a>
+  </nav>
+</div>
+
+<div id="main">
+
+  <!-- Sınav Bilgileri -->
+  <section class="mod on" id="w0">
+    <h2>Sınav Bilgileri <span class="zh">考试信息</span></h2>
+    <p class="sub">06.11.2026 Cuma · 14.30–15.30 · 179 · Öğr. 李</p>
+
+    <div class="card">
+      <div class="ct">Sınavda ne olacak? <span class="tag">Tahmin</span></div>
+      <ul class="elist">
+        <li><b>Konu:</b> Büyük ihtimalle bu dört konuyu da verir; ya da buradan 2 tane + kendisi 2 yeni konu yazar.</li>
+        <li><b>Uzunluk:</b> Geçen seneki sınavlar gibi 300–400 hanzilik bir yazı.</li>
+        <li><b>Yer / saat:</b> 06.11.2026 Cuma, 14.30–15.30, 179 numaralı derslik.</li>
+      </ul>
+      <div class="info-box" style="margin-top:12px">
+        <b>Yani iki senaryo:</b> ya 4 bilinen konu, ya 2 bilinen + 2 yeni konu. Her durumda 300–400 hanzi;
+        giriş–gelişme–sonuç iskeletini kur, zorunlu kalıpları yerleştir.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct">Çalışılacak 4 konu</div>
+      <div class="tgrid">
+        <button type="button" class="tcard" onclick="show('w1')"><b>1</b><span>有一个朋友的特点</span><small>Bir arkadaşın özellikleri</small></button>
+        <button type="button" class="tcard" onclick="show('w2')"><b>2</b><span>旅游 · 城市特色</span><small>Seyahat günlüğü / yaşadığın şehir</small></button>
+        <button type="button" class="tcard" onclick="show('w3')"><b>3</b><span>如何保护眼睛</span><small>Gözler nasıl korunur</small></button>
+        <button type="button" class="tcard" onclick="show('w4')"><b>4</b><span>难忘的一次经历</span><small>Unutulmaz bir deneyim</small></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Konu 1 -->
+  <section class="mod on" id="w1">
+    <h2>有一个朋友的特点</h2>
+    <p class="sub">Bir arkadaşınızın özellikleri · Betimleyici yazı</p>
+    <div class="card">
+      <div class="ct">Kompozisyon Alanı <span class="tag">Hedef: 300 - 400 Hanzi</span></div>
+      <div class="info-box">
+        <b>Yönerge:</b> Bir arkadaşınızı seçiniz; dış görünüşünü, kişiliğini, ilgi alanlarını ve alışkanlıklarını örneklerle anlatınız. Onun sizde bıraktığı izlenimi ve birlikte yaşadığınız somut bir anıyı da ekleyiniz.
+      </div>
+      <details class="plan">
+        <summary>Yazma planı · 4 adım</summary>
+        <div class="plan-body">
+          <ol>
+            <li><b>Giriş:</b> Arkadaşını tanıt: adı, ne zamandır arkadaşsınız, nerede tanıştınız.</li>
+            <li><b>Gelişme:</b> Dış görünüşü ve ilk izlenimin: boy, saç, gülüş, ses tonu…</li>
+            <li><b>Gelişme:</b> İki kişilik özelliği seç; her biri için somut bir olay/örnek ver.</li>
+            <li><b>Sonuç:</b> Onun hayatındaki yeri: neden vazgeçilmez olduğunu söyle.</li>
+          </ol>
+          <div class="patterns"><span class="p-badge">他/她最大的特点是……</span><span class="p-badge">虽然……但是……</span><span class="p-badge">不但……而且……</span><span class="p-badge">对我来说</span><span class="p-badge">可以说</span></div>
+        </div>
+      </details>
+      <textarea id="t1" placeholder="请写一写你的一位朋友的特点：外貌、性格、爱好和习惯，并用具体的事例说明……" oninput="updateCount('t1','c1',300,400);scheduleSave('t1')"></textarea>
+      <div class="meter" aria-hidden="true"><span class="meter-zone"></span><span class="meter-fill" id="bar1"></span></div>
+      <div class="counter">
+        <span id="c1" class="cstat">Karakter: 0 · 0 cümle · hedef 300-400</span>
+        <span class="saved" id="s1"></span>
+        <div class="cbtns">
+          <button type="button" class="btn ghost" onclick="copyEssay('t1')">Kopyala</button>
+          <button type="button" class="btn ghost" onclick="downloadEssay('t1','yazili-konu1')">.txt indir</button>
+          <button type="button" class="btn ghost danger" onclick="clearText('t1','c1',300,400)">Temizle</button>
+        </div>
+      </div>
+      <p class="kbd-hint">Yazdıkların otomatik kaydedilir · Ctrl + S ile hemen kaydet</p>
+    </div>
+  </section>
+
+  <!-- Konu 2 -->
+  <section class="mod" id="w2">
+    <h2>旅游日记 / 现在生活城市的特色</h2>
+    <p class="sub">Seyahat Günlüğü veya Yaşadığınız Şehrin Özellikleri</p>
+    <div class="card">
+      <div class="ct">Kompozisyon Alanı <span class="tag">Hedef: 300 - 400 Hanzi</span></div>
+      <div class="info-box">
+        <b>Kullanılması Zorunlu Kalıplar:</b><div class="patterns"><span class="p-badge">尽管……但是……</span><span class="p-badge">可以说</span><span class="p-badge">或许正是因为如此</span></div>
+      </div>
+      <details class="plan">
+        <summary>Yazma planı · 4 adım</summary>
+        <div class="plan-body">
+          <ol>
+            <li><b>Giriş:</b> Şehri/geziyi tanıt ve genel izlenimini söyle (ilk bakışta ne hissettin?).</li>
+            <li><b>Gelişme:</b> Bir somut özellik seç: yemek, ulaşım, insanlar veya manzara.</li>
+            <li><b>Gelişme:</b> Karşılaştırma yap: kendi şehrin ya da gördüğün başka bir yerle.</li>
+            <li><b>Sonuç:</b> “或许正是因为如此” ile yazıyı toparla.</li>
+          </ol>
+          <div class="patterns"><span class="p-badge">给我留下最深印象的是……</span><span class="p-badge">与……相比</span><span class="p-badge">不仅……还……</span><span class="p-badge">让我感到惊讶的是</span></div>
+        </div>
+      </details>
+      <textarea id="t2" placeholder="请结合旅游经历或你生活的城市特色进行写作，注意使用要求的句型……" oninput="updateCount('t2','c2',300,400);scheduleSave('t2')"></textarea>
+      <div class="meter" aria-hidden="true"><span class="meter-zone"></span><span class="meter-fill" id="bar2"></span></div>
+      <div class="counter">
+        <span id="c2" class="cstat">Karakter: 0 · 0 cümle · hedef 300-400</span>
+        <span class="saved" id="s2"></span>
+        <div class="cbtns">
+          <button type="button" class="btn ghost" onclick="copyEssay('t2')">Kopyala</button>
+          <button type="button" class="btn ghost" onclick="downloadEssay('t2','yazili-konu2')">.txt indir</button>
+          <button type="button" class="btn ghost danger" onclick="clearText('t2','c2',300,400)">Temizle</button>
+        </div>
+      </div>
+      <p class="kbd-hint">Yazdıkların otomatik kaydedilir · Ctrl + S ile hemen kaydet</p>
+    </div>
+  </section>
+
+  <!-- Konu 3 -->
+  <section class="mod" id="w3">
+    <h2>如何保护眼睛</h2>
+    <p class="sub">Gözler nasıl korunmalıdır?</p>
+    <div class="card">
+      <div class="ct">Kompozisyon Alanı <span class="tag">Hedef: 300 - 400 Hanzi</span></div>
+      <div class="info-box">
+        <b>Yönerge:</b> Göz sağlığını korumak için günlük hayatta yapılması gerekenleri (ekran süresi, dinlenme, uyku, beslenme vb.) açıklayan bir yazı yazınız.
+      </div>
+      <details class="plan">
+        <summary>Yazma planı · 4 adım</summary>
+        <div class="plan-body">
+          <ol>
+            <li><b>Giriş:</b> Neden önemli: ekran süresi ve göz yorgunluğu üzerinden başla.</li>
+            <li><b>Gelişme:</b> Günlük alışkanlıklar: 20-20-20 kuralı, ara verme, ekran mesafesi.</li>
+            <li><b>Gelişme:</b> Uyku, beslenme ve ışık/ortam koşullarını ekle.</li>
+            <li><b>Sonuç:</b> Kısa ve net bir öneri cümlesiyle bitir.</li>
+          </ol>
+          <div class="patterns"><span class="p-badge">首先……其次……最后……</span><span class="p-badge">对……来说</span><span class="p-badge">只有……才……</span><span class="p-badge">长期坚持下去</span></div>
+        </div>
+      </details>
+      <textarea id="t3" placeholder="请写一写日常生活中如何保护眼睛的建议和方法……" oninput="updateCount('t3','c3',300,400);scheduleSave('t3')"></textarea>
+      <div class="meter" aria-hidden="true"><span class="meter-zone"></span><span class="meter-fill" id="bar3"></span></div>
+      <div class="counter">
+        <span id="c3" class="cstat">Karakter: 0 · 0 cümle · hedef 300-400</span>
+        <span class="saved" id="s3"></span>
+        <div class="cbtns">
+          <button type="button" class="btn ghost" onclick="copyEssay('t3')">Kopyala</button>
+          <button type="button" class="btn ghost" onclick="downloadEssay('t3','yazili-konu3')">.txt indir</button>
+          <button type="button" class="btn ghost danger" onclick="clearText('t3','c3',300,400)">Temizle</button>
+        </div>
+      </div>
+      <p class="kbd-hint">Yazdıkların otomatik kaydedilir · Ctrl + S ile hemen kaydet</p>
+    </div>
+  </section>
+
+  <!-- Konu 4 -->
+  <section class="mod" id="w4">
+    <h2>让我难忘的一次经历</h2>
+    <p class="sub">Unutulmaz bir deneyimim</p>
+    <div class="card">
+      <div class="ct">Kompozisyon Alanı <span class="tag">Hedef: 300 - 400 Hanzi</span></div>
+      <div class="info-box">
+        <b>Kullanılması Zorunlu Kalıplar:</b><div class="patterns"><span class="p-badge">就</span><span class="p-badge">没</span><span class="p-badge">不光……也……</span><span class="p-badge">再三</span><span class="p-badge">只有……才……</span></div>
+      </div>
+      <details class="plan">
+        <summary>Yazma planı · 4 adım</summary>
+        <div class="plan-body">
+          <ol>
+            <li><b>Giriş:</b> Olayı tanıt: ne oldu, ne zaman, nerede, kiminle?</li>
+            <li><b>Gelişme:</b> Olay akışını sırayla anlat: önce… 接着… 然后…</li>
+            <li><b>Doruk:</b> En etkileyici/şaşırtıcı anı ayrıntı ve duygularla ver.</li>
+            <li><b>Sonuç:</b> Ne öğrendiğini ve neden hâlâ hatırladığını söyle.</li>
+          </ol>
+          <div class="patterns"><span class="p-badge">让我最难忘的是……</span><span class="p-badge">那一刻，我……</span><span class="p-badge">虽然……但是……</span><span class="p-badge">从那以后</span></div>
+        </div>
+      </details>
+      <textarea id="t4" placeholder="请写一件让你印象深刻、难以忘怀的经历，并融入指定的语法结构……" oninput="updateCount('t4','c4',300,400);scheduleSave('t4')"></textarea>
+      <div class="meter" aria-hidden="true"><span class="meter-zone"></span><span class="meter-fill" id="bar4"></span></div>
+      <div class="counter">
+        <span id="c4" class="cstat">Karakter: 0 · 0 cümle · hedef 300-400</span>
+        <span class="saved" id="s4"></span>
+        <div class="cbtns">
+          <button type="button" class="btn ghost" onclick="copyEssay('t4')">Kopyala</button>
+          <button type="button" class="btn ghost" onclick="downloadEssay('t4','yazili-konu4')">.txt indir</button>
+          <button type="button" class="btn ghost danger" onclick="clearText('t4','c4',300,400)">Temizle</button>
+        </div>
+      </div>
+      <p class="kbd-hint">Yazdıkların otomatik kaydedilir · Ctrl + S ile hemen kaydet</p>
+    </div>
+  </section>
+
+
+</div>
+
+<script>
+function toggleSidebar() {
+    var side = document.getElementById('side');
+    side.classList.toggle('collapsed');
+}
+
+var TOPICS = ["w1", "w2", "w3", "w4"];
+var IDS = ["w0"].concat(TOPICS);
+var nav = document.getElementById("nav");
+nav.querySelectorAll("a").forEach(function(a) {
+  a.onclick = function() { show(a.dataset.id); }
+});
+
+function show(id) {
+  document.querySelectorAll(".mod").forEach(function(m) {
+    m.classList.toggle("on", m.id === id);
+  });
+  nav.querySelectorAll("a").forEach(function(a) {
+    a.classList.toggle("on", a.dataset.id === id);
+  });
+  document.getElementById("main").scrollTop = 0;
+  window.scrollTo(0, 0);
+  try { history.replaceState(null, "", "#" + id); } catch(e) {}
+}
+
+/* ---------------- Taslak kaydı (localStorage) ---------------- */
+var SAVE_PREFIX = "yazili.v1.";
+var saveTimers = {};
+var toastTimer = null;
+
+function keyOf(txtId) { return SAVE_PREFIX + txtId; }
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function clock() { var d = new Date(); return pad2(d.getHours()) + ":" + pad2(d.getMinutes()); }
+function setSaved(txtId, msg) {
+  var el = document.getElementById("s" + txtId.slice(1));
+  if (el) el.textContent = msg || "";
+}
+function storageAvailable() {
+  try { localStorage.setItem(SAVE_PREFIX + "test", "1"); localStorage.removeItem(SAVE_PREFIX + "test"); return true; }
+  catch (e) { return false; }
+}
+function store(txtId, quiet) {
+  var el = document.getElementById(txtId);
+  if (!el) return;
+  if (!storageAvailable()) { setSaved(txtId, "Tarayıcı depolaması kapalı"); return; }
+  try {
+    if (el.value.trim()) localStorage.setItem(keyOf(txtId), el.value);
+    else localStorage.removeItem(keyOf(txtId));
+    setSaved(txtId, el.value.trim() ? "Taslak kaydedildi · " + clock() : "");
+    updateDraftBadges();
+    if (!quiet) toast("Kaydedildi · " + clock());
+  } catch (e) {
+    setSaved(txtId, "Kaydedilemedi");
+  }
+}
+function scheduleSave(txtId) {
+  clearTimeout(saveTimers[txtId]);
+  saveTimers[txtId] = setTimeout(function() { store(txtId, true); }, 600);
+}
+function restoreDrafts() {
+  var restored = 0;
+  TOPICS.forEach(function(id) {
+    var txtId = "t" + id.slice(1);
+    try {
+      var v = localStorage.getItem(keyOf(txtId));
+      if (v && v.trim()) {
+        document.getElementById(txtId).value = v;
+        updateCount(txtId, "c" + id.slice(1), 300, 400);
+        setSaved(txtId, "Taslak geri yüklendi · " + clock());
+        restored++;
+      }
+    } catch (e) {}
+  });
+  updateDraftBadges();
+  if (restored) toast(restored + " taslak geri yüklendi");
+}
+function updateDraftBadges() {
+  nav.querySelectorAll("a").forEach(function(a) {
+    var txtId = "t" + a.dataset.id.slice(1);
+    var has = false;
+    try { var v = localStorage.getItem(keyOf(txtId)); has = !!(v && v.trim()); } catch (e) {}
+    a.classList.toggle("has-draft", has);
+  });
+}
+function saveAll(quiet) {
+  TOPICS.forEach(function(id) { store("t" + id.slice(1), true); });
+  if (!quiet) toast("Tüm taslaklar kaydedildi · " + clock());
+}
+
+/* ---------------- Sayaç + ilerleme ---------------- */
+function updateCount(txtId, counterId, min, max) {
+  var el = document.getElementById(txtId);
+  if (!el) return;
+  var text = el.value.trim();
+  var len = text.length;
+  var sents = 0;
+  if (text) {
+    var marks = text.match(/[。！？!?]/g);
+    sents = (marks ? marks.length : 0) + (/[。！？!?]$/.test(text) ? 0 : 1);
+  }
+  var counterEl = document.getElementById(counterId);
+  var status;
+  if (len === 0) status = "hedef 300-400";
+  else if (len < min) status = (min - len) + " karakter kaldı";
+  else if (len <= max) status = "hedef aralığında ✓";
+  else status = "hedefin " + (len - max) + " karakter üstünde";
+
+  if (counterEl) {
+    counterEl.textContent = "Karakter: " + len + " · " + sents + " cümle · " + status;
+    counterEl.style.color = (len >= min && len <= max) ? "var(--ok)" : (len > max ? "var(--hl)" : "var(--tx2)");
+  }
+  var fill = document.getElementById("bar" + txtId.slice(1));
+  if (fill) {
+    fill.style.width = Math.min(100, len / max * 100) + "%";
+    fill.style.background = (len >= min && len <= max) ? "var(--ok)" : (len > max ? "var(--hl)" : "var(--ac)");
+  }
+}
+
+function clearText(txtId, counterId, min, max) {
+  if (confirm("Yazdığınız metni silmek istediğinizden emin misiniz?")) {
+    document.getElementById(txtId).value = "";
+    try { localStorage.removeItem(keyOf(txtId)); } catch (e) {}
+    setSaved(txtId, "");
+    updateCount(txtId, counterId, min, max);
+    updateDraftBadges();
+    toast("Taslak silindi");
+  }
+}
+
+/* ---------------- Kopyala / indir / bildirim ---------------- */
+function toast(msg) {
+  var el = document.getElementById("toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "toast";
+    el.className = "toast";
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-live", "polite");
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove("show"); }, 2200);
+}
+
+function copyEssay(txtId) {
+  var el = document.getElementById(txtId);
+  var v = el ? el.value.trim() : "";
+  if (!v) { toast("Kopyalanacak metin yok"); return; }
+  function fallback() {
+    el.focus();
+    el.select();
+    try { el.setSelectionRange(0, el.value.length); } catch (e) {}
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    toast(ok ? "Panoya kopyalandı ✓" : "Kopyalanamadı");
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(v).then(function() { toast("Panoya kopyalandı ✓"); }, fallback);
+  } else {
+    fallback();
+  }
+}
+
+function downloadEssay(txtId, filename) {
+  var el = document.getElementById(txtId);
+  var v = el ? el.value : "";
+  if (!v.trim()) { toast("İndirilecek metin yok"); return; }
+  var blob = new Blob([v], { type: "text/plain;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
+  toast("İndirildi: " + filename + ".txt");
+}
+
+/* ---------------- Kısayollar + otomatik kayıt ---------------- */
+document.addEventListener("keydown", function(e) {
+  if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
+    e.preventDefault();
+    saveAll(false);
+  }
+});
+window.addEventListener("pagehide", function() { saveAll(true); });
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === "hidden") saveAll(true);
+});
+
+restoreDrafts();
+
+var h = location.hash.slice(1);
+show(IDS.indexOf(h) >= 0 ? h : IDS[0]);
+</script>
+
+</body>
+</html>

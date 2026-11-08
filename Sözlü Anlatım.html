@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sözlü Anlatım Dersi – Çince Sunum ve Pratik Portalı</title>
+<style>
+:root{
+  --bg:#0f1117;--side:#151922;--card:#1a1f2b;--in:#12161f;--in2:#10141b;
+  --tx:#e9ecf4;--tx2:#a3acbd;--tx3:#6f7a8f;
+  --ac:#bb86fc;--ac2:#7c4dff;--ac-soft:rgba(187,134,252,.12);
+  --hl:#ffd54f;--ok:#4ade80;--no:#fb7185;
+  --bd:#2a3040;--bd2:#363d50;
+  --zh:"Kaiti","STKaiti","KaiTi","楷体","Noto Serif CJK SC",serif;
+  --sidebar-width:288px;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#f6f4fa;--side:#fff;--card:#fff;--in:#f3f0f9;--in2:#ece8f5;
+    --tx:#1f2330;--tx2:#5c6478;--tx3:#8b93a7;
+    --ac:#6a32b8;--ac2:#4b1f99;--ac-soft:rgba(106,50,184,.10);
+    --hl:#8a5a00;--ok:#227a45;--no:#b3264a;
+    --bd:#ddd7e8;--bd2:#c9c1da;
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;height:100dvh}
+body{
+  font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:15px;line-height:1.6;color:var(--tx);
+  background:
+    radial-gradient(900px 520px at 100% -5%,rgba(187,134,252,.09),transparent 62%),
+    radial-gradient(700px 480px at -10% 110%,rgba(124,77,255,.06),transparent 60%),
+    var(--bg);
+  display:flex;overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(187,134,252,.28)}
+
+/* ================= SIDEBAR ================= */
+#side{
+  width:var(--sidebar-width);flex-shrink:0;display:flex;flex-direction:column;
+  background:var(--side);border-right:1px solid var(--bd);
+  transition:width .28s cubic-bezier(.4,0,.2,1);position:relative;z-index:20;
+}
+.brand{
+  display:flex;align-items:center;gap:11px;padding:16px 14px;
+  border-bottom:1px solid var(--bd);
+  background:linear-gradient(180deg,rgba(187,134,252,.07),transparent);
+}
+.brand-ico{
+  width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;
+  font-family:var(--zh);font-size:1.15rem;font-weight:700;
+  box-shadow:0 8px 22px -8px rgba(124,77,255,.65);
+}
+.brand-txt{min-width:0;flex:1}
+.brand h1{font-size:.98rem;letter-spacing:.1px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand p{margin-top:2px;font-size:.68rem;color:var(--tx3);letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-toggle{
+  flex:none;width:32px;height:32px;border:1px solid var(--bd);border-radius:9px;
+  background:var(--in);color:var(--tx2);font-size:1rem;line-height:1;cursor:pointer;
+  display:grid;place-items:center;transition:background .18s,color .18s,border-color .18s;
+}
+.side-toggle:hover{background:var(--card);color:var(--ac);border-color:rgba(187,134,252,.4)}
+
+#nav{flex:1;overflow-y:auto;padding:10px 10px 18px;scrollbar-width:thin;scrollbar-color:var(--bd2) transparent}
+#nav::-webkit-scrollbar{width:8px}
+#nav::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:99px}
+.nav-label{
+  font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);
+  font-weight:800;padding:15px 9px 6px;white-space:nowrap;overflow:hidden;
+}
+.nav-label:first-child{padding-top:3px}
+#nav a{
+  display:flex;align-items:center;gap:10px;padding:8px 9px;margin:2px 0;
+  border-radius:11px;border:1px solid transparent;color:var(--tx2);
+  text-decoration:none;font-size:.88rem;cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s,transform .18s;
+}
+#nav a .ico{
+  width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;
+  background:var(--in);border:1px solid var(--bd);font-style:normal;
+  font-size:.72rem;font-weight:800;color:var(--tx2);letter-spacing:.2px;
+  transition:background .18s,color .18s,border-color .18s;
+}
+#nav a .txt{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+#nav a b{font-size:.87rem;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nav a small{margin-top:2px;font-size:.66rem;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nav a:hover{background:var(--card);color:var(--tx);transform:translateX(2px)}
+#nav a:hover .ico{border-color:var(--bd2);color:var(--tx)}
+#nav a.on{
+  background:linear-gradient(90deg,var(--ac-soft),rgba(187,134,252,.02));
+  border-color:rgba(187,134,252,.3);color:var(--ac);
+}
+#nav a.on .ico{background:rgba(187,134,252,.17);border-color:rgba(187,134,252,.42);color:var(--ac)}
+#nav a.on small{color:var(--ac);opacity:.75}
+#nav a:focus-visible{outline:2px solid rgba(187,134,252,.6);outline-offset:1px}
+.side-foot{display:flex;flex-wrap:wrap;gap:7px;padding:12px 14px;border-top:1px solid var(--bd)}
+.side-foot span{font-size:.64rem;color:var(--tx3);border:1px solid var(--bd);border-radius:999px;padding:4px 9px;background:var(--in)}
+
+/* Collapsed (desktop icon rail) */
+#side.collapsed{width:84px}
+#side.collapsed .brand-txt,
+#side.collapsed .nav-label,
+#side.collapsed #nav a .txt,
+#side.collapsed .side-foot{display:none}
+#side.collapsed .brand{padding:14px 10px;gap:6px;justify-content:center}
+#side.collapsed .brand-ico{width:34px;height:34px;flex-basis:34px;border-radius:10px;font-size:.95rem}
+#side.collapsed .side-toggle{width:26px;height:26px;font-size:.82rem;border-radius:7px}
+#side.collapsed #nav{padding:10px 8px 18px}
+#side.collapsed #nav a{justify-content:center;padding:9px 0}
+#side.collapsed #nav a:hover{transform:none}
+
+/* ================= MAIN ================= */
+#main{flex:1;min-width:0;overflow-y:auto;padding:32px clamp(18px,4vw,48px) 64px;scroll-behavior:smooth}
+#main::-webkit-scrollbar{width:10px}
+#main::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:99px}
+.mod{display:none;max-width:1060px;margin:0 auto;animation:modIn .22s ease}
+.mod.on{display:block}
+@keyframes modIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+.page-head{margin-bottom:20px}
+.eyebrow{font-size:.66rem;letter-spacing:.17em;text-transform:uppercase;color:var(--ac);font-weight:800;margin-bottom:6px}
+h2{font-size:clamp(1.45rem,2.4vw,1.95rem);line-height:1.18;letter-spacing:-.02em;margin-bottom:8px}
+.lead{color:var(--tx2);font-size:.92rem;max-width:78ch}
+.lead b{color:var(--tx)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{font-size:.71rem;color:var(--tx2);background:var(--in);border:1px solid var(--bd);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.chip b{color:var(--ac);font-weight:750}
+.sub{color:var(--tx2);font-size:.9rem;margin-bottom:14px}
+.zh-inline{font-family:var(--zh);font-size:1.02rem;color:var(--hl);white-space:nowrap}
+
+/* ================= CARDS / TEXT ================= */
+.card{
+  background:var(--card);border:1px solid var(--bd);border-radius:16px;
+  padding:20px 22px;margin-bottom:16px;word-break:break-word;
+  box-shadow:0 12px 34px -22px rgba(0,0,0,.6);
+}
+.ct{
+  display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:750;
+  color:var(--tx);padding-bottom:11px;margin-bottom:14px;border-bottom:1px solid var(--bd);
+}
+.ct::before{content:"";width:4px;height:16px;border-radius:2px;background:linear-gradient(180deg,var(--ac),var(--ac2));flex:none}
+.ct.zh{font-family:var(--zh);font-weight:600;letter-spacing:.3px}
+.tag{background:var(--ac);color:var(--bg);border-radius:999px;padding:2px 10px;font-size:.72rem;margin-left:8px;vertical-align:middle;font-weight:800}
+
+/* Chinese text */
+.zh{font-family:var(--zh);font-size:1.1rem;line-height:1.85;letter-spacing:.25px}
+.zh b{font-weight:600}
+blockquote{
+  border-left:3px solid var(--ac);background:var(--in);
+  border-radius:0 12px 12px 0;padding:12px 16px;margin:0 0 15px;
+  color:var(--tx2);font-size:1rem;line-height:1.85;
+}
+blockquote.zh{font-size:1.08rem;color:var(--tx2)}
+
+/* Info cards */
+.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.info-card{
+  background:var(--card);border:1px solid var(--bd);border-radius:15px;padding:18px 18px 20px;
+  box-shadow:0 12px 34px -22px rgba(0,0,0,.6);position:relative;overflow:hidden;
+}
+.info-card::after{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--ac),transparent 75%);opacity:.7}
+.info-card.gold::after{background:linear-gradient(90deg,var(--hl),transparent 75%)}
+.info-card.green::after{background:linear-gradient(90deg,var(--ok),transparent 75%)}
+.info-num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--ac-soft);border:1px solid rgba(187,134,252,.32);color:var(--ac);font-size:.72rem;font-weight:800;letter-spacing:.5px;margin-bottom:11px}
+.info-card.gold .info-num{background:rgba(255,213,79,.1);border-color:rgba(255,213,79,.3);color:var(--hl)}
+.info-card.green .info-num{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3);color:var(--ok)}
+.info-card h3{font-size:.98rem;margin:0 0 6px;color:var(--tx)}
+.info-card p{font-size:.86rem;line-height:1.65;color:var(--tx2)}
+.info-card p b{color:var(--tx)}
+
+/* Pattern list */
+.pattern-list{list-style:none;display:grid;gap:8px}
+.pattern-list li{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:10px 13px;background:var(--in);border:1px solid var(--bd);border-radius:10px;transition:border-color .16s,background .16s}
+.pattern-list li:hover{border-color:rgba(187,134,252,.3);background:rgba(187,134,252,.05)}
+.pattern-list b{font-family:var(--zh);font-size:1.1rem;font-weight:600;color:var(--hl);letter-spacing:.3px}
+.pattern-list span{font-size:.86rem;color:var(--tx2)}
+
+/* Dialogue */
+.lesson-text{padding-bottom:22px}
+.lesson-text p{margin:6px 0;padding:2px 0;font-size:1.04rem;line-height:1.9}
+.lesson-text p b{display:inline-block;color:var(--ac);font-weight:650;min-width:3.4em}
+.lesson-text p b[data-role]{min-width:4.4em}
+.stage{color:var(--tx3)!important;font-size:.86rem!important;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif!important;line-height:1.6!important;background:var(--in);border-left:3px solid var(--bd2);border-radius:0 8px 8px 0;padding:8px 12px!important;margin:10px 0!important}
+.hint{color:var(--hl);font-family:var(--zh);font-size:.96rem;white-space:nowrap}
+
+/* Exercises */
+.exercise{padding:18px 20px}
+.ex-title{font-size:1rem;line-height:1.75;font-weight:600;color:var(--tx);margin-bottom:11px}
+.exercise ul{list-style:none;display:grid;gap:7px;margin:0}
+.exercise li{
+  position:relative;padding:8px 12px 8px 30px;background:var(--in);border:1px solid var(--bd);
+  border-radius:9px;font-size:1.02rem;line-height:1.85;transition:border-color .16s,background .16s;
+}
+.exercise li::before{content:"";position:absolute;left:13px;top:1.05em;width:5px;height:5px;border-radius:50%;background:var(--ac);opacity:.8}
+.exercise li:hover{border-color:rgba(187,134,252,.28);background:rgba(187,134,252,.05)}
+
+/* Practice dialogue lists */
+.practice-list{list-style:none;display:grid;gap:10px;margin:0}
+.practice-list>li{padding:12px 14px;background:var(--in);border:1px solid var(--bd);border-radius:11px;font-size:1.03rem;line-height:1.9}
+.practice-list b{color:var(--ac);font-weight:700}
+.practice-list>li:hover{border-color:rgba(187,134,252,.28)}
+
+/* Fill-in blanks (decorated by JS) */
+.blank{display:inline-block;min-width:5.2em;height:1.05em;border-bottom:2px dashed rgba(187,134,252,.55);vertical-align:-.08em;margin:0 .12em}
+
+/* ================= WORD CARDS (Çeviri style) ================= */
+.wb-card{
+  background:var(--card);border:1px solid var(--bd);border-radius:16px;margin:14px 0 18px;
+  overflow:hidden;scroll-margin-top:64px;box-shadow:0 12px 34px -22px rgba(0,0,0,.6);
+}
+.wb-head{
+  display:flex;align-items:center;gap:13px;padding:15px 18px 13px;flex-wrap:wrap;
+  background:linear-gradient(90deg,rgba(187,134,252,.13),rgba(187,134,252,0) 72%);
+  border-bottom:1px solid var(--bd);
+}
+.wb-badge{
+  width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:12px;
+  background:rgba(187,134,252,.14);border:1px solid rgba(187,134,252,.4);
+  color:var(--ac);font-weight:800;font-size:.84rem;letter-spacing:.3px;
+}
+.wb-titles{min-width:0;flex:1}
+.wb-titles h3{font-size:1rem;line-height:1.3;color:var(--tx);margin:0 0 2px;font-weight:650}
+.wb-titles p{font-size:.75rem;color:var(--tx3)}
+.wb-count{flex:none;font-size:.7rem;color:var(--tx2);background:rgba(187,134,252,.06);border:1px solid var(--bd);padding:5px 10px;border-radius:999px;white-space:nowrap}
+.wb-toggle{
+  flex:none;font:inherit;font-size:.72rem;font-weight:650;color:var(--ac);cursor:pointer;
+  background:rgba(187,134,252,.08);border:1px solid rgba(187,134,252,.35);
+  border-radius:999px;padding:5px 11px;transition:background .16s,color .16s;
+}
+.wb-toggle:hover{background:var(--ac);color:var(--bg)}
+.wb-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));align-items:start;gap:9px;margin:0;padding:14px 18px 16px}
+.wb-item{
+  display:flex;flex-direction:column;gap:6px;padding:10px 12px;
+  border:1px solid var(--bd);border-left:3px solid rgba(187,134,252,.25);
+  border-radius:10px;background:var(--in);
+  transition:background .16s,border-color .16s,transform .16s;
+}
+.wb-item:hover{background:rgba(187,134,252,.07);border-color:rgba(187,134,252,.3);border-left-color:var(--ac);transform:translateY(-1px)}
+.wb-item.open{background:rgba(187,134,252,.07);border-left-color:var(--ac)}
+.wb-top{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.wb-term{font-family:var(--zh);font-size:1.4rem;line-height:1.25;color:var(--hl);letter-spacing:.4px;word-break:break-word}
+.wb-btn{
+  flex:none;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:.68rem;font-weight:650;
+  color:var(--ac);background:rgba(187,134,252,.1);border:1px solid rgba(187,134,252,.38);
+  border-radius:999px;padding:5px 10px;cursor:pointer;white-space:nowrap;transition:background .16s,color .16s;
+}
+.wb-btn:hover{background:var(--ac);color:var(--bg)}
+.wb-chev{font-size:.6rem;line-height:1;transition:transform .18s}
+.wb-item.open .wb-chev{transform:rotate(180deg)}
+.wb-info{display:none;padding-top:8px;margin-top:1px;border-top:1px dashed var(--bd)}
+.wb-item.open .wb-info{display:block;animation:wbIn .18s ease}
+@keyframes wbIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.wb-type{display:inline-block;margin-bottom:5px;font-family:var(--zh);font-size:.76rem;font-weight:600;color:var(--ac);background:rgba(187,134,252,.1);border:1px solid rgba(187,134,252,.28);border-radius:999px;padding:1px 8px}
+.wb-mean{font-size:.84rem;line-height:1.55;color:var(--tx)}
+.wb-slot{display:block}
+
+/* Word bank tools + chips */
+.wb-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.wb-search{
+  flex:1;min-width:220px;font:inherit;font-size:.88rem;color:var(--tx);
+  background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;
+  transition:border-color .16s,box-shadow .16s;
+}
+.wb-search::placeholder{color:var(--tx3)}
+.wb-search:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(187,134,252,.14)}
+.wb-result{font-size:.76rem;color:var(--tx3);white-space:nowrap}
+.wb-chips{
+  position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:7px;
+  padding:8px 0 11px;margin-bottom:4px;background:var(--bg);
+  border-bottom:1px solid var(--bd);box-shadow:0 10px 14px -14px rgba(0,0,0,.55);
+}
+.wb-chip{
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font:inherit;
+  font-size:.76rem;line-height:1;color:var(--tx2);background:var(--card);
+  border:1px solid var(--bd);border-radius:999px;padding:7px 12px;cursor:pointer;
+  transition:all .16s;
+}
+.wb-chip b{font-size:.84rem;color:var(--ac);font-weight:800}
+.wb-chip:hover{color:var(--tx);border-color:var(--ac);background:rgba(187,134,252,.08);transform:translateY(-1px)}
+.wb-chip.active{background:var(--ac);border-color:var(--ac);color:#fff}
+.wb-chip.active b{color:#fff}
+.hide{display:none!important}
+
+/* Exercise sample sentences */
+.exercise .ex-sample{margin:0 0 10px;padding:8px 12px;border-left:3px solid rgba(187,134,252,.45);background:rgba(187,134,252,.05);border-radius:0 8px 8px 0;color:var(--tx2);font-size:1rem;line-height:1.8}
+.lesson-text p.para{margin-top:12px}
+
+/* Footer */
+.page-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:26px;padding-top:14px;border-top:1px solid var(--bd);font-size:.72rem;color:var(--tx3)}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:900px){
+  body{flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+  #side{width:100%;border-right:0;border-bottom:1px solid var(--bd)}
+  .brand{padding:10px 14px;gap:10px}
+  .brand-ico{width:36px;height:36px;flex-basis:36px;border-radius:10px;font-size:1rem}
+  .brand h1{font-size:.92rem}
+  .brand p{display:none}
+  .side-toggle{width:32px;height:32px}
+  #nav{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:4px 12px 10px;gap:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #nav::-webkit-scrollbar{display:none}
+  .nav-label{display:none}
+  #nav a{flex:0 0 auto;white-space:nowrap;padding:8px 11px;border:1px solid transparent;border-radius:9px;font-size:.8rem;gap:7px}
+  #nav a:hover{transform:none}
+  #nav a .ico{width:24px;height:24px;flex-basis:24px;font-size:.66rem}
+  #nav a .txt{flex-direction:row;align-items:center;gap:6px}
+  #nav a b{font-size:.8rem;font-weight:600}
+  #nav a small{display:none}
+  #nav a.on{border-color:rgba(187,134,252,.36)}
+  .side-foot{display:none}
+  #side.collapsed{width:100%}
+  #side.collapsed .brand-txt{display:block}
+  #side.collapsed #nav{display:none}
+  #side.collapsed .brand{padding:10px 14px;justify-content:flex-start}
+  #side.collapsed .brand-ico{width:36px;height:36px;flex-basis:36px}
+  #side.collapsed .side-toggle{margin-left:auto}
+  #main{padding:20px 16px 56px}
+  h2{font-size:1.5rem}
+  .info-grid{grid-template-columns:1fr}
+  .wb-list{grid-template-columns:1fr;padding:12px 14px 14px}
+  .wb-head{padding:14px 14px 12px;gap:10px}
+  .wb-badge{width:40px;height:40px;border-radius:10px;font-size:.78rem}
+  .wb-titles h3{font-size:.95rem}
+  .wb-count{margin-left:0}
+  .wb-term{font-size:1.28rem}
+  .wb-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .wb-chips::-webkit-scrollbar{display:none}
+  .wb-chip{font-size:.72rem;padding:6px 10px}
+  .card{padding:16px;border-radius:14px}
+  .lesson-text p{font-size:1rem}
+  .zh{font-size:1.02rem}
+  .pattern-list li{gap:8px;padding:9px 11px}
+  .pattern-list b{font-size:1rem}
+  .exercise li{font-size:.98rem}
+}
+@media (max-width:520px){
+  #main{padding:16px 12px 48px}
+  .page-head{margin-bottom:15px}
+  .lead{font-size:.87rem}
+  .wb-badge{display:none}
+  .practice-list>li{font-size:.96rem;padding:10px 12px}
+}
+/* ============================================================
+   ÇİNCE METİN BOYUTU
+   Tüm Çince metni büyütmek/küçültmek için sadece aşağıdaki
+   --zh-scale değerini değiştir.
+   1.18 = mevcut boyutun %18 fazlası · 1.30 = %30 daha büyük
+   ============================================================ */
+:root{--zh-scale:1.30}
+.zh{font-size:calc(1.1rem * var(--zh-scale))}
+blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
+.zh-inline{font-size:calc(1.02rem * var(--zh-scale))}
+.ct.zh{font-size:calc(1rem * var(--zh-scale))}
+.pattern-list b{font-size:calc(1.1rem * var(--zh-scale))}
+.wb-term{font-size:calc(1.4rem * var(--zh-scale))}
+.wb-type{font-size:calc(.76rem * var(--zh-scale))}
+.lesson-text p{font-size:calc(1.04rem * var(--zh-scale))}
+.hint{font-size:calc(.96rem * var(--zh-scale))}
+.ex-title{font-size:calc(1rem * var(--zh-scale))}
+.exercise li{font-size:calc(1.02rem * var(--zh-scale))}
+.exercise .ex-sample{font-size:calc(1rem * var(--zh-scale))}
+.practice-list>li{font-size:calc(1.03rem * var(--zh-scale))}
+.stage{font-size:calc(.9rem * var(--zh-scale))!important}
+@media (max-width:900px){
+  .zh{font-size:calc(1.02rem * var(--zh-scale))}
+  .wb-term{font-size:calc(1.28rem * var(--zh-scale))}
+  .lesson-text p{font-size:calc(1rem * var(--zh-scale))}
+  .pattern-list b{font-size:calc(1rem * var(--zh-scale))}
+  .exercise li{font-size:calc(.98rem * var(--zh-scale))}
+}
+@media (max-width:520px){
+  .practice-list>li{font-size:calc(.96rem * var(--zh-scale))}
+}
+
+</style>
+</head>
+<body>
+
+<div id="side">
+  <div class="brand">
+    <div class="brand-ico" lang="zh">口</div>
+    <div class="brand-txt">
+      <h1>Sözlü Anlatım</h1>
+      <p>口语表达 · 1. Dönem Ara Sınav</p>
+    </div>
+    <button class="side-toggle" onclick="toggleSidebar()" title="Menüyü Daralt/Genişlet" aria-label="Menüyü Daralt/Genişlet">☰</button>
+  </div>
+  <nav id="nav">
+    <div class="nav-label">Başlangıç</div>
+    <a data-id="m-bilgi" class="on"><i class="ico">📌</i><span class="txt"><b>Sınav Bilgileri</b><small>Format ve yapı</small></span></a>
+    <a data-id="m-kaliplar"><i class="ico">🧩</i><span class="txt"><b>Temel Kalıplar</b><small>14 ana yapı</small></span></a>
+    <a data-id="m-kelimeler"><i class="ico">🗂️</i><span class="txt"><b>Tüm Kelimeler</b><small>61 kelime · 6 Sayfa</small></span></a>
+
+    <div class="nav-label">Unit 1 · Sayfa 18–29</div>
+    <a data-id="m-19"><i class="ico">19</i><span class="txt"><b>Sayfa 18</b><small>Banka &amp; Kart</small></span></a>
+    <a data-id="m-21"><i class="ico">21</i><span class="txt"><b>Sayfa 20</b><small>Elektronik</small></span></a>
+    <a data-id="m-23-24"><i class="ico">23</i><span class="txt"><b>Sayfa 23–24</b><small>Restoran</small></span></a>
+    <a data-id="m-25-26"><i class="ico">💬</i><span class="txt"><b>Sayfa 25–26</b><small>Diyalog pratiği</small></span></a>
+    <a data-id="m-27-28"><i class="ico">🥟</i><span class="txt"><b>Sayfa 27–28</b><small>Sipariş &amp; İsteme</small></span></a>
+
+    <div class="nav-label">Unit 2 · Sayfa 30–42</div>
+    <a data-id="m-32"><i class="ico">32</i><span class="txt"><b>Sayfa 30</b><small>Aile</small></span></a>
+    <a data-id="m-34"><i class="ico">34</i><span class="txt"><b>Sayfa 32</b><small>Evlilik &amp; Boşanma</small></span></a>
+    <a data-id="m-36"><i class="ico">36</i><span class="txt"><b>Sayfa 34</b><small>Evlilik Modelleri</small></span></a>
+    <a data-id="m-38"><i class="ico">🎯</i><span class="txt"><b>Sayfa 38</b><small>Tepki pratiği</small></span></a>
+  </nav>
+  <div class="side-foot"><span>61 kelime</span><span>9 Sayfa</span><span>2 unit</span></div>
+</div>
+
+<div id="main">
+
+  <!-- Sınav Bilgileri -->
+  <section class="mod on" id="m-bilgi">
+    <header class="page-head">
+      <div class="eyebrow">Başlangıç · Sınav Rehberi</div>
+      <h2>Sınav Bilgileri</h2>
+      <p class="lead">Sözlü anlatım ara sınavı üç bölümden oluşuyor. Aşağıdaki yapıyı bilmek, sınavda neyi ne kadar yazacağını planlamanı kolaylaştırır.</p>
+      <div class="chips">
+        <span class="chip"><b>3</b> bölüm</span>
+        <span class="chip"><b>11</b> şık</span>
+        <span class="chip"><b>2</b> resim</span>
+        <span class="chip"><b>5+</b> paragraf</span>
+      </div>
+    </header>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-num">01</span>
+        <h3>Metin Tamamlama</h3>
+        <p>Bir metin ve bu metne ait <b>11 şık</b> verilir. Şıkları metindeki boş bırakılan uygun yerlere doğru şekilde yerleştirmen beklenir.</p>
+      </div>
+      <div class="info-card gold">
+        <span class="info-num">02</span>
+        <h3>Resim Analizi ve Yazı</h3>
+        <p>Sınavda <b>2 resim</b> verilir. Resimlerdeki <b>kelimeler ve cümle kalıpları</b> kullanılarak <b>en az 5 paragraflı</b> bir metin/sunum oluşturman istenir.</p>
+      </div>
+      <div class="info-card green">
+        <span class="info-num">03</span>
+        <h3>Konu Bazlı Sunum</h3>
+        <p>Sınavda belirtilen belirli bir <b>konu</b> üzerine sunum yazısı yazman gerekecektir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Temel Kalıplar -->
+  <section class="mod" id="m-kaliplar">
+    <header class="page-head">
+      <div class="eyebrow">Başlangıç · Gramer</div>
+      <h2>Temel Cümle Kalıpları</h2>
+      <p class="lead">Dersler boyunca öğrenilen anahtar gramer yapıları. Sınavda metin tamamlama ve sunum yazısında bu kalıpları kullanacaksın.</p>
+      <div class="chips"><span class="chip"><b>14</b> kalıp</span><span class="chip">2 grup</span></div>
+    </header>
+    <div class="card">
+      <div class="ct">Unit 1</div>
+      <ul class="pattern-list">
+        <li><b>...，要不...</b><span>...yoksa / ...olmazsa</span></li>
+        <li><b>...或者...</b><span>...ya da / ...veya</span></li>
+        <li><b>在...下</b><span>...in altında / ...sayesinde</span></li>
+        <li><b>V是V，可是...</b><span>Fiil fiil ama, ... / ...ması ...masına ya ama...</span></li>
+        <li><b>千万</b><span>Sakın / Mutlaka (uyarı)</span></li>
+        <li><b>再说</b><span>Üstelik / Zaten / Dahası</span></li>
+        <li><b>哪能……呢？</b><span>Nasıl olur da ...? / ... imkânı var mı?</span></li>
+        <li><b>不仅...而且...</b><span>Sadece ... değil, aynı zamanda ...</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ct">Unit 2</div>
+      <ul class="pattern-list">
+        <li><b>对...来说</b><span>...ine göre / ... açısından</span></li>
+        <li><b>难道...吗</b><span>Acaba ... mi? / ... değil mi ya? (retorik soru)</span></li>
+        <li><b>...或是...</b><span>...veya / ...ya da</span></li>
+        <li><b>因为/由于...的关系</b><span>...nedeniyle / ...yüzünden</span></li>
+        <li><b>...上</b><span>...konusunda / ...alanında (örn: <span class="zh-inline">思想上</span>)</span></li>
+        <li><b>在...看来</b><span>...in gözünde / ...e göre</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Tüm Kelimeler -->
+  <section class="mod" id="m-kelimeler">
+    <header class="page-head">
+      <div class="eyebrow">Başlangıç · Kelime Bankası</div>
+      <h2>Tüm Kelimeler</h2>
+      <p class="lead">61 kelimenin tamamı tek yerde. Hanzi açık; kelime türü ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. Arayabilir ya da bölüm seçebilirsin.</p>
+      <div class="chips"><span class="chip"><b>61</b> kelime</span><span class="chip"><b>6</b> bölüm</span><span class="chip"><b>2</b> unit</span></div>
+    </header>
+
+    <div class="wb-tools">
+      <input id="wbSearch" class="wb-search" type="search" placeholder="Kelime veya Türkçe anlam ara…" autocomplete="off" aria-label="Kelime ara">
+      <span class="wb-result" id="wbResult">61 kelime</span>
+    </div>
+    <nav class="wb-chips" id="wbChips" aria-label="Sayfa seçimi"></nav>
+    <div id="wbBank"></div>
+  </section>
+
+  <!-- Sayfa 18 -->
+  <section class="mod" id="m-19">
+    <header class="page-head">
+      <div class="eyebrow">Unit 1 · Sayfa 18 · Ders 2</div>
+      <h2>Banka &amp; Kart</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(……，要不……)</span> ve <span class="zh-inline">(……或者……)</span></p>
+      <div class="chips"><span class="chip"><b>7</b> kelime</span><span class="chip">Diyalog</span><span class="chip">2 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="19"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 02 · Bankada</div>
+      <blockquote class="zh">
+        大卫是美国留学生，在美国学过三年汉语，来中国已经几个月了。王楠是新闻专业的研究生，在美国留学时认识了大卫。这次，大卫想请王楠帮他办张银行卡。
+      </blockquote>
+      <p><b>大卫：</b> 你这个周末有时间吗？</p>
+      <p><b>王楠：</b> 应该没什么事儿，需要我帮忙吗？</p>
+      <p><b>大卫：</b> 我想办张银行卡，要不买东西太不方便了。</p>
+      <p><b>王楠：</b> 我周六、周日都有时间。</p>
+      <p><b>大卫：</b> 办卡麻烦吗？</p>
+      <p><b>王楠：</b> 不麻烦，带上你的护照和学生证，去银行填张表就行了。</p>
+      <p><b>大卫：</b> 你觉得哪家银行比较可靠？</p>
+      <p><b>王楠：</b> 我个人觉得都差不多。</p>
+      <p><b>大卫：</b> 是不是国有银行比较好？</p>
+      <p><b>王楠：</b> 国有、非国有都一样，就去中国银行吧。我的卡就是在那儿办的。</p>
+      <p><b>大卫：</b> 那你看周六可以吗？</p>
+      <p><b>王楠：</b> 可以，到时候提前给我打电话或者发短信。</p>
+      <p><b>大卫：</b> 真是太谢谢你了。</p>
+      <p><b>王楠：</b> 嗨，跟我你还客气什么！</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 我想办张银行卡，要不买东西太不方便了。</div>
+      <ul class="zh">
+        <li>(1) 我得在公司附近租间房子，要不上下班太不方便了。</li>
+        <li>(2) 把剩下的饭菜打包吧，____________________。</li>
+        <li>(3) 我想买本电子词典，____________________。</li>
+        <li>(4) ____________________，要不他们俩准得吵起来。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 可以，到时候提前给我打电话或者发短信。</div>
+      <ul class="zh">
+        <li>(1) 外国学生办银行卡，需要带着护照、学生证或者其他有效证件。</li>
+        <li>(2) 方便的时候你来找我吧，____________________都可以。</li>
+        <li>(3) ____________________，你说去哪儿，咱们就去哪儿。</li>
+        <li>(4) 如果不知道坐什么车，____________________，他们两个肯定知道。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 20 -->
+  <section class="mod" id="m-21">
+    <header class="page-head">
+      <div class="eyebrow">Unit 1 · Sayfa 20 · Ders 4</div>
+      <h2>Elektronik &amp; İnternet</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(在……下)</span> ve <span class="zh-inline">(A是A，可是……)</span></p>
+      <div class="chips"><span class="chip"><b>9</b> kelime</span><span class="chip">Diyalog</span><span class="chip">2 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="21"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 04</div>
+      <blockquote class="zh">
+        在王楠的帮助下，大卫去中国银行办了一张卡。回来的路上，他想去超市买些东西。可王楠有点儿累了，不想去。
+      </blockquote>
+      <p><b>大卫：</b> 王楠，附近有超市吗？</p>
+      <p><b>王楠：</b> 刚办了张卡就想消费，现在是金融危机，要省钱！</p>
+      <p><b>大卫：</b> 不是，我得去买个变压器。</p>
+      <p><b>王楠：</b> 对了，来之前忘了告诉你了，中国的电压是220伏。</p>
+      <p><b>大卫：</b> 是啊，有些电器用不了。插头也不一样，电脑也用不了。</p>
+      <p><b>王楠：</b> 那就再买个多功能插头或插座，以后到哪儿都能用。</p>
+      <p><b>大卫：</b> 我还想买条长点儿的网线，我房间的太短了。</p>
+      <p><b>王楠：</b> 你的电脑不能无线上网吗？</p>
+      <p><b>大卫：</b> 能是能，可是无线上网有时会掉线，不如有线上网稳定。</p>
+      <p><b>王楠：</b> 你看，前面的路口往左拐就有一家超市，你自己去吧，我有点儿累了。</p>
+      <p><b>大卫：</b> 你陪我一起去吧。你刚去美国的时候，换钱都得拉着我给你当翻译。</p>
+      <p><b>王楠：</b> 好，真拿你没办法！</p>
+      <p><b>大卫：</b> 这不叫“没办法”，用中国话说，这叫“在家靠父母，出门靠朋友”。</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 在王楠的帮助下，大卫去中国银行办了一张卡。</div>
+      <ul class="zh">
+        <li>(1) 在就业这么困难的情况下，你能找到这么好的工作，祝贺你！</li>
+        <li>(2) 在我的劝说下，____________________。</li>
+        <li>(3) ____________________，我们只能依靠自己的努力。</li>
+        <li>(4) ____________________，公司顺利渡过了难关。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 能是能，可是无线上网有时会掉线，不如有线上网稳定。</div>
+      <ul class="zh">
+        <li>(1) 批评他，应该是应该，但不能把所有责任都推给他一个人。</li>
+        <li>(2) 他们俩吵架是吵架，____________________。</li>
+        <li>(3) ____________________，可是穿上显得特别帅，有精神。</li>
+        <li>(4) ____________________，可是我没有时间啊。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 21-22 -->
+  <section class="mod" id="m-23-24">
+    <header class="page-head">
+      <div class="eyebrow">Unit 1 · Sayfa 23–24 · Ders 6</div>
+      <h2>Restoran &amp; Yemek</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(千万)</span>, <span class="zh-inline">(再说)</span> ve <span class="zh-inline">(哪能……呢)</span></p>
+      <div class="chips"><span class="chip"><b>12</b> kelime</span><span class="chip">Diyalog</span><span class="chip">3 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="23-24"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 06</div>
+      <blockquote class="zh">
+        王楠陪大卫去银行办了卡，然后又去超市买了多功能插头和插座。从超市出来，已经快七点了，大卫要请王楠吃饭。他们提着买的东西，去饭馆吃饭。
+      </blockquote>
+      <p><b>服务员：</b> 欢迎光临，二位里面请。</p>
+      <p><b>王 楠：</b> 请给我们找个靠窗户的地方。</p>
+      <p class="stage">（服务员帮他们找了一张靠窗户的桌子。）</p>
+      <p><b>服务员：</b> 这是菜单，请二位点菜。</p>
+      <p><b>大 卫：</b> 来个水煮牛肉。</p>
+      <p><b>王 楠：</b> 这是辣的，你吃得惯吗？</p>
+      <p><b>大 卫：</b> 没问题，我在美国的中餐馆也常常吃辣的。</p>
+      <p><b>王 楠：</b> 清炒西兰花。</p>
+      <p><b>大 卫：</b> 再点一个宫保鸡丁。</p>
+      <p><b>王 楠：</b> 再来一个素菜，凉拌苦瓜。</p>
+      <p><b>服务员：</b> 请问二位喝点儿什么？</p>
+      <p><b>大 卫：</b> 来一瓶青岛啤酒。你喝什么？</p>
+      <p><b>王 楠：</b> 一杯果汁。</p>
+      <p><b>服务员：</b> 主食吃什么？</p>
+      <p><b>王 楠：</b> 两碗米饭。</p>
+      <p><b>服务员：</b> 二位有什么忌口的吗？</p>
+      <p><b>王 楠：</b> 我没有。</p>
+      <p><b>大 卫：</b> 我有！请告诉厨房的师傅，千万不要放香菜，我不吃香菜！</p>
+      <p><b>王 楠：</b> 大卫，入乡随俗，试试吧。</p>
+      <p><b>大 卫：</b> 不行不行。这就像你吃不了七成熟的牛肉一样！</p>
+      <p class="stage">（王楠和大卫吃完了饭，准备离开。）</p>
+      <p><b>王 楠：</b> 服务员，买单！这个菜打包。</p>
+      <p><b>服务员：</b> 请二位稍等。</p>
+      <p><b>大 卫：</b> 等等。我说了我请客，再说你帮了我这么大的忙，哪能让你破费呢？</p>
+      <p><b>王 楠：</b> 还是我请你吧，你刚来中国，我给你接风。</p>
+      <p><b>大 卫：</b> 那就让你破费了，下次我再请你。</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 千万</div>
+      <p class="zh ex-sample">请告诉厨房的师傅，千万不要放香菜，我不吃香菜！</p>
+      <ul class="zh">
+        <li>(1) 最近股票市场非常不稳定，你要买股票的话，千万要小心。</li>
+        <li>(2) 明天上午八点，会议准时开始，____________________。</li>
+        <li>(3) ____________________，千万不要告诉任何人。</li>
+        <li>(4) ____________________，千万不要大意。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 再说</div>
+      <p class="zh ex-sample">我说了我请客，再说你帮了我这么大的忙，哪能让你破费呢？</p>
+      <ul class="zh">
+        <li>(1) 他不是有意的，再说，他也承认了自己的错误，我们不要再批评他了。</li>
+        <li>(2) 时间太晚了，____________________，还是明天再去找她吧。</li>
+        <li>(3) ____________________，再说，大卫一直想去看京剧，这张票还是送给大卫吧。</li>
+        <li>(4) ____________________，再说我对球赛从来都没什么兴趣，____________________。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">3. 哪能……呢</div>
+      <ul class="zh">
+        <li>(1) 他哪能这么说话呢？明明是他自己做错了，还对别人说三道四。</li>
+        <li>(2) 这都是粮食，____________________？真可惜！</li>
+        <li>(3) 你哪能说辞职就辞职呢？____________________。</li>
+        <li>(4) 你是大卫！我哪能忘记呢？当初____________________。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 25-26 -->
+  <section class="mod" id="m-25-26">
+    <header class="page-head">
+      <div class="eyebrow">Unit 1 · Sayfa 25–26</div>
+      <h2>Diyalog Tamamlama</h2>
+      <p class="lead">Karşılıklı konuşma ve soru-cevap pratikleri. Boşlukları uygun kalıp ve ifadelerle tamamla.</p>
+      <div class="chips"><span class="chip"><b>6</b> diyalog</span><span class="chip">Soru-cevap</span></div>
+    </header>
+    <div class="card practice-list-card">
+      <div class="ct">Diyalog Tamamlama</div>
+      <ul class="zh practice-list">
+        <li><b>1. A:</b> <span>你好，____________________？</span><br><b>B:</b> <span>噢，你一直往前走，在前边那个路口左拐，再往前走50米，就有一家。</span></li>
+        <li><b>2. A:</b> <span>____________________，买单，给我开张发票。</span><br><b>B:</b> <span>好的，请稍等一下。</span></li>
+        <li><b>3. A:</b> <span>询问____________________？</span><br><b>B:</b> <span>对了，差点儿忘了告诉你，一定不要放香菜，还有辣椒。</span></li>
+        <li><b>4. A:</b> <span>哎呀，你就和我一起去吧，求你了！</span><br><b>B:</b> <span>好吧，____________________。</span></li>
+        <li><b>5. A:</b> <span>你好，请问您要办理什么业务？</span><br><b>B:</b> <span>____________________。</span></li>
+        <li><b>6. A:</b> <span>这次来中国，真是多亏你帮忙了。</span><br><b>B:</b> <span>____________________，朋友之间互相帮助是应该的。</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 27-28 -->
+  <section class="mod" id="m-27-28">
+    <header class="page-head">
+      <div class="eyebrow">Unit 1 · Sayfa 27–28</div>
+      <h2>Restoranda Sipariş · <span class="zh-inline">我想吃饺子</span></h2>
+      <p class="lead">Restoranda sipariş diyaloğu. Parantez içindeki ipuçları boşlukları doldurmana yardımcı olur.</p>
+      <div class="chips"><span class="chip">Diyalog</span><span class="chip">Sipariş</span></div>
+    </header>
+    <div class="card lesson-text zh">
+      <div class="ct zh">（在饭馆）</div>
+      <p><b>服务员：</b>请问您想吃点儿什么？</p>
+      <p><b>大 卫：</b>有饺子吗？</p>
+      <p><b>服务员：</b>有，____________________？ <span class="hint">(馅儿)</span></p>
+      <p><b>大 卫：</b>牛肉的和三鲜的各来三两。</p>
+      <p><b>服务员：</b>____________________？ <span class="hint">(忌口)</span></p>
+      <p><b>大 卫：</b>没有。</p>
+      <p><b>服务员：</b>好，____________________？ <span class="hint">(还是)</span></p>
+      <p><b>大 卫：</b>不要速冻的，要手工的，我喜欢吃现做的饺子。</p>
+      <p><b>服务员：</b>手工的需要等一会儿。</p>
+      <p><b>大 卫：</b>____________________？ <span class="hint">(多长)</span></p>
+      <p><b>服务员：</b>十五分钟左右。</p>
+      <p><b>大 卫：</b>没关系，请尽量快一点儿。</p>
+      <p><b>服务员：</b>____________________？ <span class="hint">(别的)</span></p>
+      <p><b>大 卫：</b>不要了，对了，来一壶菊花茶。</p>
+      <p><b>服务员：</b>请稍等。</p>
+    </div>
+  </section>
+
+  <!-- Sayfa 30 -->
+  <section class="mod" id="m-32">
+    <header class="page-head">
+      <div class="eyebrow">Unit 2 · Sayfa 30 · Ders 8</div>
+      <h2>Aile &amp; Üç Kişilik Aile</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(对……来说)</span> ve <span class="zh-inline">(难道……吗)</span></p>
+      <div class="chips"><span class="chip"><b>8</b> kelime</span><span class="chip">Diyalog</span><span class="chip">2 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="32"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 08</div>
+      <blockquote class="zh">
+        大卫和王楠在星巴克（Starbucks）喝咖啡聊天儿，看到很多幸福的三口之家：丈夫和妻子陪着一个孩子，有说有笑。大卫和王楠一边喝咖啡，一边讨论中国的三口之家。
+      </blockquote>
+      <p><b>大卫：</b> 王楠，现在中国的家庭都只有一个孩子吗？</p>
+      <p><b>王楠：</b> 对，城市里绝大部分都是一个孩子。</p>
+      <p><b>大卫：</b> 你觉得这样的三口之家是理想的家庭吗？</p>
+      <p><b>王楠：</b> 这要看怎么说。对丈夫和妻子来说，可能一个孩子已经足够了。</p>
+      <p><b>大卫：</b> 为什么这么说呢？</p>
+      <p><b>王楠：</b> 两个人结婚，有孩子以后关系就比较稳定了；而且，一个孩子，教育等费用不会太高。</p>
+      <p><b>大卫：</b> 难道没有孩子就不稳定吗？</p>
+      <p><b>王楠：</b> 我觉得是。丈夫、妻子、孩子，三个点才能构成一个平面。</p>
+      <p><b>大卫：</b> 但三口之家可能对孩子不太好，一个孩子，太孤单了。</p>
+      <p><b>王楠：</b> 我也有同感。其实，独生子女有很多缺点。</p>
+      <p><b>大卫：</b> 来中国之前，我听过“小皇帝”的说法。</p>
+      <p><b>王楠：</b> 对，不过，现在越来越多的父母已经注意到这个问题了。</p>
+      <p><b>大卫：</b> 他们是不是觉得一个孩子太少了，想再生一个？</p>
+      <p><b>王楠：</b> 那倒不是。我是说父母正在渐渐改变教育孩子的方式。</p>
+      <p><b>大卫：</b> 我觉得最重要的是不能溺爱。</p>
+      <p><b>王楠：</b> 我也是这么想的。应该让孩子知道，“自己的事情自己做”。</p>
+      <p><b>大卫：</b> 你刚才说，独生子女有很多缺点，你是不同意中国“一个孩子”的政策吗？</p>
+      <p><b>王楠：</b> 这要看怎么说。一家只有一个孩子，的确对孩子的成长不利，但有什么办法呢？中国的人口实在太多了。</p>
+      <p><b>大卫：</b> 以前曾有专家预测，中国会因为人口太多而没有粮食吃。</p>
+      <p><b>王楠：</b> 是啊。如果想到这一点，就不要再批评中国的人口政策了。</p>
+      <p><b>大卫：</b> 看来，你以后会选择三口之家了？</p>
+      <p><b>王楠：</b> 当然，考虑各种因素，三口之家是比较理想的家庭。</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 对丈夫和妻子来说，可能一个孩子已经足够了。</div>
+      <ul class="zh">
+        <li>(1) 对作家来说，经常去农村生活一段时间可能是好事儿。</li>
+        <li>(2) 对我来说，____________________。</li>
+        <li>(3) 对孩子来说，____________________。</li>
+        <li>(4) ____________________，建立一种良好的关系非常重要。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 难道没有孩子就不稳定吗？</div>
+      <ul class="zh">
+        <li>(1) 这种错误都出现100次了，难道是偶然的吗？</li>
+        <li>(2) 老板说得那么清楚，____________________？</li>
+        <li>(3) 他是个穷光蛋，____________________？</li>
+        <li>(4) ____________________，难道你真的不知道吗？</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 32 -->
+  <section class="mod" id="m-34">
+    <header class="page-head">
+      <div class="eyebrow">Unit 2 · Sayfa 32 · Ders 10</div>
+      <h2>Evlilik &amp; Boşanma</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(……或是……)</span> ve <span class="zh-inline">(因为/由于……的关系)</span></p>
+      <div class="chips"><span class="chip"><b>13</b> kelime</span><span class="chip">Diyalog</span><span class="chip">2 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="34"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 10</div>
+      <blockquote class="zh">
+        性格不合或是对方有了外遇，往往成为离婚的理由。然而，有资料显示，近来有 1/5 的办理离婚手续者，没有任何理由。离婚，真的可以无理由吗？请听听心理专家和三个离婚者的对话。
+      </blockquote>
+      <p><b>心理专家：</b> 能说说你当初离婚的理由吗？</p>
+      <p><b>离婚者A：</b> 没有理由。恋爱时我们曾经爱得死去活来，后来因为关系，我们在一起的时间越来越少。更可怕的是，我变得越来越吹毛求疵。他看电视的时候把腿翘在茶几上，我会骂他；他吃饭的时候，拿出一个馒头又放下，我会说“你想找钻石啊”；他看报纸的时候腿不停地抖，我说“你有毛病啊”。</p>
+      <p><b>心理专家：</b> 你怎么能这么说话呢？</p>
+      <p><b>离婚者A：</b> 没办法。后来有一天他突然大怒，就分手了。</p>
+      <p><b>心理专家：</b> 你现在后悔吗？</p>
+      <p><b>离婚者B：</b> 有什么办法呢？我们结婚八年，从开始时的卿卿我我到后来的吵吵闹闹，再到后来的沉默不语，一切都很自然。每天都是一样的生活，平静、枯燥。我们都感到，二人世界的生活不过如此。终于有一天，我说“我们还是分开过吧”，他同意了。</p>
+      <p><b>心理专家：</b> 你也是无理由离婚的吗？</p>
+      <p><b>离婚者C：</b> 其实，说没有理由，那是一个借口，离婚怎么会没有理由呢？我们是大学同学，彼此都非常了解。开始的时候，我们很乐意过二人世界的生活。后来，我们觉得彼此都太透明了，相互间的吸引力渐渐消失了，有时会有腻的感觉。再后来，就友好地分手了，但我们还是朋友，没有形同路人。</p>
+      <p class="stage">（选自网络）</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 性格不合或是对方有了外遇，往往成为离婚的理由。</div>
+      <ul class="zh">
+        <li>(1) 你去或是她去，你们两个人商量吧。</li>
+        <li>(2) 如果你有问题，____________________，都可以。</li>
+        <li>(3) ____________________，常常成为学生迟到的理由。</li>
+        <li>(4) 同意或是反对，____________________。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 后来因为关系，我们在一起的时间越来越少。</div>
+      <ul class="zh">
+        <li>(1) 由于与同事合作不愉快的关系，他被公司炒了鱿鱼。</li>
+        <li>(2) 因为感冒的关系，____________________。</li>
+        <li>(3) 由于孩子的关系，____________________。</li>
+        <li>(4) ____________________，飞机晚点半个小时。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 34 -->
+  <section class="mod" id="m-36">
+    <header class="page-head">
+      <div class="eyebrow">Unit 2 · Sayfa 34 · Ders 12</div>
+      <h2>Evlilik Modelleri</h2>
+      <p class="lead">Kalıplar: <span class="zh-inline">(……上)</span> ve <span class="zh-inline">(在……看来)</span></p>
+      <div class="chips"><span class="chip"><b>12</b> kelime</span><span class="chip">Metin</span><span class="chip">2 alıştırma</span></div>
+    </header>
+
+    <!-- Kelime Listesi -->
+    <div class="wb-slot" data-ch="36"></div>
+
+    <!-- Ders Metni -->
+    <div class="card lesson-text zh">
+      <div class="ct zh">课文 12</div>
+      <blockquote class="zh">
+        “婚姻是爱情的坟墓”这句话对现代年轻人来说，似乎已经不那么适用了一。21世纪的今天，一些新的婚姻形式正在你我身边产生……
+      </blockquote>
+      <p class="para"><b>试验式婚姻：</b> 又叫试婚。男女双方背叛传统，不惧怕别人的冷眼。他们不要结婚证书，但相信爱情，追求感情生活的质量。双方觉得合适就生活在一起，不合适就分开，非常自由。</p>
+      <p class="para"><b>丁克式婚姻：</b> 即丁克家族。男女双方放弃用孩子来维持夫妻关系，充分体验二人世界的乐趣。他们认为，爱情、性、共同的精神追求是婚姻的基础。没有孩子，婚姻生活质量更高。</p>
+      <p class="para"><b>周末式婚姻：</b> 即周末夫妻。男女双方领了结婚证，法律上是夫妻，但从周一到周五的工作日，各自住自己的房子，过单身生活，只是周末才住在一起。</p>
+      <p class="para"><b>分账式婚姻：</b> 即 AA 制婚姻。在夫妻双方看来，安全感永远不会来自精神方面，他们需要用物质建立稳定的生活和内心的安全感。这种婚姻形式中，双方经济独立，都清楚地知道自己的收入和支出，不必为婚变担心。</p>
+      <p class="para"><b>闪电式婚姻：</b> 即闪婚。从相识到相知，真的需要一个漫长的过程吗？在闪婚族看来，婚姻只需要一个瞬间。在这个信息发达的社会，3 秒钟坠入爱河已不再是幻想。</p>
+      <p class="para"><b>同性式婚姻：</b> 即同性恋婚姻。这种“同志”式的婚姻模式在荷兰、比利时、加拿大、英国等国家已经合法化，在中国虽然还没立……</p>
+    </div>
+
+    <!-- Alıştırmalar -->
+    <div class="card exercise">
+      <div class="ex-title zh">1. 男女双方领了结婚证，法律上是夫妻，但只是周末才住在一起。</div>
+      <ul class="zh">
+        <li>(1) 思想上的事儿，有时很难说清楚。</li>
+        <li>(2) 无论是____________________，还是____________________，他对我的帮助都很大。</li>
+        <li>(3) 生活上有困难，____________________。</li>
+        <li>(4) 这篇小说修改以后，____________________，但内容变化了很多。</li>
+      </ul>
+    </div>
+    <div class="card exercise">
+      <div class="ex-title zh">2. 在夫妻双方看来，安全感永远不会来自精神方面。</div>
+      <ul class="zh">
+        <li>(1) 在理想主义者看来，传统式婚姻是最好的选择。</li>
+        <li>(2) 在律师看来，____________________。</li>
+        <li>(3) ____________________，这件事儿没什么大不了的。</li>
+        <li>(4) 在一般人看来，____________________。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sayfa 38 -->
+  <section class="mod" id="m-38">
+    <header class="page-head">
+      <div class="eyebrow">Unit 2 · Sayfa 38</div>
+      <h2>Tepki Pratiği</h2>
+      <p class="lead">Durum karşısında doğru tepki verme. A / B diyaloglarındaki boşlukları tamamla.</p>
+      <div class="chips"><span class="chip"><b>5</b> diyalog</span><span class="chip">A / B</span></div>
+    </header>
+    <div class="card practice-list-card">
+      <div class="ct zh">练一练</div>
+      <ul class="zh practice-list">
+        <li><b>1. A:</b> <span>虽然我选择的专业是语言学，不过，说实话，不是很喜欢这个专业。</span><br><b>B:</b> <span>____________________？你也可以不选这个啊。</span></li>
+        <li><b>2. A:</b> <span>你觉得丁克族自私吗？</span><br><b>B:</b> <span>____________________，对他们自己当然没什么，但如果大家都不想要孩子，以后谁为社会工作啊？</span></li>
+        <li><b>3. A:</b> <span>你们为什么非得举办这么大的婚礼呢？多累啊。</span><br><b>B:</b> <span>____________________？双方的父母都坚持这样做。</span></li>
+        <li><b>4. A:</b> <span>你是不是也觉得“无理由离婚”是合理的？</span><br><b>B:</b> <span>____________________，我只是觉得，表面上看的确好像没有理由，其实还是有理由的。</span></li>
+        <li><b>5. A:</b> <span>我觉得还是传统式婚姻比较好，“嫁鸡随鸡，嫁狗随狗”，不是也很浪漫吗？</span><br><b>B:</b> <span>____________________，那些另类婚姻模式，真让人想不明白。</span></li>
+      </ul>
+    </div>
+  </section>
+  <footer class="page-foot">
+    <span>Sözlü Anlatım · 口语表达 — 1. Dönem Ara Sınav</span>
+    <span>61 kelime · 6 Sayfa · 2 unit</span>
+  </footer>
+
+</div>
+
+<script>
+/* ============ Genel gezinme ============ */
+function toggleSidebar() {
+  document.getElementById('side').classList.toggle('collapsed');
+}
+
+var IDS = ["m-bilgi", "m-kaliplar", "m-kelimeler", "m-19", "m-21", "m-23-24", "m-25-26", "m-27-28", "m-32", "m-34", "m-36", "m-38"];
+var nav = document.getElementById("nav");
+nav.querySelectorAll("a").forEach(function (a) {
+  a.onclick = function () { show(a.dataset.id); };
+});
+
+function show(id) {
+  if (IDS.indexOf(id) < 0) id = IDS[0];
+  document.querySelectorAll(".mod").forEach(function (m) {
+    m.classList.toggle("on", m.id === id);
+  });
+  nav.querySelectorAll("a").forEach(function (a) {
+    a.classList.toggle("on", a.dataset.id === id);
+  });
+  var active = nav.querySelector('a[data-id="' + id + '"]');
+  if (active && active.scrollIntoView) {
+    try { active.scrollIntoView({ block: "nearest", inline: "center" }); } catch (e) {}
+  }
+  document.getElementById("main").scrollTop = 0;
+  window.scrollTo(0, 0);
+  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+}
+
+/* ============ Kelime bankası ============ */
+var CH_META = {
+  "19":    { badge: "18",   title: "Banka & Kart",           short: "Banka",      sub: "Sayfa 18 · 课文 02" },
+  "21":    { badge: "20",   title: "Elektronik & İnternet",  short: "Elektronik", sub: "Sayfa 20 · 课文 04" },
+  "23-24": { badge: "23",   title: "Restoran & Yemek",       short: "Restoran",   sub: "Sayfa 23–24 · 课文 06" },
+  "32":    { badge: "30",   title: "Aile & Üç Kişilik Aile", short: "Aile",       sub: "Sayfa 30 · 课文 08" },
+  "34":    { badge: "32",   title: "Evlilik & Boşanma",      short: "Evlilik",    sub: "Sayfa 32 · 课文 10" },
+  "36":    { badge: "34",   title: "Evlilik Modelleri",      short: "Modeller",   sub: "Sayfa 34 · 课文 12" }
+};
+var CH_ORDER = ["19", "21", "23-24", "32", "34", "36"];
+var WORD_BANK = {"19":[{"t":"卡 (办卡)","p":"名词 / 动词","m":"Kart (Kart çıkartmak)"},{"t":"专业","p":"名词","m":"Uzmanlık alanı / Bölüm / Branş"},{"t":"要不","p":"连词","m":"Yoksa / Aksi takdirde"},{"t":"填","p":"动词","m":"Doldurmak (Form vb.)"},{"t":"可靠","p":"形容词","m":"Güvenilir"},{"t":"国有","p":"形容词","m":"Devlete ait / Kamusal"},{"t":"非","p":"副词 / 前缀","m":"Non- / Olmayan / Özel (Örn: 非国有)"}],"21":[{"t":"金融","p":"名词","m":"Finans"},{"t":"危机","p":"名词","m":"Kriz"},{"t":"变压器","p":"名词","m":"Transformatör / Dönüştürücü / Adaptör"},{"t":"电压","p":"名词","m":"Voltaj / Gerilim"},{"t":"插头","p":"名词","m":"Fiş"},{"t":"插座","p":"名词","m":"Priz"},{"t":"网线","p":"名词","m":"İnternet / Ağ Kablosu"},{"t":"掉线","p":"动词","m":"Bağlantı kopması / İnternetin kesilmesi"},{"t":"稳定","p":"形容词 / 动词","m":"Kararlı / İstikrarlı / Sabit"}],"32":[{"t":"足够","p":"形容词 / 副词","m":"Yeterli / Kafi"},{"t":"构成","p":"动词","m":"Oluşturmak / Teşkil etmek"},{"t":"孤单","p":"形容词","m":"Yalnız / İnzivada"},{"t":"溺爱","p":"动词","m":"Şımartmak / Aşırı korumak"},{"t":"政策","p":"名词","m":"Politika / Siyaset"},{"t":"的确","p":"副词","m":"Gerçekten / Hakikaten"},{"t":"预测","p":"动词 / 名词","m":"Tahmin etmek / Öngörmek"},{"t":"粮食","p":"名词","m":"Tahıl / Erzak / Gıda"}],"34":[{"t":"不合","p":"动词 / 形容词","m":"Anlaşamamak / Uyuşmamak"},{"t":"外遇","p":"名词","m":"İlişki / Aldatma (Evlilik dışı ilişki)"},{"t":"吹毛求疵","p":"成语 / 动词","m":"Kusur aramak / Kılı kırk yararak eleştirmek"},{"t":"翘","p":"动词","m":"(Bacak vb.) Üst üste atmak / Havaya kaldırmak"},{"t":"茶几","p":"名词","m":"Sehpa"},{"t":"馒头","p":"名词","m":"Buharda pişmiş Çin çöreği / Ekmek"},{"t":"钻石","p":"名词","m":"Elmas / Pırlanta"},{"t":"卿卿我我","p":"成语 / 动词","m":"Cilveleşmek / Çifte kumrular gibi olmak"},{"t":"沉默","p":"形容词 / 动词","m":"Sessiz / Sessizleşmek / Suskun"},{"t":"枯燥","p":"形容词","m":"Monoton / Sıkıcı / Kurak"},{"t":"彼此","p":"代词","m":"Karşılıklı / Birbirini"},{"t":"透明","p":"形容词","m":"Şeffaf / Açık"},{"t":"腻","p":"形容词 / 动词","m":"Bıkmak / Usanmak / Yağlı-ağır gelmek"}],"36":[{"t":"坟墓","p":"名词","m":"Mezar / Kabir"},{"t":"适用","p":"动词 / 形容词","m":"Uygulanabilir / Geçerli olmak"},{"t":"背叛","p":"动词","m":"İhanet etmek / Geri çevirmek"},{"t":"惧怕","p":"动词","m":"Korkmak / Çekinmek"},{"t":"追求","p":"动词","m":"Peşinde koşmak / Arayışında olmak"},{"t":"放弃","p":"动词","m":"Vazgeçmek / Bırakmak"},{"t":"维持","p":"动词","m":"Sürdürmek / Korumak"},{"t":"体验","p":"动词 / 名词","m":"Deneyimlemek / Tecrübe etmek"},{"t":"漫长","p":"形容词","m":"Uzun ve sonu gelmez / Ucu bucağı olmayan"},{"t":"瞬间","p":"名词","m":"An / Saniye / Anlık"},{"t":"坠","p":"动词","m":"Düşmek / Kapılmak (Örn: 坠入爱河)"},{"t":"幻想","p":"名词 / 动词","m":"Hayal / İllüzyon"}],"23-24":[{"t":"香菜","p":"名词","m":"Kişniş"},{"t":"欢迎","p":"动词","m":"Hoş karşılamak / Karşılamak"},{"t":"光临","p":"动词","m":"Şereflendirmek / Teşrif etmek (Hoş geldiniz)"},{"t":"点菜","p":"动词短语","m":"Yemek siparişi vermek"},{"t":"煮","p":"动词","m":"Haşlamak / Kaynatmak"},{"t":"素菜","p":"名词","m":"Sebze yemeği / Vejetaryen yemek"},{"t":"凉拌","p":"动词","m":"Soğuk meze yapmak / Soğuk soslamak"},{"t":"果汁","p":"名词","m":"Meyve suyu"},{"t":"忌口","p":"动词 / 名词","m":"Diyet perhizi / Yiyemediği özel gıdalar"},{"t":"稍等","p":"动词短语","m":"Biraz beklemek"},{"t":"破费","p":"动词","m":"Masraf etmek / Paraya kıymak"},{"t":"接风","p":"动词","m":"Hoş geldin yemeği vermek / Karşılama ziyafeti yapmak"}]};
+
+function esc(v) {
+  return String(v).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+  });
+}
+
+function wordItem(w) {
+  return '<li class="wb-item">' +
+      '<div class="wb-top">' +
+        '<span class="wb-term">' + esc(w.t) + '</span>' +
+        '<button class="wb-btn" type="button" aria-expanded="false" onclick="wbToggle(this)">Anlam <span class="wb-chev">▾</span></button>' +
+      '</div>' +
+      '<div class="wb-info">' +
+        '<span class="wb-type">' + esc(w.p) + '</span>' +
+        '<div class="wb-mean">' + esc(w.m) + '</div>' +
+      '</div>' +
+    '</li>';
+}
+
+function cardHTML(ch) {
+  var meta = CH_META[ch];
+  var words = WORD_BANK[ch] || [];
+  return '<article class="wb-card" data-ch="' + ch + '" id="wb-' + ch + '">' +
+      '<div class="wb-head">' +
+        '<div class="wb-badge">' + meta.badge + '</div>' +
+        '<div class="wb-titles"><h3>' + meta.title + '</h3><p>' + meta.sub + '</p></div>' +
+        '<span class="wb-count">' + words.length + ' kelime</span>' +
+        '<button class="wb-toggle" type="button" onclick="wbToggleAll(this)">Hepsini aç</button>' +
+      '</div>' +
+      '<ul class="wb-list">' + words.map(wordItem).join("") + '</ul>' +
+    '</article>';
+}
+
+function renderWordCards() {
+  document.querySelectorAll(".wb-slot[data-ch]").forEach(function (slot) {
+    var ch = slot.dataset.ch;
+    if (WORD_BANK[ch]) slot.innerHTML = cardHTML(ch);
+  });
+
+  var bank = document.getElementById("wbBank");
+  if (bank) bank.innerHTML = CH_ORDER.map(cardHTML).join("");
+
+  var chips = document.getElementById("wbChips");
+  if (chips) {
+    chips.innerHTML = CH_ORDER.map(function (ch, i) {
+      var m = CH_META[ch];
+      return '<button type="button" class="wb-chip' + (i === 0 ? ' active' : '') + '" data-ch="' + ch + '" onclick="wbScroll(\'' + ch + '\', this)">' +
+        '<b>' + m.badge + '</b><span>' + m.short + '</span></button>';
+    }).join("");
+  }
+}
+
+function wbToggle(btn) {
+  var item = btn.closest(".wb-item");
+  var open = item.classList.toggle("open");
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function wbToggleAll(btn) {
+  var card = btn.closest(".wb-card");
+  var items = card.querySelectorAll(".wb-item");
+  var allOpen = card.querySelectorAll(".wb-item.open").length === items.length;
+  items.forEach(function (it) { it.classList.toggle("open", !allOpen); });
+  card.querySelectorAll(".wb-btn").forEach(function (b) { b.setAttribute("aria-expanded", String(!allOpen)); });
+  btn.textContent = allOpen ? "Hepsini aç" : "Hepsini kapat";
+}
+
+function wbScroll(ch, btn) {
+  var input = document.getElementById("wbSearch");
+  if (input && input.value) {
+    input.value = "";
+    input.dispatchEvent(new Event("input"));
+  }
+  var card = document.getElementById("wb-" + ch);
+  if (card && card.scrollIntoView) card.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelectorAll("#wbChips .wb-chip").forEach(function (c) {
+    c.classList.toggle("active", c === btn);
+  });
+}
+
+function wbSearchSetup() {
+  var input = document.getElementById("wbSearch");
+  var result = document.getElementById("wbResult");
+  if (!input) return;
+
+  function run() {
+    var q = input.value.trim().toLowerCase();
+    var total = 0;
+    document.querySelectorAll("#wbBank .wb-card").forEach(function (card) {
+      var shown = 0;
+      card.querySelectorAll(".wb-item").forEach(function (item) {
+        var term = item.querySelector(".wb-term").textContent.toLowerCase();
+        var mean = item.querySelector(".wb-mean").textContent.toLowerCase();
+        var type = item.querySelector(".wb-type").textContent.toLowerCase();
+        var match = !q || term.indexOf(q) >= 0 || mean.indexOf(q) >= 0 || type.indexOf(q) >= 0;
+        item.classList.toggle("hide", !match);
+        if (match) {
+          shown++;
+          if (q && term.indexOf(q) < 0 && mean.indexOf(q) >= 0) {
+            item.classList.add("open");
+            var b = item.querySelector(".wb-btn");
+            if (b) b.setAttribute("aria-expanded", "true");
+          }
+        }
+      });
+      card.classList.toggle("hide", shown === 0);
+      total += shown;
+    });
+    if (result) result.textContent = total + " kelime";
+  }
+
+  input.addEventListener("input", run);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { input.value = ""; run(); }
+  });
+}
+
+/* ============ Boşluk çizgileri ============ */
+function decorateBlanks(root) {
+  if (!root) return;
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  var nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(function (n) {
+    if (!/_{4,}/.test(n.nodeValue)) return;
+    var parent = n.parentNode;
+    if (!parent || (parent.closest && parent.closest("script,style,.wb-info,.blank"))) return;
+    var parts = n.nodeValue.split(/(_{4,})/);
+    var frag = document.createDocumentFragment();
+    parts.forEach(function (part) {
+      if (/^_{4,}$/.test(part)) {
+        var sp = document.createElement("span");
+        sp.className = "blank";
+        frag.appendChild(sp);
+      } else if (part) {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    parent.replaceChild(frag, n);
+  });
+}
+
+/* ============ Başlat ============ */
+renderWordCards();
+wbSearchSetup();
+decorateBlanks(document.getElementById("main"));
+
+var startHash = decodeURIComponent(location.hash.slice(1));
+show(IDS.indexOf(startHash) >= 0 ? startHash : IDS[0]);
+
+window.addEventListener("hashchange", function () {
+  var h = decodeURIComponent(location.hash.slice(1));
+  if (IDS.indexOf(h) >= 0) show(h);
+});
+</script>
+
+</body>
+</html>

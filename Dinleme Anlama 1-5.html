@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Çince Dinleme Anlama - Eksiksiz Sınav Portalı</title>
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --sidebar-bg: #1e1e1e;
+            --card-bg: #242424;
+            --text-main: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --accent-color: #bb86fc;
+            --border-color: #333333;
+            --highlight-bg: #2c2500;
+            --highlight-border: #665200;
+            --highlight-text: #ffd54f;
+            --correct-bg: #1b5e20;
+            --wrong-bg: #b71c1c;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 17px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-size: 1.14rem;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.8;
+            display: flex;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
+
+        #sidebar.collapsed {
+            width: 60px;
+        }
+        #sidebar.collapsed .header-title,
+        #sidebar.collapsed nav a span {
+            display: none;
+        }
+        #sidebar.collapsed nav a {
+            padding: 12px 0;
+            justify-content: center;
+            font-size: 1.1rem;
+            border-left: 4px solid transparent;
+        }
+
+        #sidebar .header {
+            padding: 16px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #181818;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .toggle-sidebar-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .toggle-sidebar-btn:hover {
+            background-color: #2a2a2a;
+        }
+
+        #sidebar nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.02rem;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #sidebar nav a:hover, #sidebar nav a.active {
+            background-color: #2a2a2a;
+            color: var(--accent-color);
+            border-left-color: var(--accent-color);
+        }
+
+        #content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 30px 40px 30px;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        /* Controls Bar - Standard flow card at top */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 25px;
+            padding: 14px 20px;
+            background: #1e1e1e;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .controls-title {
+            font-size: 1.05rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .controls-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: #2a2a2a;
+            color: var(--accent-color);
+            border: 1px solid #3d3b5c;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: #121212;
+            border-color: var(--accent-color);
+        }
+
+        .audio-container {
+            margin: 15px 0 20px 0;
+            padding: 12px;
+            background: #181818;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .audio-container label {
+            font-size: 1rem;
+            color: var(--highlight-text);
+            font-weight: bold;
+        }
+
+        .audio-mini {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: #151515;
+            border-radius: 6px;
+            border: 1px dashed #333;
+        }
+
+        .audio-mini label {
+            font-size: 0.92rem;
+            color: #aaa;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        audio {
+            width: 100%;
+            height: 36px;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        .tts-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .tts-btn {
+            background-color: #2e2b44;
+            color: #bb86fc;
+            border: 1px solid #bb86fc;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .tts-btn:hover {
+            background-color: #bb86fc;
+            color: #121212;
+        }
+
+        .module {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .module-title {
+            font-size: 2.05rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .text-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-color);
+        }
+
+        .chinese-text {
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            font-size: 1.4rem;
+            line-height: 1.9;
+            white-space: pre-line;
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        /* Vocab Table Styles */
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            font-size: 1.06rem;
+        }
+
+        .vocab-table th, .vocab-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .vocab-table th {
+            background-color: #1a1a1a;
+            color: var(--highlight-text);
+            font-weight: 600;
+        }
+
+        .vocab-table tr:hover {
+            background-color: #2a2a2a;
+        }
+
+        .vocab-hz {
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .vocab-pos {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .section-header {
+            color: var(--highlight-text);
+            margin: 25px 0 12px 0;
+            font-size: 1.66rem;
+            border-left: 4px solid var(--highlight-text);
+            padding-left: 10px;
+            background: rgba(255, 213, 79, 0.05);
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .quiz-item {
+            background: #1a1a1a;
+            padding: 18px 20px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            border: 1px solid #2e2e2e;
+            position: relative;
+            font-size: 1.44rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .quiz-question {
+            margin-bottom: 10px;
+            font-weight: 500;
+            line-height: 1.7;
+            font-size: 1.44rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #2a2a2a;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 11px 14px;
+            margin: 6px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.39rem;
+            line-height: 1.65;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .quiz-options button:hover {
+            background: #333333;
+        }
+
+        .quiz-options button.correct {
+            background-color: var(--correct-bg) !important;
+            color: #fff;
+            border-color: #2e7d32 !important;
+        }
+
+        .quiz-options button.wrong {
+            background-color: var(--wrong-bg) !important;
+            color: #fff;
+            border-color: #c62828 !important;
+        }
+
+        /* Word Bank Component */
+        .word-bank {
+            background: #23221b;
+            border: 1px solid var(--highlight-border);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .word-bank-title {
+            color: var(--highlight-text);
+            font-weight: bold;
+            font-size: 1.22rem;
+            margin-right: 5px;
+        }
+
+        .word-tag {
+            background: #332b00;
+            color: #ffe082;
+            border: 1px solid #806600;
+            padding: 6px 13px;
+            border-radius: 4px;
+            font-size: 1.44rem;
+            font-family: "Kaiti", "KaiTi", serif;
+        }
+
+        /* Lesson 2 matching exercise */
+        .matching-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 4px 0 14px;
+        }
+        .matching-row {
+            display: grid;
+            grid-template-columns: minmax(112px, 150px) 18px minmax(190px, 1fr);
+            align-items: center;
+            gap: 10px;
+            padding: 7px 10px;
+            border: 1px solid var(--border-color, #444);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.025);
+        }
+        .matching-label {
+            font-family: "KaiTi", "Kaiti SC", "STKaiti", serif;
+            font-size: 1.25rem;
+        }
+        .matching-dash {
+            text-align: center;
+            opacity: 0.75;
+        }
+        .matching-row .quiz-select {
+            width: 100%;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        @media (max-width: 560px) {
+            .matching-row {
+                grid-template-columns: minmax(86px, 112px) 12px minmax(0, 1fr);
+                gap: 6px;
+                padding: 6px;
+            }
+            .matching-row .quiz-select {
+                min-width: 0;
+                font-size: 1.05rem;
+                padding: 7px 5px;
+            }
+        }
+
+        /* Interactive Select Dropdown */
+        .quiz-select {
+            background-color: #2a2a2a;
+            color: var(--accent-color);
+            border: 1px solid #444;
+            padding: 7px 11px;
+            border-radius: 4px;
+            font-size: 1.39rem;
+            font-family: "Kaiti", "KaiTi", serif;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 2px 4px;
+            outline: none;
+            transition: all 0.2s ease;
+            max-width: 100%;
+        }
+
+        .quiz-select:focus {
+            border-color: var(--accent-color);
+        }
+
+        .quiz-select.is-correct {
+            background-color: #1b5e20 !important;
+            color: #ffffff !important;
+            border-color: #2e7d32 !important;
+        }
+
+        .quiz-select.is-wrong {
+            background-color: #b71c1c !important;
+            color: #ffffff !important;
+            border-color: #c62828 !important;
+        }
+
+        /* Answer Key Visibility */
+        .answer-key {
+            display: none;
+            color: #ffd54f;
+            background: #2c2500;
+            padding: 3px 9px;
+            border-radius: 4px;
+            border: 1px dashed #665200;
+            font-weight: bold;
+            margin-left: 6px;
+            font-size: 1.32rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .answer-key.visible {
+            display: inline-block !important;
+        }
+
+        .action-btn-group {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .check-btn {
+            background: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 1.14rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+        }
+
+        .toggle-ans-btn {
+            background: #2a2a3a;
+            color: var(--accent-color);
+            border: 1px solid #3d3b5c;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 1.14rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .toggle-ans-btn:hover {
+            background: var(--accent-color);
+            color: #121212;
+        }
+
+        /* True / False Interactive Buttons */
+        .tf-btn-group {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .tf-btn {
+            background: #2a2a2a;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 5px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            font-size: 1.22rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .tf-btn:hover {
+            background: #3a3a3a;
+        }
+
+        .tf-btn.active-correct {
+            background: #1b5e20 !important;
+            color: #fff !important;
+            border-color: #2e7d32 !important;
+        }
+
+        .tf-btn.active-wrong {
+            background: #b71c1c !important;
+            color: #fff !important;
+            border-color: #c62828 !important;
+        }
+
+        .grammar-box {
+            background: #181818;
+            border: 1px solid #333;
+            padding: 13px 17px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 1.40rem;
+            line-height: 1.8;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .grammar-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.43rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .ordering-item {
+            background: #222;
+            padding: 10px 13px;
+            margin: 7px 0;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 1.40rem;
+            line-height: 1.7;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        /* ── Yeni interaktif bileşenler ── */
+        .qa-card {
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .qa-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.42rem;
+            line-height: 1.7;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .qa-input {
+            width: 100%;
+            background: #242424;
+            border: 1px solid #3a3a3a;
+            color: #ffffff;
+            border-radius: 6px;
+            padding: 11px 13px;
+            font-size: 1.34rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .qa-input::placeholder {
+            color: #777;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1.14rem;
+        }
+
+        .qa-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.18);
+        }
+
+        .exercise-hint {
+            margin: 4px 0 10px;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .exercise-hint strong {
+            color: var(--highlight-text);
+        }
+
+        .multi-options {
+            display: grid;
+            gap: 8px;
+            margin: 10px 0 4px;
+        }
+
+        .multi-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            text-align: left;
+            background: #252525;
+            color: var(--text-main);
+            border: 1px solid #3a3a3a;
+            padding: 11px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.39rem;
+            line-height: 1.7;
+            transition: all 0.18s ease;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .multi-option::before {
+            content: "☐";
+            color: var(--accent-color);
+            font-size: 1.38rem;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+
+        .multi-option:hover {
+            background: #303030;
+            border-color: #555;
+        }
+
+        .multi-option.selected {
+            background: #2d2540;
+            border-color: var(--accent-color);
+        }
+
+        .multi-option.selected::before {
+            content: "☑";
+        }
+
+        .multi-option.correct {
+            background: var(--correct-bg) !important;
+            border-color: #2e7d32 !important;
+            color: #ffffff;
+        }
+
+        .multi-option.wrong {
+            background: var(--wrong-bg) !important;
+            border-color: #c62828 !important;
+            color: #ffffff;
+        }
+
+        .matrix-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 5px 16px;
+            margin: 10px 0 12px;
+            padding: 12px 14px;
+            background: #181818;
+            border: 1px dashed #3d3b5c;
+            border-radius: 6px;
+            font-size: 1.32rem;
+            line-height: 1.6;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+        }
+
+        .matrix-legend strong {
+            color: var(--accent-color);
+        }
+
+        .matrix-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 6px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 1.32rem;
+        }
+
+        .matrix-table th {
+            background: #202028;
+            color: var(--highlight-text);
+            padding: 10px 12px;
+            border: 1px solid #333;
+            text-align: left;
+            font-size: 1.32rem;
+        }
+
+        .matrix-table td {
+            padding: 10px 12px;
+            border: 1px solid #333;
+            vertical-align: top;
+            background: #1d1d1d;
+        }
+
+        .matrix-stage {
+            font-weight: bold;
+            color: var(--accent-color);
+            white-space: nowrap;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            font-size: 1.34rem;
+        }
+
+        .matrix-cell {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .matrix-chip {
+            width: 41px;
+            height: 41px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #282828;
+            color: #dddddd;
+            border: 1px solid #444;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.27rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "楷体", serif;
+            transition: all 0.15s ease;
+        }
+
+        .matrix-chip:hover {
+            border-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .matrix-chip.selected {
+            background: #3d2f66;
+            border-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .matrix-chip.correct {
+            background: var(--correct-bg) !important;
+            border-color: #2e7d32 !important;
+            color: #ffffff;
+        }
+
+        .matrix-chip.wrong {
+            background: var(--wrong-bg) !important;
+            border-color: #c62828 !important;
+            color: #ffffff;
+        }
+
+        .exercise-feedback {
+            margin-top: 8px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            min-height: 1.2em;
+        }
+
+        @media (max-width: 640px) {
+            .matrix-chip {
+                width: 31px;
+                height: 31px;
+                font-size: 1.10rem;
+            }
+
+            .matrix-table {
+                min-width: 560px;
+            }
+        }
+
+        .exam-info-card {
+            background-color: #1a2332;
+            border: 1px solid #2b3d54;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .exam-info-card h3 {
+            color: #64b5f6;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #2b3d54;
+            padding-bottom: 8px;
+        }
+
+        .exam-info-card ul {
+            padding-left: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .exam-info-card ul li {
+            margin-bottom: 8px;
+        }
+
+        body.hide-turkish .turkish-card {
+            display: none !important;
+        }
+
+        body.hide-turkish .text-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        body.hide-turkish .chinese-text {
+            font-size: 1.4rem;
+            line-height: 2;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+                height: 100vh;
+                height: 100dvh;
+                overflow: hidden;
+            }
+
+            #sidebar {
+                width: 100% !important;
+                height: auto;
+                max-height: 250px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            #sidebar.collapsed nav {
+                display: none;
+            }
+
+            #sidebar .header {
+                padding: 12px 16px;
+            }
+
+            #sidebar nav a {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            #content {
+                flex: 1;
+                padding: 16px;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .text-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .card {
+                overflow-x: auto;
+            }
+
+            .vocab-table {
+                min-width: 560px;
+            }
+        }
+    </style>
+
+<style id="language-fonts">
+/* Keep the page's existing typography unchanged. In interactive controls,
+   Segoe UI handles Latin/Turkish while Chinese glyphs fall through to KaiTi. */
+/* Apply the same CJK-capable font stack to every interactive choice,
+   including the native dropdown list and its individual options. */
+button, input, select, textarea, option,
+.quiz-select, .quiz-select option,
+.quiz-options button, .tf-btn, .multi-option,
+.word-tag, .matrix-chip, [role="button"] {
+  font-family: "Segoe UI", "KaiTi", "KaiTi_GB2312", "楷体", "STKaiti", serif !important;
+  font-weight: 400 !important;
+}
+
+/* Native option popups can ignore inherited styles, so target each option
+   explicitly as well. Segoe UI handles Latin/Turkish; KaiTi supplies CJK. */
+select option,
+select.quiz-select option,
+.quiz-select option {
+  font-family: "Segoe UI", "KaiTi", "KaiTi_GB2312", "楷体", "STKaiti", serif !important;
+  font-weight: 400 !important;
+}
+</style>
+
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="header">
+            <button class="toggle-sidebar-btn" onclick="toggleSidebar()" title="Menüyü Daralt/Genişlet">☰</button>
+            <span class="header-title">听力理解 (Listening)</span>
+        </div>
+        <nav>
+            <a href="#info" class="active" onclick="showModule(event, 'info')" title="Sınav Bilgileri">
+                <i>📌</i><span>Sınav Bilgileri</span>
+            </a>
+            <a href="#m1" onclick="showModule(event, 'm1')" title="Lesson 1: 画家和他的孙女">
+                <i>🎧</i><span>Lesson 1: 画家和他的孙女</span>
+            </a>
+            <a href="#m2" onclick="showModule(event, 'm2')" title="Lesson 2: 最好的年龄">
+                <i>🎧</i><span>Lesson 2: 最好的年龄</span>
+            </a>
+            <a href="#m3" onclick="showModule(event, 'm3')" title="Lesson 3: 交换人生">
+                <i>🎧</i><span>Lesson 3: 交换人生</span>
+            </a>
+            <a href="#m4" onclick="showModule(event, 'm4')" title="Lesson 4: 为什么烦恼">
+                <i>🎧</i><span>Lesson 4: 为什么烦恼</span>
+            </a>
+            <a href="#m5" onclick="showModule(event, 'm5')" title="Lesson 5: 乞丐的故事">
+                <i>🎧</i><span>Lesson 5: 乞丐的故事</span>
+            </a>
+        </nav>
+    </div>
+
+    <div id="content">
+        <!-- Static Top Controls Bar -->
+        <div class="controls-bar">
+            <span class="controls-title">⚙️ Hızlı Kontroller</span>
+            <div class="controls-group">
+                <button class="btn" id="toggleAllAnswersBtn" onclick="toggleAllAnswers()">💡 Tüm Cevapları Göster / Gizle</button>
+                <button class="btn" id="toggleTurkishBtn" onclick="toggleTurkish()">🌐 Türkçe Göster / Sadece Çince Mode</button>
+            </div>
+        </div>
+
+        <!-- MODULE: SINAV BİLGİLERİ -->
+        <div id="info" class="module active">
+            <h2 class="module-title">Sınav Bilgileri / 考试信息</h2>
+            <div class="exam-info-card">
+                <h3>Sınav Kapsamı ve Dağılım</h3>
+                <ul>
+                    <li><strong>Sınav Konuları:</strong> 1-5. üniteler dahildir.</li>
+                    <li><strong>%70:</strong> Kitaptaki alıştırmaların aynısı.</li>
+                    <li><strong>%30:</strong> Kitaptan olmayan alıştırmalar.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- LESSON 1 -->
+        <div id="m1" class="module">
+            <h2 class="module-title">Lesson 1: 画家和他的孙女</h2>
+            
+            <div class="audio-container">
+                <label>🎧 Ders Metni Ses Kaydı (Audio 1-1.mp3):</label>
+                <audio controls id="audio-m1">
+                    <source src="audio/01/1-1.mp3" type="audio/mpeg">
+                    Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
+                <div class="tts-controls">
+                    <button class="tts-btn" onclick="speakText('text-m1')">🔊 Metni Seslendir (TTS)</button>
+                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">1-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>汉字 (Hanzi)</th>
+                            <th>拼音 (Pinyin)</th>
+                            <th>词性</th>
+                            <th>English</th>
+                            <th>Türkçe Anlamı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="vocab-hz">画家</td><td>huàjiā</td><td class="vocab-pos">(名)</td><td>painter</td><td>Ressam</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">孙女</td><td>sūnnǚ(r)</td><td class="vocab-pos">(名)</td><td>(paternal) granddaughter</td><td>Kız torun (baba tarafı)</td></tr>
+                        <tr><td>3</td><td class="vocab-hz">树枝</td><td>shùzhī</td><td class="vocab-pos">(名)</td><td>branch, twig</td><td>Ağaç dalı, ince dal</td></tr>
+                        <tr><td>4</td><td class="vocab-hz">树干</td><td>shùgàn</td><td class="vocab-pos">(名)</td><td>tree trunk</td><td>Ağaç gövdesi</td></tr>
+                        <tr><td>5</td><td class="vocab-hz">翅膀</td><td>chìbǎng</td><td class="vocab-pos">(名)</td><td>wing</td><td>Kanat</td></tr>
+                        <tr><td>6</td><td class="vocab-hz">母鸡</td><td>mǔjī</td><td class="vocab-pos">(名)</td><td>hen</td><td>Anne tavuk</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-grid">
+                <div class="card chinese-card">
+                    <div class="card-title">Metin (Text)</div>
+                    <div class="chinese-text" id="text-m1">(旁白)画家有一个六岁的孙女,六岁的孙女也喜欢画画儿。她画了一棵树。
+爷爷:孙女,你画的树不对。
+孙女:怎么不对呢?
+爷爷:树枝不对。
+孙女:树枝怎么不对呢?
+爷爷:树枝怎么能比树干粗呢?
+孙女:树枝怎么不能比树干粗呢?
+爷爷:那就不是树了。
+孙女:不是树,您怎么说是树呢?
+(旁白)爷爷没话说了。孙女画了一只小兔子。
+爷爷:孙女,你画的小兔子不对。
+孙女:怎么不对呢?
+爷爷:兔子有红色的吗?
+孙女:兔子怎么没有红色的呢?
+爷爷:你见过红色的兔子吗?
+孙女:没见过的就没有吗?
+爷爷:红色的就不是兔子了。
+孙女:不是兔子,您怎么说是兔子呢?
+(旁白)爷爷又没话说了。孙女画了一匹马。
+爷爷:孙女,你画的马不对。
+孙女:怎么不对呢?
+爷爷:马有翅膀吗?
+孙女:马没有翅膀。
+爷爷:那你为什么给马画了翅膀呢?
+孙女:我想让马长出翅膀来。
+爷爷:那就不是马了。
+孙女:不是马,您怎么说是马呢?
+(旁白)爷爷又没话说了。孙女还画了一只母鸡,母鸡下了一个蛋,鸡蛋比母鸡还大。孙女拿着这张画儿去参加一个儿童画儿比赛,结果得了一等奖。</div>
+                </div>
+                <div class="card turkish-card">
+                    <div class="card-title">Türkçe Çeviri ve Özet</div>
+                    <div style="line-height: 1.7;">
+                        <strong style="color: var(--accent-color);">Birebir Türkçe Çeviri:</strong><br>
+                        (Dış ses) Bir ressamın altı yaşında bir kız torunu vardı, altı yaşındaki torunu da resim yapmayı severdi. Bir ağaç çizdi.<br>
+                        Dede: Torunum, çizdiğin ağaç doğru değil.<br>
+                        Torun: Nasıl doğru değil?<br>
+                        Dede: Dalları doğru değil.<br>
+                        Torun: Dalları nasıl doğru değil?<br>
+                        Dede: Ağacın dalı gövdesinden nasıl daha kalın olabilir ki?<br>
+                        Torun: Ağacın dalı gövdesinden neden daha kalın olamasın ki?<br>
+                        Dede: O zaman o ağaç olmaz ki.<br>
+                        Torun: Ağaç değilse, siz niye ağaç diyorsunuz o zaman?<br>
+                        (Dış ses) Dede söyleyecek söz bulamadı. Torun küçük bir tavşan çizdi.<br>
+                        Dede: Torunum, çizdiğin tavşan doğru değil.<br>
+                        Torun: Nasıl doğru değil?<br>
+                        Dede: Kırmızı tavşan olur mu hiç?<br>
+                        Torun: Neden kırmızı tavşan olmasın ki?<br>
+                        Dede: Sen hiç kırmızı tavşan gördün mü?<br>
+                        Torun: Görülmeyen bir şey yok demek midir?<br>
+                        Dede: Kırmızı olursa o tavşan olmaz.<br>
+                        Torun: Tavşan değilse, siz niye tavşan diyorsunuz o zaman?<br>
+                        (Dış ses) Dede yine söyleyecek söz bulamadı. Torun bir at çizdi.<br>
+                        Dede: Torunum, çizdiğin at doğru değil.<br>
+                        Torun: Nasıl doğru değil?<br>
+                        Dede: Atın kanatları olur mu?<br>
+                        Torun: Atın kanatları yoktur.<br>
+                        Dede: Öyleyse ata neden kanat çizdin?<br>
+                        Torun: Atın kanatlarının çıkmasını istedim.<br>
+                        Dede: O zaman o at olmaz.<br>
+                        Torun: At değilse, siz niye at diyorsunuz o zaman?<br>
+                        (Dış ses) Dede yine diyecek bir şey bulamadı. Torun bir de anne tavuk çizdi, tavuk bir yumurta yumurtlamıştı ve yumurta tavuktan bile büyüktü. Torun bu resmi alıp bir çocuk resim yarışmasına katıldı ve sonuç olarak birincilik ödülü kazandı.<br><br>
+                        <strong style="color: var(--highlight-text);">Özet Çeviri:</strong><br>
+                        Ressamın 6 yaşındaki kız torunu resim yapmayı çok sever. Gövdesinden kalın dallı ağaç, kırmızı tavşan, kanatlı at ve tavuktan büyük yumurta çizer. Dedesinin mantıksal itirazlarına hazırcevaplıkla yanıt vererek dedesini cevapsız bırakır. Resmiyle katıldığı yarışmada 1.lik ödülü kazanır.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alıştırmalar 1 (Tamamı)</div>
+                
+                <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (1-2.mp3):</label>
+                    <audio controls><source src="audio/01/1-2.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第一组 (怎么 - Nasıl/Neden?)</div>
+                    ① 这么重要的事，你怎么不告诉我？<br>② 你怎么知道这是真的？我可不信！<br>③ 你怎么现在才来？<br><em>(课文例句：怎么不对呢？)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第二组 (长/长着 - Görünmek/Büyümek)</div>
+                    ① 这只猫长着两只颜色不一样的眼睛。<br>② 兔子长着长耳朵和红眼睛。<br>③ 他长得很像他爸爸。<br><em>(课文例句：我想让马长出翅膀来。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第三组 (比……还…… - ...den daha bile...)</div>
+                    ① 周末不上班，可是比上班还累。<br>② 他觉得唱卡拉OK比学外语还难。<br>③ 弟弟很聪明，哥哥比弟弟还聪明。<br><em>(课文例句：母鸡下了一个蛋，鸡蛋比母鸡还大。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第四组 (参加 - Katılmak)</div>
+                    ① 你参加工作几年了？<br>② 他参加了足球比赛。<br>③ 明天有一个新年晚会，我们一起参加吧。<br><em>(课文例句：孙女拿着这张画儿去参加一个儿童画儿比赛，结果得了一等奖。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第五组 (结果 - Sonucunda)</div>
+                    ① 他参加了HSK考试，结果考过了六级。<br>② 我买了一张中国歌的CD，结果听不懂。<br>③ 我七点半才起床，结果迟到了。<br><em>(课文例句：孙女拿着这张画儿去参加一个儿童画儿比赛，结果得了一等奖。)</em>
+                </div>
+
+                <div class="section-header">2. 连线 (Match the titles/roles)</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Seçenekler (Roles):</span>
+                    <span class="word-tag">教育家</span>
+                    <span class="word-tag">作家</span>
+                    <span class="word-tag">画家</span>
+                    <span class="word-tag">音乐家</span>
+                    <span class="word-tag">科学家</span>
+                </div>
+                <div class="quiz-item">
+                    • 孔子 (Confucius) ➔ 
+                    <select class="quiz-select" data-answer="教育家">
+                        <option value="">--Meslek Seç--</option>
+                        <option value="作家">作家 (Writer)</option>
+                        <option value="科学家">科学家 (Scientist)</option>
+                        <option value="画家">画家 (Painter)</option>
+                        <option value="音乐家">音乐家 (Musician)</option>
+                        <option value="教育家">教育家 (Educator)</option>
+                    </select><br>
+                    • 莎士比亚 (Shakespeare) ➔ 
+                    <select class="quiz-select" data-answer="作家">
+                        <option value="">--Meslek Seç--</option>
+                        <option value="作家">作家 (Writer)</option>
+                        <option value="科学家">科学家 (Scientist)</option>
+                        <option value="画家">画家 (Painter)</option>
+                        <option value="音乐家">音乐家 (Musician)</option>
+                        <option value="教育家">教育家 (Educator)</option>
+                    </select><br>
+                    • 达·芬奇 (Da Vinci) ➔ 
+                    <select class="quiz-select" data-answer="画家">
+                        <option value="">--Meslek Seç--</option>
+                        <option value="作家">作家 (Writer)</option>
+                        <option value="科学家">科学家 (Scientist)</option>
+                        <option value="画家">画家 (Painter)</option>
+                        <option value="音乐家">音乐家 (Musician)</option>
+                        <option value="教育家">教育家 (Educator)</option>
+                    </select><br>
+                    • 贝多芬 (Beethoven) ➔ 
+                    <select class="quiz-select" data-answer="音乐家">
+                        <option value="">--Meslek Seç--</option>
+                        <option value="作家">作家 (Writer)</option>
+                        <option value="科学家">科学家 (Scientist)</option>
+                        <option value="画家">画家 (Painter)</option>
+                        <option value="音乐家">音乐家 (Musician)</option>
+                        <option value="教育家">教育家 (Educator)</option>
+                    </select><br>
+                    • 爱因斯坦 (Einstein) ➔ 
+                    <select class="quiz-select" data-answer="科学家">
+                        <option value="">--Meslek Seç--</option>
+                        <option value="作家">作家 (Writer)</option>
+                        <option value="科学家">科学家 (Scientist)</option>
+                        <option value="画家">画家 (Painter)</option>
+                        <option value="音乐家">音乐家 (Musician)</option>
+                        <option value="教育家">教育家 (Educator)</option>
+                    </select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">三、听课文录音边画√ (Listening Check)</div>
+                <div class="audio-mini">
+                    <label>🎧 Dinleme İşaretleme Alıştırması Ses Kaydı (1-3.mp3):</label>
+                    <audio controls><source src="audio/01/1-3.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="quiz-item">
+                    • 树 (Tree): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, true)">√ Var</button><button class="tf-btn" onclick="checkTF(this, false)">× Yok</button></span><br>
+                    • 花 (Flower): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">√ Var</button><button class="tf-btn" onclick="checkTF(this, true)">× Yok</button></span><br>
+                    • 水果 (Fruit): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">√ Var</button><button class="tf-btn" onclick="checkTF(this, true)">× Yok</button></span><br>
+                    • 兔子 (Rabbit): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, true)">√ Var</button><button class="tf-btn" onclick="checkTF(this, false)">× Yok</button></span><br>
+                    • 人 (Person): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">√ Var</button><button class="tf-btn" onclick="checkTF(this, true)">× Yok</button></span><br>
+                    • 马 (Horse): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, true)">√ Var</button><button class="tf-btn" onclick="checkTF(this, false)">× Yok</button></span><br>
+                    • 母鸡和鸡蛋 (Hen & Egg): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, true)">√ Var</button><button class="tf-btn" onclick="checkTF(this, false)">× Yok</button></span><br>
+                    • 小鸡 (Chick): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">√ Var</button><button class="tf-btn" onclick="checkTF(this, true)">× Yok</button></span>
+                </div>
+
+                <div class="section-header">四、按顺序写出孙女画的东西</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Seçenekler:</span>
+                    <span class="word-tag">马</span>
+                    <span class="word-tag">兔子</span>
+                    <span class="word-tag">母鸡和鸡蛋</span>
+                </div>
+                <div class="quiz-item">
+                    树 ➔ 
+                    <select class="quiz-select" data-answer="兔子">
+                        <option value="">--Seç--</option>
+                        <option value="兔子">兔子</option>
+                        <option value="马">马</option>
+                        <option value="母鸡和鸡蛋">母鸡和鸡蛋</option>
+                    </select>
+                    ➔ 
+                    <select class="quiz-select" data-answer="马">
+                        <option value="">--Seç--</option>
+                        <option value="兔子">兔子</option>
+                        <option value="马">马</option>
+                        <option value="母鸡和鸡蛋">母鸡和鸡蛋</option>
+                    </select>
+                    ➔ 
+                    <select class="quiz-select" data-answer="母鸡和鸡蛋">
+                        <option value="">--Seç--</option>
+                        <option value="兔子">兔子</option>
+                        <option value="马">马</option>
+                        <option value="母鸡和鸡蛋">母鸡和鸡蛋</option>
+                    </select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">五、根据课文内容填空</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Seçenekler:</span>
+                    <span class="word-tag">树干</span>
+                    <span class="word-tag">母鸡</span>
+                    <span class="word-tag">树枝</span>
+                    <span class="word-tag">鸡蛋</span>
+                    <span class="word-tag">长</span>
+                    <span class="word-tag">红</span>
+                </div>
+                <div class="quiz-item">
+                    • 树：
+                    <select class="quiz-select" data-answer="树枝"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    比 
+                    <select class="quiz-select" data-answer="树干"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    粗。<br>
+                    • 兔子：
+                    <select class="quiz-select" data-answer="红"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    色的。<br>
+                    • 马：
+                    <select class="quiz-select" data-answer="长"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    翅膀。<br>
+                    • 母鸡和鸡蛋：
+                    <select class="quiz-select" data-answer="鸡蛋"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    比 
+                    <select class="quiz-select" data-answer="母鸡"><option value="">--Seç--</option><option value="树枝">树枝</option><option value="树干">树干</option><option value="红">红</option><option value="长">长</option><option value="鸡蛋">鸡蛋</option><option value="母鸡">母鸡</option></select>
+                    大。
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">六、根据课文内容，选择正确答案</div>
+                <div class="audio-mini">
+                    <label>🎧 Çoktan Seçmeli Sorular Ses Kaydı (1-4.mp3):</label>
+                    <audio controls><source src="audio/01/1-4.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 爷爷认为孙女的画儿怎么样？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 不对</button>
+                        <button onclick="checkAnswer(this, false)">B. 不像</button>
+                        <button onclick="checkAnswer(this, false)">C. 不漂亮</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 孙女认为自己的画儿怎么样？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 都对</button>
+                        <button onclick="checkAnswer(this, false)">B. 一般</button>
+                        <button onclick="checkAnswer(this, false)">C. 很漂亮</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 下面哪个不是孙女的画儿？ <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 长翅膀的马</button>
+                        <button onclick="checkAnswer(this, true)">B. 能飞的兔子</button>
+                        <button onclick="checkAnswer(this, false)">C. 红色的兔子</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">4. 孙女的什么画儿得了大奖？ <span class="answer-key">( D )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 大树</button>
+                        <button onclick="checkAnswer(this, false)">B. 兔子</button>
+                        <button onclick="checkAnswer(this, false)">C. 马</button>
+                        <button onclick="checkAnswer(this, true)">D. 母鸡</button>
+                    </div>
+                </div>
+
+                <div class="section-header">七、说说写写 (Match sentences with different tones/moods)</div>
+                <div class="audio-mini">
+                    <label>🎧 Konuşma Alıştırması Ses Kaydı (1-5.mp3):</label>
+                    <audio controls><source src="audio/01/1-5.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Uygun İfade Seçenekleri:</span>
+                    <span class="word-tag">A: 我怎么能不去呢？</span>
+                    <span class="word-tag">B: 怎么能有红色的兔子呢？</span>
+                    <span class="word-tag">C: 你怎么迟到了呢？</span>
+                    <span class="word-tag">D: 我怎么会不帮你呢？</span>
+                    <span class="word-tag">E: 我怎么知道呢？</span>
+                    <span class="word-tag">F: 这怎么可能？</span>
+                    <span class="word-tag">G: 我怎么吃得了这么多？</span>
+                </div>
+                <div class="quiz-item">
+                    • 你不应该迟到。 ➔ 
+                    <select class="quiz-select" data-answer="C"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 我不知道。 ➔ 
+                    <select class="quiz-select" data-answer="E"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 我不会不帮你。 ➔ 
+                    <select class="quiz-select" data-answer="D"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 这不可能。 ➔ 
+                    <select class="quiz-select" data-answer="F"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 我一定会去的。 ➔ 
+                    <select class="quiz-select" data-answer="A"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 我吃不了这么多。 ➔ 
+                    <select class="quiz-select" data-answer="G"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><br>
+                    • 没有红色的兔子。 ➔ 
+                    <select class="quiz-select" data-answer="B"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LESSON 2 -->
+        <div id="m2" class="module">
+            <h2 class="module-title">Lesson 2: 最好的年龄</h2>
+            
+            <div class="audio-container">
+                <label>🎧 Ders Metni Ses Kaydı (Audio 2-1.mp3):</label>
+                <audio controls id="audio-m2">
+                    <source src="audio/02/2-1.mp3" type="audio/mpeg">
+                    Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
+                <div class="tts-controls">
+                    <button class="tts-btn" onclick="speakText('text-m2')">🔊 Metni Seslendir (TTS)</button>
+                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">2-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>汉字 (Hanzi)</th>
+                            <th>拼音 (Pinyin)</th>
+                            <th>词性</th>
+                            <th>English</th>
+                            <th>Türkçe Anlamı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="vocab-hz">采访</td><td>cǎifǎng</td><td class="vocab-pos">(动)</td><td>to interview</td><td>Röportaj yapmak</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">不停</td><td>bùtíng</td><td class="vocab-pos">(副)</td><td>ceaselessly, all the time</td><td>Durmaksızın, sürekli</td></tr>
+                        <tr><td>3</td><td class="vocab-hz">高中</td><td>gāozhōng</td><td class="vocab-pos">(名)</td><td>senior secondary school</td><td>Lise</td></tr>
+                        <tr><td>4</td><td class="vocab-hz">没劲儿</td><td>méijìnr</td><td class="vocab-pos">(动)</td><td>to feel weak</td><td>Halsiz hissetmek, takati olmamak</td></tr>
+                        <tr><td>5</td><td class="vocab-hz">待</td><td>dāi</td><td class="vocab-pos">(动)</td><td>to stay</td><td>Kalmak, vakit geçirmek</td></tr>
+                        <tr><td>6</td><td class="vocab-hz">退休</td><td>tuìxiū</td><td class="vocab-pos">(动)</td><td>to retire</td><td>Emekli olmak</td></tr>
+                        <tr><td>7</td><td class="vocab-hz">操心</td><td>cāoxīn</td><td class="vocab-pos">(动)</td><td>to worry about</td><td>Endişelenmek, kafa yormak</td></tr>
+                        <tr><td>8</td><td class="vocab-hz">接受</td><td>jiēshòu</td><td class="vocab-pos">(动)</td><td>to accept</td><td>Kabul etmek</td></tr>
+                        <tr><td>9</td><td class="vocab-hz">享受</td><td>xiǎngshòu</td><td class="vocab-pos">(动)</td><td>to enjoy</td><td>Tadını çıkarmak, keyfini sürmek</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-grid">
+                <div class="card chinese-card">
+                    <div class="card-title">Metin (Text)</div>
+                    <div class="chinese-text" id="text-m2">多大是生命中最好的年龄呢？
+
+电视台采访了很多人。一个小男孩说：“两个月，因为你会被抱着走，你会得到很多的爱和照顾。”
+
+另一个小孩回答：“3岁，因为不用去上学。你可以做所有想做的事，也可以不停地玩儿。”
+
+一个少年说：“18岁，因为你高中毕业了，你可以开车去任何想去的地方。”
+
+一个男人回答说：“25岁，因为你的身体最好。”这个男人43岁。他说自己现在走路越来越没劲儿了。他25岁的时候，常常到夜里12点才上床睡觉，但现在晚上9点就困得睁不开眼睛了。
+
+一个5岁的小女孩说，生命中最好的年龄是29岁。因为你可以待在屋子里的任何地方，想干什么就干什么。有人问她：“你妈妈多大？”她回答说：“29岁。”
+
+一个女士回答说：“55岁，因为你退休了，不用工作了。而且孩子都长大了，你不用为他们操心了，可以过自己想过的生活了。”
+
+最后接受访问的是一位老太太， compulsory says：“每个年龄都是最好的。享受你现在的年龄吧。”</div>
+                </div>
+                <div class="card turkish-card">
+                    <div class="card-title">Türkçe Çeviri ve Özet</div>
+                    <div style="line-height: 1.7;">
+                        <strong style="color: var(--accent-color);">Birebir Türkçe Çeviri:</strong><br>
+                        Hayattaki en güzel yaş kaçtır acaba?<br><br>
+                        Televizyon kanalı bir çok kişiyle röportaj yaptı. Küçük bir erkek çocuk dedi ki: "İki aylıkken, çünkü kucakta taşınırsın, bolca sevgi ve ilgi görürsün."<br><br>
+                        Başka bir çocuk şöyle yanıtladı: "3 yaş, çünkü okula gitmek zorunda değilsin. İstediğin her şeyi yapabilir ve durmaksızın oynayabilirsin."<br><br>
+                        Gencin biri dedi ki: "18 yaş, çünkü liseden mezun olmuşsundur ve gitmek istediğin her yere araba sürerek gidebilirsin."<br><br>
+                        Bir adam şöyle yanıt verdi: "25 yaş, çünkü vücudunun en sağlıklı olduğu zamandır." Bu adam 43 yaşındaydı. Şimdi yürürken bile gittikçe halsizleştiğini söyledi. 25 yaşındayken sık sık gece saat 12'de yatağa girerdi ama şimdi akşam saat 9'da uykudan gözlerini açamayacak hale geliyordu.<br><br>
+                        5 yaşındaki küçük bir kız çocuğu, hayattaki en güzel yaşın 29 olduğunu söyledi. Çünkü evin içinde istediğin yerde durabilir, ne yapmak istersen onu yapabilirsin. Biri ona "Annen kaç yaşında?" diye sordu. O da "29 yaşında" diye cevap verdi.<br><br>
+                        Bir kadın şöyle cevap verdi: "55 yaş, çünkü emekli olmuşsundur, artık çalışmak zorunda değilsindir. Ayrıca çocuklar büyümüştür, artık onlar için endişelenmene gerek kalmamıştır, kendi yaşamak istediğin hayatı yaşayabilirsin."<br><br>
+                        Röportaj yapılan son kişi yaşlı bir teyzeydi. Şöyle dedi: "Her yaş en güzel yaştır. Şu anki yaşının tadını çıkarın."<br><br>
+                        <strong style="color: var(--highlight-text);">Özet Çeviri:</strong><br>
+                        Televizyon kanalı insanlara en güzel yaşı sorar. Farklı yaşlardaki insanlar kendi bulundukları veya imrendikleri yaşların avantajlarını anlatır. Yaşlı kadın ise "Her yaş en güzel yaştır, yaşadığın yaşın tadını çıkar" mesajını verir.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alıştırmalar 2 (Tamamı)</div>
+
+                <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (2-2.mp3):</label>
+                    <audio controls><source src="audio/02/2-2.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第一组 (越来越…… - Gittikçe...)</div>
+                    ① 经过半年的学习，我的汉语越来越好。<br>② 冬天到了，天气越来越冷。<br>③ 我越来越喜欢这个工作。<br><em>(课文例句：他说自己现在走路越来越没劲儿了。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第二组 (……得…… - Derecesinde)</div>
+                    ① 几天没睡觉，他困得睁不开眼睛。<br>② 在火车上站了一夜，我累得走不了路。<br>③ 听说母亲生病，他急得说不出话来。<br><em>(课文例句：晚上9点就困得睁不开眼睛了。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第三组 (任何 - Herhangi bir)</div>
+                    ① 有任何问题都可以问我。<br>② 你放心吧，我不会告诉任何人。<br>③ 任何人都应该排队上车。<br><em>(课文例句：你可以待在屋子里的任何地方。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第四组 (想……就…… - ne zaman/ne isterse...)</div>
+                    ① 放假了，我想干什么就干什么。<br>② 厨房里的东西都可以用，你想吃什么就做什么。<br>③ 周末，我想看书就看书，想上网就上网，太自由了。<br><em>(课文例句：你可以待在屋子里的任何地方，想干什么就干什么。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第五组 (为……操心 - ... için endişelenmek)</div>
+                    ① 父母什么时候都为孩子操心。<br>② 当领导也不容易，操心的事太多。<br>③ 我一定能找到工作，您别操心了。<br><em>(课文例句：孩子都长大了，你不用为他们操心了。)</em>
+                </div>
+
+                <div class="section-header">2. 怎么问别人的年龄？在年龄和问题之间连线</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Soru Kalıpları:</span>
+                    <span class="word-tag">多大了？</span>
+                    <span class="word-tag">多大年纪了？</span>
+                    <span class="word-tag">多大岁数？</span>
+                    <span class="word-tag">几岁了？</span>
+                </div>
+                <div class="quiz-item">
+                    • 十岁以下 ➔ 
+                    <select class="quiz-select" data-answer="几岁了？">
+                        <option value="">--Soru Seç--</option>
+                        <option value="多大年纪了？">多大年纪了？</option>
+                        <option value="几岁了？">几岁了？</option>
+                        <option value="多大岁数？">多大岁数？</option>
+                        <option value="多大了？">多大了？</option>
+                    </select><br>
+                    • 十五六岁 ➔ 
+                    <select class="quiz-select" data-answer="多大了？">
+                        <option value="">--Soru Seç--</option>
+                        <option value="多大年纪了？">多大年纪了？</option>
+                        <option value="几岁了？">几岁了？</option>
+                        <option value="多大岁数？">多大岁数？</option>
+                        <option value="多大了？">多大了？</option>
+                    </select><br>
+                    • 三四十岁 ➔ 
+                    <select class="quiz-select" data-answer="多大岁数？">
+                        <option value="">--Soru Seç--</option>
+                        <option value="多大年纪了？">多大年纪了？</option>
+                        <option value="几岁了？">几岁了？</option>
+                        <option value="多大岁数？">多大岁数？</option>
+                        <option value="多大了？">多大了？</option>
+                    </select><br>
+                    • 七八十岁 ➔ 
+                    <select class="quiz-select" data-answer="多大年纪了？">
+                        <option value="">--Soru Seç--</option>
+                        <option value="多大年纪了？">多大年纪了？</option>
+                        <option value="几岁了？">几岁了？</option>
+                        <option value="多大岁数？">多大岁数？</option>
+                        <option value="多大了？">多大了？</option>
+                    </select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">三、听课文录音，在年龄和他们能做的事之间连线</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Durum / Eylem Seçenekleri:</span>
+                    <span class="word-tag">被抱着走</span>
+                    <span class="word-tag">不用上学</span>
+                    <span class="word-tag">高中毕业</span>
+                    <span class="word-tag">身体最好</span>
+                    <span class="word-tag">退休</span>
+                </div>
+                <div class="quiz-item">
+                    • 两个月 ➔ 
+                    <select class="quiz-select" data-answer="被抱着走">
+                        <option value="">--Eylem Seç--</option>
+                        <option value="高中毕业">高中毕业</option>
+                        <option value="被抱着走">被抱着走</option>
+                        <option value="退休">退休</option>
+                        <option value="身体最好">身体最好</option>
+                        <option value="不用上学">不用上学</option>
+                    </select><br>
+                    • 3岁 ➔ 
+                    <select class="quiz-select" data-answer="不用上学">
+                        <option value="">--Eylem Seç--</option>
+                        <option value="高中毕业">高中毕业</option>
+                        <option value="被抱着走">被抱着走</option>
+                        <option value="退休">退休</option>
+                        <option value="身体最好">身体最好</option>
+                        <option value="不用上学">不用上学</option>
+                    </select><br>
+                    • 18岁 ➔ 
+                    <select class="quiz-select" data-answer="高中毕业">
+                        <option value="">--Eylem Seç--</option>
+                        <option value="高中毕业">高中毕业</option>
+                        <option value="被抱着走">被抱着走</option>
+                        <option value="退休">退休</option>
+                        <option value="身体最好">身体最好</option>
+                        <option value="不用上学">不用上学</option>
+                    </select><br>
+                    • 25岁 ➔ 
+                    <select class="quiz-select" data-answer="身体最好">
+                        <option value="">--Eylem Seç--</option>
+                        <option value="高中毕业">高中毕业</option>
+                        <option value="被抱着走">被抱着走</option>
+                        <option value="退休">退休</option>
+                        <option value="身体最好">身体最好</option>
+                        <option value="不用上学">不用上学</option>
+                    </select><br>
+                    • 55岁 ➔ 
+                    <select class="quiz-select" data-answer="退休">
+                        <option value="">--Eylem Seç--</option>
+                        <option value="高中毕业">高中毕业</option>
+                        <option value="被抱着走">被抱着走</option>
+                        <option value="退休">退休</option>
+                        <option value="身体最好">身体最好</option>
+                        <option value="不用上学">不用上学</option>
+                    </select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">五、听录音，回答问题</div>
+<div class="audio-mini">
+                    <label>听力问答练习音频 (2-5.mp3):</label>
+                    <audio controls><source src="audio/02/2-5.mp3" type="audio/mpeg"></audio>
+                </div>
+<div class="quiz-item qa-card">
+                    <div class="quiz-question">1. 问：你认为说话的小男孩可能多大？</div>
+                    <div class="quiz-options"><button type="button" onclick="checkAnswer(this, true)">A. 三四岁</button>
+<button type="button" onclick="checkAnswer(this, false)">B. 六七岁</button>
+<button type="button" onclick="checkAnswer(this, false)">C. 二十多岁</button>
+<button type="button" onclick="checkAnswer(this, false)">D. 五十多岁</button></div>
+                    <span class="answer-key" style="margin-left:0; margin-top:8px;">答：三四岁 / 五六岁</span>
+                </div>
+<div class="quiz-item qa-card">
+                    <div class="quiz-question">2. 问：你认为这个小孩多大？</div>
+                    <div class="quiz-options"><button type="button" onclick="checkAnswer(this, false)">A. 三四岁</button>
+<button type="button" onclick="checkAnswer(this, true)">B. 六七岁</button>
+<button type="button" onclick="checkAnswer(this, false)">C. 十岁左右</button>
+<button type="button" onclick="checkAnswer(this, false)">D. 二十九岁</button></div>
+                    <span class="answer-key" style="margin-left:0; margin-top:8px;">答：六七岁</span>
+                </div>
+<div class="quiz-item qa-card">
+                    <div class="quiz-question">3. 问：那时的他跟现在什么方面不一样？</div>
+                    <div class="quiz-options"><button type="button" onclick="checkAnswer(this, true)">A. 身体状况 / 体力</button>
+<button type="button" onclick="checkAnswer(this, false)">B. 工作和收入</button>
+<button type="button" onclick="checkAnswer(this, false)">C. 家庭情况</button>
+<button type="button" onclick="checkAnswer(this, false)">D. 住的地方</button></div>
+                    <span class="answer-key" style="margin-left:0; margin-top:8px;">答：身体状况 / 体力（那时候身体最好）</span>
+                </div>
+<div class="quiz-item qa-card">
+                    <div class="quiz-question">4. 问：29岁可以做什么？</div>
+                    <div class="quiz-options"><button type="button" onclick="checkAnswer(this, false)">A. 只能在外面工作</button>
+<button type="button" onclick="checkAnswer(this, true)">B. 可以待在屋子里的任何地方，想干什么就干什么</button>
+<button type="button" onclick="checkAnswer(this, false)">C. 必须照顾别人</button>
+<button type="button" onclick="checkAnswer(this, false)">D. 什么事情都不能做</button></div>
+                    <span class="answer-key" style="margin-left:0; margin-top:8px;">答：可以待在屋子里的任何地方，想干什么就干什么</span>
+                </div>
+<div class="quiz-item qa-card">
+                    <div class="quiz-question">5. 问：原因可能是什么？</div>
+                    <div class="quiz-options"><button type="button" onclick="checkAnswer(this, false)">A. 他还在上学</button>
+<button type="button" onclick="checkAnswer(this, false)">B. 他需要照顾孩子</button>
+<button type="button" onclick="checkAnswer(this, true)">C. 退休了，不用工作，不用为别人操心</button>
+<button type="button" onclick="checkAnswer(this, false)">D. 他正在找工作</button></div>
+                    <span class="answer-key" style="margin-left:0; margin-top:8px;">答：退休了，不用工作，不用为别人操心</span>
+                </div>
+
+                <div class="section-header">六、在合适的搭配之间连线，然后填空</div>
+                <div class="quiz-item">
+                    <div class="matching-list" aria-label="Match the expressions">
+                        <div class="matching-row"><span class="matching-label">A. 困得</span><span class="matching-dash">—</span><select class="quiz-select" data-answer="睁不开眼睛" aria-label="Match A: 困得"><option value="">--Seç--</option><option value="睁不开眼睛">睁不开眼睛</option><option value="睡不着觉">睡不着觉</option><option value="合不上嘴">合不上嘴</option><option value="走不了路">走不了路</option><option value="不出话来">不出话来</option></select></div>
+                        <div class="matching-row"><span class="matching-label">B. 累得</span><span class="matching-dash">—</span><select class="quiz-select" data-answer="走不了路" aria-label="Match B: 累得"><option value="">--Seç--</option><option value="睁不开眼睛">睁不开眼睛</option><option value="睡不着觉">睡不着觉</option><option value="合不上嘴">合不上嘴</option><option value="走不了路">走不了路</option><option value="不出话来">不出话来</option></select></div>
+                        <div class="matching-row"><span class="matching-label">C. 气得说</span><span class="matching-dash">—</span><select class="quiz-select" data-answer="不出话来" aria-label="Match C: 气得说"><option value="">--Seç--</option><option value="睁不开眼睛">睁不开眼睛</option><option value="睡不着觉">睡不着觉</option><option value="合不上嘴">合不上嘴</option><option value="走不了路">走不了路</option><option value="不出话来">不出话来</option></select></div>
+                        <div class="matching-row"><span class="matching-label">D. 高兴得</span><span class="matching-dash">—</span><select class="quiz-select" data-answer="合不上嘴" aria-label="Match D: 高兴得"><option value="">--Seç--</option><option value="睁不开眼睛">睁不开眼睛</option><option value="睡不着觉">睡不着觉</option><option value="合不上嘴">合不上嘴</option><option value="走不了路">走不了路</option><option value="不出话来">不出话来</option></select></div>
+                        <div class="matching-row"><span class="matching-label">E. 急得</span><span class="matching-dash">—</span><select class="quiz-select" data-answer="睡不着觉" aria-label="Match E: 急得"><option value="">--Seç--</option><option value="睁不开眼睛">睁不开眼睛</option><option value="睡不着觉">睡不着觉</option><option value="合不上嘴">合不上嘴</option><option value="走不了路">走不了路</option><option value="不出话来">不出话来</option></select></div>
+                    </div>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+                <div class="quiz-item" style="margin-top: 12px;">
+                    1. 他把钱包丢了，（ <select class="quiz-select" data-answer="E"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select> ）。<br>
+                    2. 我见到了20年没见的老朋友，（ <select class="quiz-select" data-answer="D"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select> ）。<br>
+                    3. 我夜里三点才睡觉，现在（ <select class="quiz-select" data-answer="A"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select> ）。<br>
+                    4. 他今天爬长城、去故宫，玩儿了一整天，现在（ <select class="quiz-select" data-answer="B"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select> ）。<br>
+                    5. 售货员态度不好，还跟顾客吵架，顾客（ <select class="quiz-select" data-answer="C"><option value="">--Seç--</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select> ）。
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">七、选词填空</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Kelime Havuzu (Word Bank):</span>
+                    <span class="word-tag">任何</span>
+                    <span class="word-tag">越来越</span>
+                    <span class="word-tag">想...就...</span>
+                    <span class="word-tag">没劲儿</span>
+                    <span class="word-tag">操心</span>
+                </div>
+                <div class="quiz-item">
+                    1. 他没有（ <select class="quiz-select" data-answer="任何"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）坏习惯。<br>
+                    2. 车（ <select class="quiz-select" data-answer="越来越"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）多，路（ <select class="quiz-select" data-answer="越来越"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）堵。<br>
+                    3. 这件事没有（ <select class="quiz-select" data-answer="任何"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）意义，你别做了。<br>
+                    4. 这些地方都挺好玩的，你（ <select class="quiz-select" data-answer="想"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）去哪儿（ <select class="quiz-select" data-answer="就"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）去哪儿。<br>
+                    5. 大夫，我头疼、发烧，全身（ <select class="quiz-select" data-answer="没劲儿"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）。<br>
+                    6. 天气（ <select class="quiz-select" data-answer="越来越"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）冷，我得买一件毛衣。<br>
+                    7. 我们现在身体还可以，不要为我们（ <select class="quiz-select" data-answer="操心"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）。<br>
+                    8. 年纪大了，走一会儿路就（ <select class="quiz-select" data-answer="没劲儿"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）了。<br>
+                    9. 抽烟对身体不好，（ <select class="quiz-select" data-answer="想"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）抽（ <select class="quiz-select" data-answer="就"><option value="">--Seç--</option><option value="任何">任何</option><option value="越来越">越来越</option><option value="想">想</option><option value="就">就</option><option value="没劲儿">没劲儿</option><option value="操心">操心</option></select> ）抽可不行。
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LESSON 3 -->
+        <div id="m3" class="module">
+            <h2 class="module-title">Lesson 3: 交换人生</h2>
+
+            <div class="audio-container">
+                <label>🎧 Ders Metni Ses Kaydı (Audio 3-1.mp3):</label>
+                <audio controls id="audio-m3">
+                    <source src="audio/03/3-1.mp3" type="audio/mpeg">
+                    Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
+                <div class="tts-controls">
+                    <button class="tts-btn" onclick="speakText('text-m3')">🔊 Metni Seslendir (TTS)</button>
+                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">3-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>汉字 (Hanzi)</th>
+                            <th>拼音 (Pinyin)</th>
+                            <th>词性</th>
+                            <th>English</th>
+                            <th>Türkçe Anlamı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="vocab-hz">交换</td><td>jiāohuàn</td><td class="vocab-pos">(动)</td><td>to interchange</td><td>Takas etmek, değiştirmek</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">人生</td><td>rénshēng</td><td class="vocab-pos">(名)</td><td>life</td><td>Hayat, yaşam</td></tr>
+                        <tr><td>3</td><td class="vocab-hz">富翁</td><td>fùwēng</td><td class="vocab-pos">(名)</td><td>rich person</td><td>Zengin adam, milyarder</td></tr>
+                        <tr><td>4</td><td class="vocab-hz">羡慕</td><td>xiànmù</td><td class="vocab-pos">(动)</td><td>to admire</td><td>İmrenmek, kıskanmak</td></tr>
+                        <tr><td>5</td><td class="vocab-hz">放弃</td><td>fàngqì</td><td class="vocab-pos">(动)</td><td>to give up</td><td>Vazgeçmek, pes etmek</td></tr>
+                        <tr><td>6</td><td class="vocab-hz">大脑</td><td>dànǎo</td><td class="vocab-pos">(名)</td><td>brain</td><td>Beyin</td></tr>
+                        <tr><td>7</td><td class="vocab-hz">提出</td><td>tíchū</td><td class="vocab-pos">(动)</td><td>to put forward</td><td>Öne sürmek, teklif etmek</td></tr>
+                        <tr><td>8</td><td class="vocab-hz">富有</td><td>fùyǒu</td><td class="vocab-pos">(形)</td><td>wealthy, rich</td><td>Varlıklı, zengin</td></tr>
+                        <tr><td>9</td><td class="vocab-hz">手术</td><td>shǒushù</td><td class="vocab-pos">(名)</td><td>surgical operation</td><td>Ameliyat, cerrahi operasyon</td></tr>
+                        <tr><td>10</td><td class="vocab-hz">动脑子</td><td>dòng nǎozi</td><td class="vocab-pos"></td><td>to use one's head</td><td>Kafayı çalıştırmak, akıl yürütmek</td></tr>
+                        <tr><td>11</td><td class="vocab-hz">无忧无虑</td><td>wú yōu wú lǜ</td><td class="vocab-pos">(成)</td><td>happy-go-lucky</td><td>Tasasız, dertsiz kederiz</td></tr>
+                        <tr><td>12</td><td class="vocab-hz">不知不觉</td><td>bù zhī bù jué</td><td class="vocab-pos">(成)</td><td>unconsciously</td><td>Farkında olmadan, çaktırmadan</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-grid">
+                <div class="card chinese-card">
+                    <div class="card-title">Metin (Text)</div>
+                    <div class="chinese-text" id="text-m3">一个身体很差的富翁，一个身体健康的穷人，两人互相羡慕。富翁为了得到健康，愿意放弃他的财富；穷人为了富有，愿意随时放弃健康。
+
+一个医生发现了交换大脑的方法，富翁赶紧提出和穷人交换大脑。这样，富翁会变穷，但能得到健康的身体；穷人会富有，但他会生病。
+
+手术成功了。穷人成为有钱的富翁，富翁成为了一个健康的穷人。
+
+变成了穷人的富翁由于有了健康的身体，又因为他有成功的思想，慢慢地又开始变得有钱了。可同时，他总是担心着自己的身体，只要有一点儿不舒服就非常害怕。由于他总是什么都担心，什么都害怕，时间长了，好身体又渐渐变坏了。
+
+变成了富翁的穷人虽然有钱了，可思想还是穷人的，不愿意动脑子，不断把钱花在不该花的地方，时间不长，就花光了所有的钱，又变成了穷人。同时，虽然开始他的身体很差，但由于他无忧无虑，病不知不觉地好了，他又像以前一样有了健康的身体。
+
+现在，线人都回到了原来的样子。</div>
+                </div>
+                <div class="card turkish-card">
+                    <div class="card-title">Türkçe Çeviri ve Özet</div>
+                    <div style="line-height: 1.7;">
+                        <strong style="color: var(--accent-color);">Birebir Türkçe Çeviri:</strong><br>
+                        Sağlığı çok kötü olan bir zengin ile sağlığı yerinde olan bir fakir birbirlerine gıpta ediyorlardı. Zengin adam sağlığına kavuşmak için servetinden vazgeçmeye razıydı; fakir adam ise zengin olmak için sağlığını her an feda etmeye hazırdı.<br><br>
+                        Bir doktor beyin değiştirme yöntemini keşfetti. Zengin adam hemen fakir adama beyinlerini değiştirmeyi teklif etti. Böylece zengin adam fakirleşecek ama sağlıklı bir bedene kavuşacak; fakir adam zenginleşecek ama hastalanacaktı.<br><br>
+                        Ameliyat başarılı geçti. Fakir adam varlıklı bir zengin, zengin adam ise sağlıklı bir fakir oldu.<br><br>
+                        Fakirleşen zengin adam, sağlıklı bir vücuda sahip olduğu ve başarılı bir zihniyete sahip olduğu için yavaş yavaş tekrar para kazanmaya başladı. Fakat aynı zamanda sürekli sağlığı için endişeleniyor, en ufak bir rahatsızlıkta bile çok korkuyordu. Hep her şeyden endişe edip korktuğu için, zamanla o güzelim sağlığı tekrar bozuldu.<br><br>
+                        Zenginleşen fakir adam ise paraya kavuşmuş olsa da zihniyeti hala bir fakirinki gibiydi; kafasını çalıştırmak istemiyor, parayı sürekli harcanmaması gereken yerlere harcıyordu. Çok geçmeden bütün parasını sıfırladı ve yeniden fakir birine dönüştü. Aynı zamanda, başlangıçta sağlığı çok kötü olsa da endişesiz ve dertsiz yapısı sayesinde hastalığı farkında olmadan iyileşti ve yine eskisi gibi sağlıklı bir bedene kavuştu.<br><br>
+                        Şimdi her ikisi de eski hallerine geri dönmüştü.<br><br>
+                        <strong style="color: var(--highlight-text);">Özet Çeviri:</strong><br>
+                        Hasta zengin ile sağlıklı fakir beyin ameliyatıyla hayatlarını değiştirir. Eski zengin ticari zekasıyla tekrar zenginleşir ancak hastalık takıntısı yüzünden sağlığını kaybeder. Eski fakir ise düşüncesizce harcama yapıp tekrar fakirleşir ancak tasasız yapısı sayesinde sağlığına kavuşur.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alıştırmalar 3 (Tamamı)</div>
+
+                <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (3-2.mp3):</label>
+                    <audio controls><source src="audio/03/3-2.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第一组 (羡慕 - İmrenmek/Kıskanmak)</div>
+                    ① 他刚毕业就找到了工作，大家都很羡慕他。<br>② 医生是让人羡慕的职业吗？<br>③ 我最羡慕的是无忧无虑的孩子。<br><em>(课文例句：一个身体很差的富翁，一个身体健康的穷人，两人互相羡慕。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第二组 (放弃 - Vazgeçmek)</div>
+                    ① 他放弃了出国留学的机会。<br>② 我没有放弃他，因为我爱他。<br>③ 他放弃了在那家公司工作，自己开了一家饭馆。<br><em>(课文例句：富翁为了得到健康，愿意放弃他的财富。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第三组 (只要……就…… - ...olduğu sürece...)</div>
+                    ① 只要有一点儿不舒服，他就去医院。<br>② 只要你愿意，下个星期就可以来公司上班了。<br>③ 每个周日，只要有时间，我就去看爷爷。<br><em>(课文例句：只要有一点儿不舒服就非常害怕。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第四组 (花/花光 - Harcamak/Tüketmek)</div>
+                    ① 他刚来一个月，就把钱都花光了。<br>② 她把钱都花在买衣服上了。<br>③ 为了买房子，他花光了所有的钱。<br><em>(课文例句：不愿意动脑子，不断把钱花在不该花的地方。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第五组 (像……一样 - ...gibi/aynı)</div>
+                    ① 十几年没见面了，他还像以前一样。<br>② 他的汉语真不错，跟中国人一样。<br>③ 他也和我一样，为找工作的事发愁。<br><em>(课文例句：他又像以前一样有了健康的身体。)</em>
+                </div>
+
+                <div class="section-header">三、根据课文内容填表 (Table Completion)</div>
+                <div class="quiz-item">
+                    <div class="matrix-legend">
+                        <span><strong>A</strong> 身体差</span>
+                        <span><strong>B</strong> 身体好</span>
+                        <span><strong>C</strong> 富有</span>
+                        <span><strong>D</strong> 穷</span>
+                        <span><strong>E</strong> 总担心身体</span>
+                        <span><strong>F</strong> 无忧无虑</span>
+                        <span><strong>G</strong> 随便花钱</span>
+                        <span><strong>H</strong> 不动脑子</span>
+                        <span><strong>I</strong> 有成功的思想</span>
+                    </div>
+                    <div class="matrix-scroll">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th>阶段 (Aşama)</th>
+                                    <th>富翁 (Zengin)</th>
+                                    <th>穷人 (Fakir)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="matrix-stage">交换人生以前<br><span style="font-weight:normal;color:#aaa;">Değişimden önce</span></td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="A,C">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="B,D">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="matrix-stage">交换人生以后<br><span style="font-weight:normal;color:#aaa;">Değişimden sonra</span></td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="B,D,E,I">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="A,C,F,G,H">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="matrix-stage">最后<br><span style="font-weight:normal;color:#aaa;">Sonunda</span></td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="A,C">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="matrix-cell" data-correct="B,D">
+                                            <button class="matrix-chip" data-value="A">A</button><button class="matrix-chip" data-value="B">B</button><button class="matrix-chip" data-value="C">C</button><button class="matrix-chip" data-value="D">D</button><button class="matrix-chip" data-value="E">E</button><button class="matrix-chip" data-value="F">F</button><button class="matrix-chip" data-value="G">G</button><button class="matrix-chip" data-value="H">H</button><button class="matrix-chip" data-value="I">I</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="exercise-feedback" aria-live="polite"></div>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkMatrix(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" data-label="👁️ Cevapları Göster" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">五、根据课文内容，选择正确答案 (Multiple Choice)</div>
+                <div class="audio-mini">
+                    <label>🎧 Doğru Cevap Seçimi Ses Kaydı (3-4.mp3):</label>
+                    <audio controls><source src="audio/03/3-4.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 富翁愿意放弃什么？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 财富</button>
+                        <button onclick="checkAnswer(this, false)">B. 健康</button>
+                        <button onclick="checkAnswer(this, false)">C. 大脑</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 穷人希望得到什么？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 财富</button>
+                        <button onclick="checkAnswer(this, false)">B. 健康</button>
+                        <button onclick="checkAnswer(this, false)">C. 成功的思想</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 交换人生以后，富翁什么地方没有变？ <span class="answer-key">( C )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 身体</button>
+                        <button onclick="checkAnswer(this, false)">B. 财富</button>
+                        <button onclick="checkAnswer(this, true)">C. 思想</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">4. 变成穷人的富翁为什么又失去了健康？ <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 不锻炼身体</button>
+                        <button onclick="checkAnswer(this, true)">B. 总是担心身体</button>
+                        <button onclick="checkAnswer(this, false)">C. 不动脑子</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">5. 变成富翁的穷人后来为什么又变穷了？ <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 钱还不够多</button>
+                        <button onclick="checkAnswer(this, true)">B. 随便花钱</button>
+                        <button onclick="checkAnswer(this, false)">C. 总生病</button>
+                    </div>
+                </div>
+
+                <div class="section-header">六、根据课文内容，给下面的句子排序 (Sentence Ordering)</div>
+                <div class="quiz-item">
+                    <div style="margin-bottom: 10px; font-weight: bold; color: var(--accent-color);">Cümleler (Sentences):</div>
+                    <div class="ordering-item">
+                        <span><strong>A.</strong> 富翁很担心自己的身体，穷人花光了所有的钱。</span>
+                        <select class="quiz-select" data-answer="4"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>B.</strong> 他们回归到了原来的样子。</span>
+                        <select class="quiz-select" data-answer="5"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>C.</strong> 富翁希望变得健康，穷人希望变得富有。</span>
+                        <select class="quiz-select" data-answer="1"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>D.</strong> 穷人得到了财富，富翁得到了健康。</span>
+                        <select class="quiz-select" data-answer="3"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>E.</strong> 他们交换了大脑。</span>
+                        <select class="quiz-select" data-answer="2"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                    </div>
+                    
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" data-label="👁️ Doğru Sıralamayı Göster" onclick="toggleSingleAnswer(this)">👁️ Doğru Sıralamayı Göster</button>
+                    </div>
+                    <div style="margin-top:8px;"><span class="answer-key" style="margin-left:0;">1-C ➔ 2-E ➔ 3-D ➔ 4-A ➔ 5-B</span></div>
+                </div>
+
+                <div class="section-header">七、边听录音边填空</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Kelime Havuzu (Word Bank):</span>
+                    <span class="word-tag">放弃</span>
+                    <span class="word-tag">动脑子</span>
+                    <span class="word-tag">富有</span>
+                    <span class="word-tag">担心</span>
+                    <span class="word-tag">羡慕</span>
+                </div>
+                <div class="quiz-item">
+                    1. 富翁和穷人互相（ <select class="quiz-select" data-answer="羡慕"><option value="">--Seç--</option><option value="放弃">放弃</option><option value="动脑子">动脑子</option><option value="富有">富有</option><option value="担心">担心</option><option value="羡慕">羡慕</option></select> ）。<br>
+                    2. 富翁为了健康，愿意（ <select class="quiz-select" data-answer="放弃"><option value="">--Seç--</option><option value="放弃">放弃</option><option value="动脑子">动脑子</option><option value="富有">富有</option><option value="担心">担心</option><option value="羡慕">羡慕</option></select> ）财富。<br>
+                    3. 穷人为了（ <select class="quiz-select" data-answer="富有"><option value="">--Seç--</option><option value="放弃">放弃</option><option value="动脑子">动脑子</option><option value="富有">富有</option><option value="担心">担心</option><option value="羡慕">羡慕</option></select> ），愿意放弃健康。<br>
+                    4. 变成富翁的穷人很（ <select class="quiz-select" data-answer="担心"><option value="">--Seç--</option><option value="放弃">放弃</option><option value="动脑子">动脑子</option><option value="富有">富有</option><option value="担心">担心</option><option value="羡慕">羡慕</option></select> ）自己的身体。<br>
+                    5. 变成穷人的富翁不愿意（ <select class="quiz-select" data-answer="动脑子"><option value="">--Seç--</option><option value="放弃">放弃</option><option value="动脑子">动脑子</option><option value="富有">富有</option><option value="担心">担心</option><option value="羡慕">羡慕</option></select> ），很快花光了所有的钱。
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">九、选词填空 (Vocabulary Fill-in-the-Blanks)</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Kelime Havuzu:</span>
+                    <span class="word-tag">羡慕</span>
+                    <span class="word-tag">只要...就</span>
+                    <span class="word-tag">花</span>
+                    <span class="word-tag">无忧无虑</span>
+                    <span class="word-tag">放弃</span>
+                    <span class="word-tag">不知不觉</span>
+                    <span class="word-tag">像...一样</span>
+                </div>
+                <div class="quiz-item">
+                    1. 别老（ <select class="quiz-select" data-answer="羡慕"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）别人，每个人都有自己的烦恼。<br>
+                    2. 他也（ <select class="quiz-select" data-answer="像"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）你（ <select class="quiz-select" data-answer="一样"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ），只想当画家。<br>
+                    3. （ <select class="quiz-select" data-answer="只要"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）努力，（ <select class="quiz-select" data-answer="就"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）可能成功。<br>
+                    4. 这次旅行，（ <select class="quiz-select" data-answer="花"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）了三千块钱。<br>
+                    5. 这么好的工作，你怎么（ <select class="quiz-select" data-answer="放弃"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）了？<br>
+                    6. 谁说小孩子（ <select class="quiz-select" data-answer="无忧无虑"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）？他们的压力很大。<br>
+                    7. （ <select class="quiz-select" data-answer="只要"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）你能在这里待下去，（ <select class="quiz-select" data-answer="就"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）会有机会。<br>
+                    8. 电视节目没意思，他（ <select class="quiz-select" data-answer="不知不觉"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）睡着了。<br>
+                    9. 我（ <select class="quiz-select" data-answer="花"><option value="">--Seç--</option><option value="羡慕">羡慕</option><option value="花">花</option><option value="无忧无虑">无忧无虑</option><option value="放弃">放弃</option><option value="不知不觉">不知不觉</option><option value="只要">只要</option><option value="就">就</option><option value="像">像</option><option value="一样">一样</option></select> ）了三天时间完成了这个任务。
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LESSON 4 -->
+        <div id="m4" class="module">
+            <h2 class="module-title">Lesson 4: 为什么烦恼</h2>
+
+            <div class="audio-container">
+                <label>🎧 Ders Metni Ses Kaydı (Audio 4-1.mp3):</label>
+                <audio controls id="audio-m4">
+                    <source src="audio/04/4-1.mp3" type="audio/mpeg">
+                    Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
+                <div class="tts-controls">
+                    <button class="tts-btn" onclick="speakText('text-m4')">🔊 Metni Seslendir (TTS)</button>
+                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">4-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>汉字 (Hanzi)</th>
+                            <th>拼音 (Pinyin)</th>
+                            <th>词性</th>
+                            <th>English</th>
+                            <th>Türkçe Anlamı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="vocab-hz">烦恼</td><td>fánnǎo</td><td class="vocab-pos">(形)</td><td>upset, worried, vexed</td><td>Endişeli, canı sıkkın, dertli</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">预报</td><td>yùbào</td><td class="vocab-pos">(动)</td><td>to forecast</td><td>Tahmin etmek (hava durumu vb.)</td></tr>
+                        <tr><td>3</td><td class="vocab-hz">游客</td><td>yóukè</td><td class="vocab-pos">(名)</td><td>tourist</td><td>Turist, gezgin</td></tr>
+                        <tr><td>4</td><td class="vocab-hz">淋</td><td>lín</td><td class="vocab-pos">(动)</td><td>to be caught (in the rain)</td><td>Yağmura yakalanmak, ıslanmak</td></tr>
+                        <tr><td>5</td><td class="vocab-hz">落汤鸡</td><td>luòtāngjī</td><td class="vocab-pos">(名)</td><td>soaked through</td><td>Sırılsıklam (ıslanmış tavuk gibi)</td></tr>
+                        <tr><td>6</td><td class="vocab-hz">累赘</td><td>léizhui</td><td class="vocab-pos">(名)</td><td>burden</td><td>Yük, ayak bağı, külfet</td></tr>
+                        <tr><td>7</td><td class="vocab-hz">在于</td><td>zàiyú</td><td class="vocab-pos">(动)</td><td>to lie in</td><td>...-e bağlı olmak, ...da yatmak</td></tr>
+                        <tr><td>8</td><td class="vocab-hz">烦</td><td>fán</td><td class="vocab-pos">(形)</td><td>upset</td><td>Sıkıntılı, huzursuz</td></tr>
+                        <tr style="border-top: 2px solid #444;"><td colspan="6" style="color: var(--highlight-text); font-weight: bold;">专名 (Özel İsimler / Proper Nouns)</td></tr>
+                        <tr><td>1</td><td class="vocab-hz">捷达</td><td>Jiédá</td><td class="vocab-pos"></td><td>Jetta (car brand)</td><td>Jetta (Araba markası)</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">奔驰</td><td>Bēnchí</td><td class="vocab-pos"></td><td>Benz (car brand)</td><td>Mercedes-Benz (Araba markası)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-grid">
+                <div class="card chinese-card">
+                    <div class="card-title">Metin (Text)</div>
+                    <div class="chinese-text" id="text-m4">星期六，我和妻子去公园玩儿。天气预报说有雨，我们带了伞。那天果然下起了大雨。游客很多，有不少人没带伞，雨下得很大，他们立刻就被淋成了落汤鸡。我和妻子衣服干干的，只是鞋子湿了一点儿。
+
+那天妻子很快乐。
+
+第二天，我们去另一个地方玩儿。天气预报还是说有雨，我们仍然带了伞。可是那天却没有下雨，于是雨伞成了我们手中的累赘。看看别的游客没有带伞、两手空空、十分轻松的样子，妻子就开始后悔：不该带伞。
+
+这一天妻子不快乐。
+
+妻子说：“昨天大雨把别人淋成落汤鸡，而没把我淋着，所以我快乐。今天别人手里没有累赘，我有累赘，所以不快乐。”
+
+于是我明白了：原来快乐与不快乐并不在于自己是不是过得好，而在于跟别人比较自己是不是过得好。
+
+于是我又明白了：为什么昨天我们会为有了一辆自行车而快乐得睡不着觉，今天有了汽车却心烦得吃不下饭？不是因为开车比骑车走得慢，而是因为过去你骑车比别人走得快，今天你的“捷达”却比不上别人的“奔驰”。
+
+我明白了许多，有一条不明白：干吗老是跟别人比？自己觉得快乐，这还不够吗？为什么要让自己的快乐在跟别人的比较中变成不快乐呢？</div>
+                </div>
+                <div class="card turkish-card">
+                    <div class="card-title">Türkçe Çeviri ve Özet</div>
+                    <div style="line-height: 1.7;">
+                        <strong style="color: var(--accent-color);">Birebir Türkçe Çeviri:</strong><br>
+                        Cumartesi günü eşimle parka gezmeye gittik. Hava durumu yağmurlu diyordu, yanımıza şemsiye aldık. O gün gerçekten de sicim gibi yağmur yağdı. Çok fazla turist vardı ve birçoğu yanına şemsiye almamıştı; yağmur o kadar şiddetliydi ki hemen sırılsıklam oldular. Eşimle benim kıyafetlerimiz kupkuruydu, sadece ayakkabılarımız biraz ıslanmıştı.<br><br>
+                        O gün eşim çok mutluydu.<br><br>
+                        Ertesi gün başka bir yere gezmeye gittik. Hava durumu yine yağmurlu diyordu, biz yine şemsiyelerimizi yanımıza aldık. Fakat o gün hiç yağmur yağmadı, böylece şemsiye elimizde bir yük haline geldi. Şemsiye almamış, elleri boş ve son derece rahat görünen diğer turistlere bakınca eşim pişman olmaya başladı: Şemsiye getirmemeliydim.<br><br>
+                        Bu gün eşim mutlu değildi.<br><br>
+                        Eşim dedi ki: "Dün şiddetli yağmur başkalarını sırılsıklam etti ama beni ıslatmadı, bu yüzden mutluydum. Bugün başkalarının elinde yük yok ama benim elimde yük var, bu yüzden mutlu değilim."<br><br>
+                        Böylece anladım ki: Meğer mutluluk ve mutsuzluk insanın kendi durumunun iyi olup olmamasında değil, başkalarıyla kıyaslandığında durumunun iyi olup olmamasındaymış.<br><br>
+                        Sonra yine anladım ki: Neden dün bir bisikletimiz oldu diye mutluluktan gözümüze uyku girmezken, bugün bir arabamız var ama sıkıntıdan yemek yiyemiyoruz? Araba kullanmak bisiklet sürmekten daha yavaş olduğu için değil; eskiden sen bisikletle başkalarından daha hızlı giderken, bugün seninki gibi bir 'Jetta'nın başkalarının 'Benz'ine yetişememesinden kaynaklanıyor.<br><br>
+                        Pek çok şeyi anladım da bir şeyi anlayamadım: Niye sürekli başkalarıyla kıyaslıyoruz ki? Kendini mutlu hissetmen yetmez mi? İnsan neden kendi mutluluğunu başkalarıyla kıyaslayarak mutsuzluğa dönüştürsün ki?<br><br>
+                        <strong style="color: var(--highlight-text);">Özet Çeviri:</strong><br>
+                        Anlatıcı, eşinin iki farklı günde şemsiye yüzünden yaşadığı ruh hali değişimlerini gözlemleyerek insanların kendi yaşam kalitelerinden ziyade sürekli başkalarıyla yaptıkları kıyaslamalar yüzünden mutsuz olduklarını sorgular.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alıştırmalar 4 (Tamamı)</div>
+
+                <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (4-2.mp3):</label>
+                    <audio controls><source src="audio/04/4-2.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第一组 (烦恼 - Endişe/Dert)</div>
+                    ① 别老是羡慕别人，每个人都有自己的烦恼。<br>② 有了烦恼，你会跟谁说？<br>③ 他为下星期的考试而烦恼。<br><em>(课文例句：为什么烦恼)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第二组 (后悔 - Pişman olmak)</div>
+                    ① 做事以前要好好想想，做了就不要后悔。<br>② 他很后悔年轻时没有努力学习。<br>③ 我真后悔没听你的话！<br><em>(课文例句：妻子就开始后悔：不该带伞。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第三组 (不是……而是…… - ...değil, aksine...)</div>
+                    ① 不是不想去，而是根本没时间。<br>② 这个菜不是难吃，而是你还不习惯。<br>③ 不是我不告诉你，而是我真的不知道。<br><em>(课文例句：不是因为开车比骑车走得慢，而是因为过去你骑车比别人走得快。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第四组 (比不上 - ...ile yarışamaz/gerisinde kalır)</div>
+                    ① 在中国，元旦比不上春节重要。<br>② 他现在的工资比不上以前。<br>③ 农村的教育比不上城市。<br><em>(课文例句：今天你的“捷达”却比不上别人的“奔驰”。)</em>
+                </div>
+                <div class="grammar-box">
+                    <div class="grammar-title">第五组 (老/老是 - Sürekli/Hep)</div>
+                    ① 你怎么老迟到啊？一个星期迟到了五次！<br>② 我不想老待在家里，得出去找工作了。<br>③ 孩子老问：“爸爸什么时候回来呀？”<br><em>(课文例句：干吗老是跟别人比？)</em>
+                </div>
+
+                <div class="section-header">二、听全文，选择课文的主要内容是什么，在括号里画 √ (可以多选)</div>
+                <div class="audio-mini">
+                    <label>🎧 Metin İçerik Alıştırması Ses Kaydı (4-3.mp3):</label>
+                    <audio controls><source src="audio/04/4-3.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="quiz-item">
+                    <div class="exercise-hint">Aşağıdaki ifadelerden metnin ana içeriğini anlatanları seçin. <strong>Birden fazla seçenek doğru olabilir.</strong></div>
+                    <div class="multi-options">
+                        <button class="multi-option" data-correct="false" onclick="toggleMultiOption(this)">1. 旅游该不该带伞？</button>
+                        <button class="multi-option" data-correct="false" onclick="toggleMultiOption(this)">2. 天气预报也会错。</button>
+                        <button class="multi-option" data-correct="true" onclick="toggleMultiOption(this)">3. 别老跟别人比较。</button>
+                        <button class="multi-option" data-correct="true" onclick="toggleMultiOption(this)">4. 跟别人比较以后，快乐也可能会变成烦恼。</button>
+                    </div>
+                    <div class="exercise-feedback" aria-live="polite"></div>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkMultiSelect(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" data-label="👁️ Cevapları Göster" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+
+                <div class="section-header">三、根据课文内容，选择正确答案</div>
+                <div class="audio-mini">
+                    <label>🎧 Doğru Cevap Seçimi Ses Kaydı (4-4.mp3):</label>
+                    <audio controls><source src="audio/04/4-4.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 第一天妻子为什么快乐？ <span class="answer-key">( C )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 公园很漂亮</button>
+                        <button onclick="checkAnswer(this, false)">B. 天气非常好</button>
+                        <button onclick="checkAnswer(this, true)">C. 别人淋湿了而自己没有</button>
+                        <button onclick="checkAnswer(this, false)">D. 这一天玩儿得十分轻松</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 第二天妻子为什么不快乐？ <span class="answer-key">( D )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 又下雨了</button>
+                        <button onclick="checkAnswer(this, false)">B. 天气不好</button>
+                        <button onclick="checkAnswer(this, false)">C. 他们被淋成了落汤鸡</button>
+                        <button onclick="checkAnswer(this, true)">D. 别人轻松，自己不轻松</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 作者认为人们快乐的原因是什么？ <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 自己过得好</button>
+                        <button onclick="checkAnswer(this, true)">B. 自己比别人过得好</button>
+                        <button onclick="checkAnswer(this, false)">C. 别人过得好</button>
+                        <button onclick="checkAnswer(this, false)">D. 别人过得不好</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">4. 下面哪一项是作者的观点？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 不要老跟别人比较</button>
+                        <button onclick="checkAnswer(this, false)">B. 有比较才能有快乐</button>
+                        <button onclick="checkAnswer(this, false)">C. 自己快乐不是真的快乐</button>
+                        <button onclick="checkAnswer(this, false)">D. 自行车有时比汽车还好</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">5. 以前有一辆自行车为什么那么快乐？ <span class="answer-key">( C )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 自行车质量好</button>
+                        <button onclick="checkAnswer(this, false)">B. 骑着特别舒服</button>
+                        <button onclick="checkAnswer(this, true)">C. 别人都沒有自行车</button>
+                        <button onclick="checkAnswer(this, false)">D. 自行车比汽车还快</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">6. 为什么有人有了汽车却心烦？ <span class="answer-key">( C )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 汽车开不快</button>
+                        <button onclick="checkAnswer(this, false)">B. 担心车会坏</button>
+                        <button onclick="checkAnswer(this, true)">C. 自己的车不如别人的车好</button>
+                        <button onclick="checkAnswer(this, false)">D. 自己的车比别人的车贵</button>
+                    </div>
+                </div>
+
+                <div class="section-header">四、根据课文内容，在事情、心情和原因之间连线</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Sebep Seçenekleri:</span>
+                    <span class="word-tag">没淋湿</span>
+                    <span class="word-tag">有累赘</span>
+                    <span class="word-tag">比别人走得快</span>
+                    <span class="word-tag">比别人的差</span>
+                </div>
+                <div class="quiz-item">
+                    • <strong>下雨，带了雨伞</strong> ➔ 😊 (开心) ➔ 
+                    <select class="quiz-select" data-answer="没淋湿">
+                        <option value="">--Neden Seç--</option>
+                        <option value="有累赘">有累赘</option>
+                        <option value="没淋湿">没淋湿</option>
+                        <option value="比别人的差">比别人的差</option>
+                        <option value="比别人走得快">比别人走得快</option>
+                    </select><br>
+                    • <strong>没下雨，带了雨伞</strong> ➔ 🙁 (不开心) ➔ 
+                    <select class="quiz-select" data-answer="有累赘">
+                        <option value="">--Neden Seç--</option>
+                        <option value="有累赘">有累赘</option>
+                        <option value="没淋湿">没淋湿</option>
+                        <option value="比别人的差">比别人的差</option>
+                        <option value="比别人走得快">比别人走得快</option>
+                    </select><br>
+                    • <strong>有了自行车</strong> ➔ 😊 (开心) ➔ 
+                    <select class="quiz-select" data-answer="比别人走得快">
+                        <option value="">--Neden Seç--</option>
+                        <option value="有累赘">有累赘</option>
+                        <option value="没淋湿">没淋湿</option>
+                        <option value="比别人的差">比别人的差</option>
+                        <option value="比别人走得快">比别人走得快</option>
+                    </select><br>
+                    • <strong>有了汽车</strong> ➔ 🙁 (心烦/不开心) ➔ 
+                    <select class="quiz-select" data-answer="比别人的差">
+                        <option value="">--Neden Seç--</option>
+                        <option value="有累赘">有累赘</option>
+                        <option value="没淋湿">没淋湿</option>
+                        <option value="比别人的差">比别人的差</option>
+                        <option value="比别人走得快">比别人走得快</option>
+                    </select>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LESSON 5 -->
+        <div id="m5" class="module">
+            <h2 class="module-title">Lesson 5: 乞丐的故事</h2>
+
+            <div class="audio-container">
+                <label>🎧 Ders Metni Ses Kaydı (Audio 5-1.mp3):</label>
+                <audio controls id="audio-m5">
+                    <source src="audio/05/5-1.mp3" type="audio/mpeg">
+                    Tarayıcınız ses öğesini desteklemiyor.
+                </audio>
+                <div class="tts-controls">
+                    <button class="tts-btn" onclick="speakText('text-m5')">🔊 Metni Seslendir (TTS)</button>
+                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">5-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>汉字 (Hanzi)</th>
+                            <th>拼音 (Pinyin)</th>
+                            <th>词性</th>
+                            <th>English</th>
+                            <th>Türkçe Anlamı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="vocab-hz">乞丐</td><td>qǐgài</td><td class="vocab-pos">(名)</td><td>beggar</td><td>Dilenci</td></tr>
+                        <tr><td>2</td><td class="vocab-hz">无意</td><td>wúyì</td><td class="vocab-pos">(副)</td><td>accidentally</td><td>Kazara, istemeden, tesadüfen</td></tr>
+                        <tr><td>3</td><td class="vocab-hz">栓</td><td>shuān</td><td class="vocab-pos">(动)</td><td>to tie up, to fasten</td><td>Bağlamak, bağlayıp tutmak</td></tr>
+                        <tr><td>4</td><td class="vocab-hz">启事</td><td>qǐshì</td><td class="vocab-pos">(名)</td><td>notice</td><td>İlan, duyuru</td></tr>
+                        <tr><td>5</td><td class="vocab-hz">捡</td><td>jiǎn</td><td class="vocab-pos">(动)</td><td>to pick up</td><td>Yerden bulmak, toplamak</td></tr>
+                        <tr><td>6</td><td class="vocab-hz">付</td><td>fù</td><td class="vocab-pos">(动)</td><td>to pay</td><td>Ödemek</td></tr>
+                        <tr><td>7</td><td class="vocab-hz">酬金</td><td>chóujīn</td><td class="vocab-pos">(名)</td><td>monetary reward</td><td>Para ödülü, ikramiye</td></tr>
+                        <tr><td>8</td><td class="vocab-hz">领取</td><td>lǐngqǔ</td><td class="vocab-pos">(动)</td><td>to get, to collect</td><td>Teslim almak, çekmek</td></tr>
+                        <tr><td>9</td><td class="vocab-hz">路过</td><td>lùguò</td><td class="vocab-pos">(动)</td><td>to pass by</td><td>Yoldan geçmek, uğramak</td></tr>
+                        <tr><td>10</td><td class="vocab-hz">脚步</td><td>jiǎobù</td><td class="vocab-pos">(名)</td><td>footstep</td><td>Adım, ayak izi</td></tr>
+                        <tr><td>11</td><td class="vocab-hz">吃惊</td><td>chījīng</td><td class="vocab-pos">(动)</td><td>to be surprised</td><td>Şaşırmak, hayrete düşmek</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-grid">
+                <div class="card chinese-card">
+                    <div class="card-title">Metin (Text)</div>
+                    <div class="chinese-text" id="text-m5">一个乞丐每天都在想，我要是有两万块钱就好了。一天，这个乞丐无意中发现了一只跑丢了的小狗，这只小狗很可爱。乞丐看看旁边没人，就把狗抱回了他住的地方，栓了起来。
+
+这只狗的主人是一位有名的大富翁，狗丢了，这位富翁十分着急。于是，就写了一个找狗的启事：如有人捡到狗，请马上还给我，付酬金两万元。
+
+第二天，乞丐看见了这个启事，就赶紧回家，抱起小狗准备去领取两万元酬金。他抱着狗路过贴启事的地方，发现启事上的酬金已经从两万元变成了三万元。原来，大富翁找不着狗，又把酬金提高了一万元。
+
+乞丐几乎不相信自己的眼睛，突然停下了脚步，想了想又把狗抱了回去，重新栓了起来。第三天，酬金果然又涨了，第四天又涨了，直到第七天，酬金涨到了让所有人感到吃惊时，乞丐这才跑回去抱狗。没想到的是，那只可爱的小狗已经被饿死了，乞丐还是乞丐。</div>
+                </div>
+                <div class="card turkish-card">
+                    <div class="card-title">Türkçe Çeviri ve Özet</div>
+                    <div style="line-height: 1.7;">
+                        <strong style="color: var(--accent-color);">Birebir Türkçe Çeviri:</strong><br>
+                        Bir dilenci her gün içinden "Keşke yirmi bin yuanım olsaydı ne kadar iyi olurdu" diye geçiriyordu. Bir gün bu dilenci tesadüfen kaybolmuş küçük bir köpek buldu, bu köpek çok sevimliydi. Dilenci etrafta kimsenin olmadığını görünce köpeği kucağına alıp kaldığı yere götürdü ve bağladı.<br><br>
+                        Bu köpeğin sahibi ünlü ve çok zengin bir adamdı, köpeği kaybolunca bu zengin adam çok endişelendi. Bu yüzden köpeği bulmak için bir kayıp ilanı yazdı: "Eğer köpeği bulan olursa lütfen hemen bana geri getirsin, 20 bin yuan ödül verilecektir."<br><br>
+                        Ertesi gün dilenci bu ilanı gördü ve hemen eve koştu, 20 bin yuan Ödülü almak üzere küçük köpeği kucağına aldı. Köpekle beraber ilanın asılı olduğu yerden geçerken, ilandaki ödülün 20 bin yuan'dan 30 bin yuan'a çıkarıldığını fark etti. Meğer zengin adam köpeği bulamayınca ödülü 10 bin yuan daha artırmıştı.<br><br>
+                        Dilenci neredeyse gözlerine inanamadı, aniden durakladı. Biraz düşündükten sonra köpeği tekrar eve götürdü ve yeniden bağladı. Üçüncü gün ödül beklendiği gibi yine arttı, dördüncü gün yine arttı... Ta ki yedinci güne kadar; ödül herkesi şaşkına çevirecek bir miktara ulaştığında, dilenci ancak o zaman koşarak köpeği almaya gitti. Beklemediği şey ise, o sevimli küçük köpeğin çoktan açlıktan ölmüş olmasıydı. Ve dilenci yine dilenci olarak kaldı.<br><br>
+                        <strong style="color: var(--highlight-text);">Özet Çeviri:</strong><br>
+                        Zengin bir adamın kayıp köpeğini bulan dilenci, ilandaki para ödülünün her gün arttığını görünce açgözlülük yaparak köpeği teslim etmeyi sürekli erteler. 7. gün ödül rekor seviyeye ulaştığında almaya gider ancak köpeğin açlıktan öldüğünü görünce ödülü alamadan yine parasız kalır.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alıştırmalar 5 (Tamamı)</div>
+
+                <div class="section-header">三、根据课文内容，判断正误 (True/False - Interactive)</div>
+                <div class="quiz-item">
+                    1. 这个乞丐无意中捡到两万元钱。 
+                    <span class="tf-btn-group">
+                        <button class="tf-btn" onclick="checkTF(this, false)">√</button>
+                        <button class="tf-btn" onclick="checkTF(this, true)">×</button>
+                    </span><br>
+                    2. 这个乞丐偷了大富翁的一只狗。 
+                    <span class="tf-btn-group">
+                        <button class="tf-btn" onclick="checkTF(this, false)">√</button>
+                        <button class="tf-btn" onclick="checkTF(this, true)">×</button>
+                    </span><br>
+                    3. 狗的主人非常有钱。 
+                    <span class="tf-btn-group">
+                        <button class="tf-btn" onclick="checkTF(this, true)">√</button>
+                        <button class="tf-btn" onclick="checkTF(this, false)">×</button>
+                    </span><br>
+                    4. 狗的主人愿意花两万元钱再买一只狗。 
+                    <span class="tf-btn-group">
+                        <button class="tf-btn" onclick="checkTF(this, false)">√</button>
+                        <button class="tf-btn" onclick="checkTF(this, true)">×</button>
+                    </span><br>
+                    5. 乞丐捡到狗以后，就不继续做乞丐了。 
+                    <span class="tf-btn-group">
+                        <button class="tf-btn" onclick="checkTF(this, false)">√</button>
+                        <button class="tf-btn" onclick="checkTF(this, true)">×</button>
+                    </span>
+                </div>
+
+                <div class="section-header">四、根据课文内容，选择正确答案 (Multiple Choice)</div>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 乞丐捡到狗以前的愿望是什么？ <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 捡到一只狗</button>
+                        <button onclick="checkAnswer(this, true)">B. 有两万块钱</button>
+                        <button onclick="checkAnswer(this, false)">C. 有一万元钱</button>
+                        <button onclick="checkAnswer(this, false)">D. 买一只狗</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 大富翁为什么提高酬金？ <span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 他希望捡到狗的人能把狗还给他</button>
+                        <button onclick="checkAnswer(this, false)">B. 他想让大家都感到吃惊</button>
+                        <button onclick="checkAnswer(this, false)">C. 他希望能买一只一样的狗</button>
+                        <button onclick="checkAnswer(this, false)">D. 他想让人知道那只狗非常贵</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 乞丐在第二天准备还狗的时候,为什么又改变了主意? <span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 他对三万元的酬金感到吃惊</button>
+                        <button onclick="checkAnswer(this, true)">B. 他希望酬金继续涨</button>
+                        <button onclick="checkAnswer(this, false)">C. 他不相信大富翁会付给他酬金</button>
+                        <button onclick="checkAnswer(this, false)">D. 他越来越喜欢那只小狗</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">4.第七天,大富翁的酬金为什么让大家感到吃惊? <span class="answer-key">( D )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 大家都相信狗已经死了</button>
+                        <button onclick="checkAnswer(this, false)">B. 大家为自己没捡到狗而不高兴</button>
+                        <button onclick="checkAnswer(this, false)">C. 大家觉得大富翁在骗人</button>
+                        <button onclick="checkAnswer(this, true)">D. 大家没想到酬金会涨到这么高</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">5. 乞丐为什么没有得到酬金?<span class="answer-key">( A )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, true)">A. 因为狗饿死了</button>
+                        <button onclick="checkAnswer(this, false)">B. 因为酬金太低了</button>
+                        <button onclick="checkAnswer(this, false)">C. 因为他自己留下了那只狗</button>
+                        <button onclick="checkAnswer(this, false)">D. 因为狗跑了</button>
+                    </div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">6. 这个故事告诉我们什么道理?<span class="answer-key">( B )</span></div>
+                    <div class="quiz-options">
+                        <button onclick="checkAnswer(this, false)">A. 捡了东西要马上还</button>
+                        <button onclick="checkAnswer(this, true)">B. 期望得到的东西不要太多</button>
+                        <button onclick="checkAnswer(this, false)">C. 应该对狗好一点儿</button>
+                        <button onclick="checkAnswer(this, false)">D. 别随便捡东西</button>
+                    </div>
+                </div>
+
+                <div class="section-header">六、根据课文内容，给下面的句子排序 (Sentence Ordering)</div>
+                <div class="quiz-item">
+                    <div style="margin-bottom: 10px; font-weight: bold; color: var(--accent-color);">Cümleler:</div>
+                    <div class="ordering-item">
+                        <span><strong>A.</strong> 富翁愿意给捡到小狗的人两万元酬金。</span>
+                        <select class="quiz-select" data-answer="2"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>B.</strong> 小狗饿死了。</span>
+                        <select class="quiz-select" data-answer="6"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>C.</strong> 乞丐捡到一只小狗。</span>
+                        <select class="quiz-select" data-answer="1"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>D.</strong> 酬金不停地涨。</span>
+                        <select class="quiz-select" data-answer="4"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>E.</strong> 乞丐想去领取酬金，可是发现酬金涨了，又改了主意。</span>
+                        <select class="quiz-select" data-answer="3"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="ordering-item">
+                        <span><strong>F.</strong> 乞丐决定把狗还给富翁。</span>
+                        <select class="quiz-select" data-answer="5"><option value="">--Sıra--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" data-label="👁️ Doğru Sıralamayı Göster" onclick="toggleSingleAnswer(this)">👁️ Doğru Sıralamayı Göster</button>
+                    </div>
+                    <div style="margin-top:8px;"><span class="answer-key" style="margin-left:0;">1-C ➔ 2-A ➔ 3-E ➔ 4-D ➔ 5-F ➔ 6-B</span></div>
+                </div>
+
+                <div class="section-header">七、选词填空 (有一个词是多余的)</div>
+                <div class="word-bank">
+                    <span class="word-bank-title">📦 Kelime Havuzu:</span>
+                    <span class="word-tag">丢</span>
+                    <span class="word-tag">捡</span>
+                    <span class="word-tag">涨</span>
+                    <span class="word-tag">直到</span>
+                    <span class="word-tag">相信</span>
+                    <span class="word-tag">付</span>
+                    <span class="word-tag">要是...就好了</span>
+                    <span class="word-tag" style="text-decoration: line-through;">失</span>
+                </div>
+                <div class="quiz-item">
+                    1. 我不小心（ <select class="quiz-select" data-answer="丢"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）了手机，幸亏有人（ <select class="quiz-select" data-answer="捡"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）到还给我了。<br>
+                    2. 这个东西原来 1000 块，现在（ <select class="quiz-select" data-answer="涨"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）到 1500 了。<br>
+                    3. （ <select class="quiz-select" data-answer="直到"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）他上大学，才第一次离开家。<br>
+                    4. 请（ <select class="quiz-select" data-answer="相信"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）我，我说的都是真的。<br>
+                    5. 他（ <select class="quiz-select" data-answer="付"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）了学费以后，就没有多少钱了。<br>
+                    6. 你（ <select class="quiz-select" data-answer="要是"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）早五分钟来（ <select class="quiz-select" data-answer="就好了"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ），汽车已经开走了。<br>
+                    7. 我希望房子不再（ <select class="quiz-select" data-answer="涨"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）价，而工资再（ <select class="quiz-select" data-answer="涨"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）一点儿。<br>
+                    8. 你能借我点儿钱吗？我刚（ <select class="quiz-select" data-answer="丢"><option value="">--Seç--</option><option value="丢">丢</option><option value="捡">捡</option><option value="涨">涨</option><option value="直到">直到</option><option value="相信">相信</option><option value="付">付</option><option value="要是">要是</option><option value="就好了">就好了</option><option value="失">失</option></select> ）了钱包。<br>
+                    <em>(Fazla olan kelime: <span class="answer-key">失</span>)</em>
+                    <div class="action-btn-group">
+                        <button class="check-btn" onclick="checkDropdowns(this)">✅ Kontrol Et</button>
+                        <button class="toggle-ans-btn" onclick="toggleSingleAnswer(this)">👁️ Cevapları Göster</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        function stopAllAudios() {
+            const audios = document.querySelectorAll('audio');
+            audios.forEach(a => {
+                a.pause();
+            });
+            stopSpeech();
+        }
+
+        function showModule(event, moduleId) {
+            stopAllAudios();
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(mod => mod.classList.remove('active'));
+
+            const navLinks = document.querySelectorAll('#sidebar nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            const targetModule = document.getElementById(moduleId);
+            if (targetModule) {
+                targetModule.classList.add('active');
+            }
+
+            const activeLink = document.querySelector(`#sidebar nav a[href="#${moduleId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            document.getElementById('content').scrollTop = 0;
+        }
+
+        function toggleTurkish() {
+            document.body.classList.toggle('hide-turkish');
+            const btn = document.getElementById('toggleTurkishBtn');
+            if (document.body.classList.contains('hide-turkish')) {
+                btn.textContent = '🌐 Türkçe Göster / İki Panelli Görünüm';
+            } else {
+                btn.textContent = '🌐 Türkçe Gizle / Sadece Çince Mode';
+            }
+        }
+
+        /* Multiple Choice Validation */
+        function checkAnswer(button, isCorrect) {
+            const parent = button.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.classList.remove('correct', 'wrong');
+            });
+
+            if (isCorrect) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('wrong');
+            }
+            
+            const ansKey = parent.parentElement.querySelector('.answer-key');
+            if(ansKey) {
+                ansKey.classList.add('visible');
+            }
+        }
+
+        /* True/False Buttons Validation */
+        function checkTF(btn, isCorrect) {
+            const group = btn.closest('.tf-btn-group');
+            const btns = group.querySelectorAll('.tf-btn');
+            btns.forEach(b => b.classList.remove('active-correct', 'active-wrong'));
+
+            if(isCorrect) {
+                btn.classList.add('active-correct');
+            } else {
+                btn.classList.add('active-wrong');
+            }
+        }
+
+        /* Dropdown Validation for Interactive Fill-in-the-blanks */
+        function checkDropdowns(btn) {
+            const container = btn.closest('.quiz-item');
+            if(!container) return;
+
+            const dropdowns = container.querySelectorAll('.quiz-select');
+            dropdowns.forEach(select => {
+                const selectedVal = select.value.trim();
+                const correctVal = select.getAttribute('data-answer').trim();
+
+                select.classList.remove('is-correct', 'is-wrong');
+
+                if (selectedVal === correctVal) {
+                    select.classList.add('is-correct');
+                } else if (selectedVal !== "") {
+                    select.classList.add('is-wrong');
+                }
+            });
+        }
+
+        /* Toggle Individual Section Answers */
+        function toggleSingleAnswer(btn) {
+            const container = btn.closest('.quiz-item');
+            if(!container) return;
+            
+            const isShowing = btn.getAttribute('data-showing') === 'true';
+            
+            // Text Answer Keys
+            const keys = container.querySelectorAll('.answer-key');
+            keys.forEach(k => {
+                if (isShowing) {
+                    k.classList.remove('visible');
+                } else {
+                    k.classList.add('visible');
+                }
+            });
+
+            // Select Dropdowns
+            const dropdowns = container.querySelectorAll('.quiz-select');
+            dropdowns.forEach(select => {
+                const correctVal = select.getAttribute('data-answer');
+                if (!isShowing) {
+                    select.value = correctVal;
+                    select.classList.add('is-correct');
+                    select.classList.remove('is-wrong');
+                } else {
+                    select.value = "";
+                    select.classList.remove('is-correct', 'is-wrong');
+                }
+            });
+
+            // Multiple Choice & TF Buttons inside section
+            const opts = container.querySelectorAll('.quiz-options button, .tf-btn');
+            opts.forEach(opt => {
+                if (!isShowing) {
+                    const onclickStr = opt.getAttribute('onclick') || '';
+                    if (onclickStr.includes('true')) {
+                        opt.classList.add(opt.classList.contains('tf-btn') ? 'active-correct' : 'correct');
+                    }
+                } else {
+                    opt.classList.remove('correct', 'wrong', 'active-correct', 'active-wrong');
+                }
+            });
+
+            // Multi-select (birden fazla doğru) seçenekleri
+            container.querySelectorAll('.multi-option').forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+                if (!isShowing) {
+                    opt.classList.toggle('selected', opt.dataset.correct === 'true');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+
+            // Matrix (tablo) hücreleri
+            container.querySelectorAll('.matrix-cell').forEach(cell => {
+                const correctValues = (cell.dataset.correct || '')
+                    .split(',')
+                    .map(v => v.trim())
+                    .filter(Boolean);
+                cell.querySelectorAll('.matrix-chip').forEach(chip => {
+                    chip.classList.remove('correct', 'wrong');
+                    if (!isShowing) {
+                        chip.classList.toggle('selected', correctValues.includes(chip.dataset.value));
+                    } else {
+                        chip.classList.remove('selected');
+                    }
+                });
+            });
+
+            const feedback = container.querySelector('.exercise-feedback');
+            if (feedback) feedback.textContent = '';
+
+            btn.setAttribute('data-showing', !isShowing);
+            const originalLabel = btn.getAttribute('data-label') || '👁️ Cevapları Göster';
+            btn.innerHTML = !isShowing ? '🙈 Cevapları Gizle' : originalLabel;
+        }
+
+        /* ── Çoktan seçmeli (birden fazla doğru) ── */
+        function toggleMultiOption(btn) {
+            btn.classList.toggle('selected');
+            btn.classList.remove('correct', 'wrong');
+            const container = btn.closest('.quiz-item');
+            const feedback = container ? container.querySelector('.exercise-feedback') : null;
+            if (feedback) feedback.textContent = '';
+        }
+
+        function checkMultiSelect(btn) {
+            const container = btn.closest('.quiz-item');
+            if (!container) return;
+
+            let correctTotal = 0;
+            let selectedCorrect = 0;
+            let selectedWrong = 0;
+
+            container.querySelectorAll('.multi-option').forEach(opt => {
+                const isCorrect = opt.dataset.correct === 'true';
+                const isSelected = opt.classList.contains('selected');
+                opt.classList.remove('correct', 'wrong');
+
+                if (isCorrect) correctTotal++;
+
+                if (isSelected) {
+                    if (isCorrect) {
+                        opt.classList.add('correct');
+                        selectedCorrect++;
+                    } else {
+                        opt.classList.add('wrong');
+                        selectedWrong++;
+                    }
+                }
+            });
+
+            const feedback = container.querySelector('.exercise-feedback');
+            if (!feedback) return;
+            const allCorrect = selectedCorrect === correctTotal && selectedWrong === 0;
+            feedback.style.color = allCorrect ? '#66bb6a' : '#ef5350';
+            feedback.textContent = allCorrect
+                ? '✅ Harika! Tüm doğru seçenekleri buldun.'
+                : `❌ Doğru seçim: ${selectedCorrect}/${correctTotal}` + (selectedWrong ? ` · ${selectedWrong} yanlış seçim` : '') + '. Tekrar dene.';
+        }
+
+        /* ── Tablo / matris alıştırması ── */
+        function checkMatrix(btn) {
+            const container = btn.closest('.quiz-item');
+            if (!container) return;
+
+            let correctTotal = 0;
+            let selectedCorrect = 0;
+            let selectedWrong = 0;
+
+            container.querySelectorAll('.matrix-cell').forEach(cell => {
+                const correctValues = (cell.dataset.correct || '')
+                    .split(',')
+                    .map(v => v.trim())
+                    .filter(Boolean);
+                correctTotal += correctValues.length;
+
+                cell.querySelectorAll('.matrix-chip').forEach(chip => {
+                    const isSelected = chip.classList.contains('selected');
+                    const isCorrect = correctValues.includes(chip.dataset.value);
+                    chip.classList.remove('correct', 'wrong');
+
+                    if (isSelected && isCorrect) {
+                        chip.classList.add('correct');
+                        selectedCorrect++;
+                    } else if (isSelected && !isCorrect) {
+                        chip.classList.add('wrong');
+                        selectedWrong++;
+                    }
+                });
+            });
+
+            const feedback = container.querySelector('.exercise-feedback');
+            if (!feedback) return;
+            const allCorrect = selectedCorrect === correctTotal && selectedWrong === 0;
+            feedback.style.color = allCorrect ? '#66bb6a' : '#ef5350';
+            feedback.textContent = allCorrect
+                ? '✅ Mükemmel! Tablodaki tüm eşleştirmeler doğru.'
+                : `❌ Doğru seçim: ${selectedCorrect}/${correctTotal}` + (selectedWrong ? ` · ${selectedWrong} yanlış seçim` : '') + '. Tekrar dene.';
+        }
+
+        /* ── Seçenekleri ve kelime havuzlarını karıştır ── */
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function resetSelectsToPlaceholder() {
+            document.querySelectorAll('select.quiz-select').forEach(select => {
+                const placeholder = Array.from(select.options).find(opt => opt.value === '');
+                if (placeholder) {
+                    placeholder.selected = true;
+                    select.value = '';
+                } else {
+                    select.selectedIndex = 0;
+                }
+                select.classList.remove('is-correct', 'is-wrong');
+            });
+        }
+
+        function randomizeExercises() {
+            // Dropdown seçenekleri: ilk placeholder korunur, doğru cevap asla ilk sırada bırakılmaz.
+            document.querySelectorAll('select.quiz-select').forEach(select => {
+                const options = Array.from(select.options);
+                if (options.length < 2) return;
+
+                select.setAttribute('autocomplete', 'off');
+
+                const hasPlaceholder = options[0].value === '';
+                const realOptions = hasPlaceholder ? options.slice(1) : options.slice();
+                const values = realOptions.map(o => o.value);
+
+                // Sıralama (1, 2, 3...) dropdown'larını karıştırma.
+                if (values.length && values.every(v => /^\d+$/.test(v))) return;
+
+                shuffleArray(realOptions);
+
+                // Doğru cevabı ilk gerçek seçenek olmaktan çıkar.
+                const correct = select.getAttribute('data-answer');
+                if (correct && realOptions.length > 1 && realOptions[0].value === correct) {
+                    const swapIndex = 1 + Math.floor(Math.random() * (realOptions.length - 1));
+                    [realOptions[0], realOptions[swapIndex]] = [realOptions[swapIndex], realOptions[0]];
+                }
+
+                const ordered = hasPlaceholder ? [options[0], ...realOptions] : realOptions;
+                select.innerHTML = '';
+                ordered.forEach(opt => select.appendChild(opt));
+            });
+
+            // Tarayıcının eski form değerlerini geri yüklemesini engelle.
+            resetSelectsToPlaceholder();
+
+            // Kelime havuzlarındaki etiketleri karıştır (başlık sabit kalır).
+            document.querySelectorAll('.word-bank').forEach(bank => {
+                const tags = Array.from(bank.querySelectorAll('.word-tag'));
+                if (tags.length < 2) return;
+                shuffleArray(tags);
+                tags.push(tags.shift()); // orijinal sırayla aynı kalmasını engelle
+                tags.forEach(tag => bank.appendChild(tag));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            randomizeExercises();
+
+            // Matris çiplerine tıklama (event delegation)
+            document.addEventListener('click', event => {
+                const chip = event.target.closest('.matrix-chip');
+                if (!chip) return;
+                chip.classList.toggle('selected');
+                chip.classList.remove('correct', 'wrong');
+                const container = chip.closest('.quiz-item');
+                const feedback = container ? container.querySelector('.exercise-feedback') : null;
+                if (feedback) feedback.textContent = '';
+            });
+        });
+
+        window.addEventListener('load', () => {
+            resetSelectsToPlaceholder();
+            setTimeout(resetSelectsToPlaceholder, 60);
+        });
+
+        window.addEventListener('pageshow', () => {
+            resetSelectsToPlaceholder();
+            setTimeout(resetSelectsToPlaceholder, 60);
+        });
+
+        /* Toggle All Answers Globally */
+        let allAnswersVisible = false;
+        function toggleAllAnswers() {
+            allAnswersVisible = !allAnswersVisible;
+            const singleBtns = document.querySelectorAll('.toggle-ans-btn');
+
+            singleBtns.forEach(btn => {
+                const isShowing = btn.getAttribute('data-showing') === 'true';
+                if (allAnswersVisible !== isShowing) {
+                    toggleSingleAnswer(btn);
+                }
+            });
+
+            const mainBtn = document.getElementById('toggleAllAnswersBtn');
+            if (mainBtn) {
+                mainBtn.innerHTML = allAnswersVisible ? '🙈 Tüm Cevapları Gizle' : '💡 Tüm Cevapları Göster';
+            }
+        }
+
+        /* Web Speech Synthesis (TTS) */
+        let currentUtterance = null;
+
+        function speakText(elementId) {
+            stopSpeech();
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            const text = el.innerText;
+            if ('speechSynthesis' in window) {
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                currentUtterance.lang = 'zh-CN';
+                currentUtterance.rate = 0.9;
+                window.speechSynthesis.speak(currentUtterance);
+            } else {
+                alert('Tarayıcınız Web Speech API seslendirme özelliğini desteklemiyor.');
+            }
+        }
+
+        function stopSpeech() {
+            if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+        }
+    </script>
+</body>
+</html>

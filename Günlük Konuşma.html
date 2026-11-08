@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Günlük Konuşma – Çince Konuşma Pratiği Portalı</title>
+<style>
+:root{--bg:#121212;--side:#1e1e1e;--card:#242424;--tx:#e0e0e0;--tx2:#aaa;--ac:#bb86fc;--bd:#333;--hl:#ffd54f;--ok:#4caf50;--bad:#ef5350;--in:#1a1a1a;--sidebar-width:292px;--kaiti:"Kaiti","STKaiti","KaiTi","楷体",serif;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;height:100dvh}
+body{font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16.5px;background:var(--bg);color:var(--tx);display:flex;line-height:1.6;overflow:hidden}
+.zh{font-family:var(--kaiti) !important}
+.zh-inline{font-family:var(--kaiti);font-size:1.12em;color:var(--hl)}
+.hide{display:none !important}
+a{color:var(--ac)}
+
+/* ---------- Sidebar ---------- */
+#side{width:var(--sidebar-width);background:var(--side);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;transition:width .3s cubic-bezier(.4,0,.2,1);position:relative;z-index:10}
+#side .header-box{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bd);background:var(--in);gap:8px}
+#side h1{font-size:1.12rem;color:var(--ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toggle-sidebar-btn{background:transparent;border:none;color:var(--ac);font-size:1.4rem;cursor:pointer;padding:4px 7px;border-radius:4px;flex:none}
+.toggle-sidebar-btn:hover{background:var(--card)}
+.exam-chip{font-size:.72rem;color:var(--hl);border:1px solid rgba(255,213,79,.35);border-radius:99px;padding:4px 8px;margin:8px 14px 0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nav{overflow-y:auto;flex:1;padding:8px 0;-webkit-overflow-scrolling:touch}
+#nav a{display:flex;align-items:center;gap:11px;padding:11px 18px;color:var(--tx2);font-size:.99rem;border-left:4px solid transparent;cursor:pointer;white-space:nowrap;overflow:hidden;text-decoration:none}
+#nav a:hover,#nav a.on{color:var(--ac);border-left-color:var(--ac);background:var(--in)}
+#nav a i{font-style:normal;flex:none;width:20px;text-align:center}
+.nav-sep{padding:14px 18px 6px;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--hl);opacity:.85}
+#side.collapsed{width:70px}
+#side.collapsed h1,#side.collapsed .exam-chip,#side.collapsed #nav a span,#side.collapsed .nav-sep{display:none}
+#side.collapsed #nav a{justify-content:center;padding:13px 0;text-align:center;border-left:4px solid transparent}
+
+/* ---------- Main ---------- */
+#main{flex:1;overflow-y:auto;padding:30px 34px 60px;min-width:0;-webkit-overflow-scrolling:touch}
+.mod{display:none;max-width:1020px;margin:0 auto}
+.mod.on{display:block}
+h2{color:var(--ac);font-size:1.95rem;border-bottom:2px solid var(--bd);padding-bottom:10px;margin-bottom:6px}
+h3{color:var(--hl);margin:24px 0 12px;font-size:1.22rem;border-left:4px solid var(--hl);padding-left:12px}
+.sub{color:var(--tx2);font-size:1rem;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:18px 20px;margin-bottom:18px;word-break:break-word}
+.ct{font-size:1.3rem;font-weight:700;color:var(--ac);border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:14px}
+.tag{background:var(--ac);color:#161616;border-radius:99px;padding:2px 11px;font-size:.8rem;margin-left:8px;vertical-align:middle;font-weight:700}
+.tag.gold{background:var(--hl)}
+.tag.teal{background:#4dd0e1}
+.info-box{background:var(--in);border-left:4px solid var(--hl);padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:.98rem}
+.info-box b{color:var(--hl)}
+.mini{background:var(--card);color:var(--ac);border:1px solid var(--ac);font-size:.82rem;font-weight:700;padding:6px 11px;border-radius:6px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.mini:hover{background:var(--ac);color:#161616}
+.mini.ghost{background:transparent;color:var(--tx2);border-color:var(--bd)}
+.mini.ghost:hover{background:var(--ac);color:#161616;border-color:var(--ac)}
+.btn{background:var(--ac);color:#161616;border:1px solid var(--ac);font-size:.95rem;font-weight:700;padding:9px 16px;border-radius:7px;cursor:pointer;font-family:inherit}
+.btn:hover{filter:brightness(1.12)}
+.btn.ghost{background:transparent;color:var(--ac)}
+.btn.ghost:hover{background:var(--ac);color:#161616}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+ul{margin-left:22px}
+li{margin-bottom:6px}
+.muted{color:var(--tx2);font-size:.92rem}
+.gold{color:var(--hl)}
+.ok{color:var(--ok)}
+.bad{color:var(--bad)}
+
+/* Exam info */
+.raw{list-style:none;margin:0;display:grid;gap:8px}
+.raw li{background:var(--in);border-left:3px solid var(--ac);border-radius:0 6px 6px 0;padding:9px 12px;margin:0;font-size:.98rem}
+.raw li b{color:var(--hl)}
+.scorebar{display:flex;height:42px;border-radius:8px;overflow:hidden;margin:4px 0 8px;font-weight:800;font-size:.92rem}
+.scorebar span{display:flex;align-items:center;justify-content:center;color:#161616}
+.scorebar .s1{background:var(--ac)}
+.scorebar .s2{background:var(--hl)}
+.scorebar .s3{background:#4dd0e1}
+.scorelegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86rem;color:var(--tx2);margin-bottom:4px}
+.scorelegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:12px}
+.part{background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;position:relative;overflow:hidden}
+.part:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--ac)}
+.part.p2:before{background:var(--hl)}
+.part.p3:before{background:#4dd0e1}
+.pnum{font-size:1.7rem;font-weight:800;color:var(--ac);line-height:1.1}
+.part.p2 .pnum{color:var(--hl)}
+.part.p3 .pnum{color:#4dd0e1}
+.pnum small{font-size:.8rem;font-weight:600;color:var(--tx2);margin-left:4px}
+.pt{font-weight:700;margin-top:2px}
+.pd{font-size:.84rem;color:var(--tx2);margin-top:2px}
+.roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.road{text-align:left;background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;cursor:pointer;color:var(--tx);font-family:inherit;transition:.15s}
+.road:hover{border-color:var(--ac);background:var(--card);transform:translateY(-1px)}
+.road b{display:block;color:var(--hl);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}
+.road span{display:block;font-weight:700;margin:2px 0;font-size:.98rem}
+.road small{display:block;color:var(--tx2);font-size:.8rem}
+
+/* ---------- Tables ---------- */
+.tw{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:.96rem}
+th,td{border:1px solid var(--bd);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:var(--in);color:var(--ac);font-size:.88rem;white-space:nowrap}
+tbody tr:nth-child(even){background:rgba(255,255,255,.018)}
+td.zh,th.zh{font-family:var(--kaiti);font-size:1.28rem;white-space:nowrap;color:var(--tx)}
+td.py{color:var(--ac);font-size:.88rem;white-space:nowrap}
+td.tr-meaning{color:var(--tx)}
+table.info td:first-child{white-space:nowrap;color:var(--hl);font-weight:700}
+table.info td.zh{font-size:1.15rem;white-space:normal}
+
+/* ---------- Sim / timer ---------- */
+.sim{background:linear-gradient(160deg,#241d31,#1a1a1a 65%);border:1px solid #4a3a63;border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.sim-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.sim-head b{color:var(--hl);font-size:1.05rem}
+.sim-phase{font-size:.74rem;font-weight:800;letter-spacing:.08em;color:var(--ac);border:1px solid var(--ac);border-radius:99px;padding:3px 10px}
+.sim.talk .sim-phase{color:var(--hl);border-color:var(--hl)}
+.sim.done .sim-phase{color:var(--bad);border-color:var(--bad)}
+.sim-clock{font-variant-numeric:tabular-nums;font-size:3.1rem;font-weight:800;line-height:1;color:var(--tx);letter-spacing:.02em;text-align:center;margin:6px 0 12px}
+.sim.talk .sim-clock{color:var(--hl)}
+.sim.done .sim-clock{color:var(--bad)}
+.sim-bar{height:8px;background:#0f0f0f;border:1px solid var(--bd);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.sim-bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .25s linear}
+.sim.talk .sim-bar i{background:var(--hl)}
+.sim-q{background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin-bottom:12px;min-height:78px}
+.sim-q .zh{font-size:1.35rem;line-height:1.55}
+.sim-q .py{color:var(--ac);font-size:.86rem;margin-top:3px}
+.sim-q .tr{color:var(--tx2);font-size:.88rem;margin-top:5px}
+.sim-btns{display:flex;flex-wrap:wrap;gap:8px}
+#simNotes{width:100%;min-height:95px;background:var(--in);border:1px solid var(--bd);border-radius:8px;color:var(--tx);padding:10px 12px;font-family:inherit;font-size:.94rem;resize:vertical;margin-top:12px}
+#simNotes:focus{outline:none;border-color:var(--ac)}
+.notes-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:.78rem;color:var(--tx2)}
+.timer{display:inline-flex;align-items:center;gap:8px;background:var(--in);border:1px solid var(--bd);border-radius:99px;padding:4px 6px 4px 4px;margin:4px 8px 4px 0;vertical-align:middle}
+.timer.run{border-color:var(--ac);box-shadow:0 0 0 3px rgba(187,134,252,.12)}
+.timer.done{border-color:var(--bad)}
+.timer .tdisp{font-variant-numeric:tabular-nums;font-size:.95rem;font-weight:800;min-width:52px;text-align:center;color:var(--ac)}
+.timer.done .tdisp{color:var(--bad);font-size:.8rem}
+.timer .treset{background:transparent;border:none;color:var(--tx2);cursor:pointer;font-size:1rem;padding:2px 5px;border-radius:99px}
+.timer .treset:hover{color:var(--ac);background:var(--card)}
+.timer .tbtn{background:var(--card);border:1px solid var(--bd);color:var(--tx);font-family:inherit;font-size:.82rem;font-weight:700;padding:5px 10px;border-radius:99px;cursor:pointer}
+.timer .tbtn:hover{border-color:var(--ac);color:var(--ac)}
+.timer.run .tbtn{border-color:var(--ac);color:var(--ac)}
+
+/* ---------- Picture cards ---------- */
+.pic{border:1px solid var(--bd);border-radius:10px;background:var(--in);padding:16px 18px;margin-bottom:16px}
+.pic-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.pic-head .zh{font-size:1.32rem;color:var(--hl);font-weight:700}
+.pic-head .tr-title{color:var(--tx2);font-size:.86rem}
+.pic-tools{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.ipwrap{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 6px}
+.ip{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:5px 9px;font-size:.82rem;color:var(--tx2)}
+.ip b{color:var(--tx);font-weight:600}
+.ip.key{border-color:var(--hl);background:rgba(255,213,79,.08);color:var(--hl)}
+.ip.key b{color:var(--hl)}
+.frame{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:11px 14px;margin:10px 0}
+.frame .zh{font-size:1.16rem;line-height:1.85}
+.f-label{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac);margin-bottom:2px}
+.pic .trbox{border-left:3px solid var(--ac);padding:6px 0 6px 11px;margin:8px 0 2px;color:var(--tx2);font-size:.9rem}
+.pic-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.pic-img{margin:10px 0 2px;border:1px solid var(--bd);border-radius:9px;overflow:hidden;background:#171523;line-height:0}
+.pic-img svg{display:block;width:100%;height:auto}
+.pic-cap{font-size:.72rem;color:#8b8b8b;margin:6px 0 0;letter-spacing:.02em}
+
+/* ---------- Phrase bank ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:9px;margin-top:8px}
+.ph{background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:9px 12px}
+.ph .zh{font-size:1.22rem;line-height:1.5}
+.ph .py{font-size:.78rem;color:var(--ac);margin-top:1px}
+.ph .tr{font-size:.85rem;color:var(--tx2);margin-top:3px}
+
+/* ---------- Checklist ---------- */
+.clist{display:grid;gap:6px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border-radius:7px;background:var(--in);cursor:pointer;font-size:.94rem;border:1px solid transparent;transition:.15s}
+.chk:hover{border-color:var(--bd)}
+.chk input{margin-top:4px;accent-color:var(--ac);flex:none}
+.chk.done{opacity:.62}
+.chk.done span{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.35)}
+.cprog{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:.8rem;color:var(--tx2)}
+.cprog .bar{flex:1;height:8px;background:var(--in);border:1px solid var(--bd);border-radius:99px;overflow:hidden}
+.cprog .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .2s}
+
+/* ---------- Repetition trainer ---------- */
+.settabs{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.settab{background:var(--in);border:1px solid var(--bd);color:var(--tx2);border-radius:99px;padding:7px 15px;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:700}
+.settab.on{background:var(--ac);border-color:var(--ac);color:#161616}
+.rep{background:var(--in);border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:11px 13px;margin-bottom:9px;transition:.15s}
+.rep.ok{border-left-color:var(--ok);background:rgba(76,175,80,.07)}
+.rep.bad{border-left-color:var(--bad);background:rgba(239,83,80,.06)}
+.rep-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.rep-n{width:24px;height:24px;border-radius:50%;background:var(--card);border:1px solid var(--bd);display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:var(--hl);flex:none}
+.rep-tr{margin-left:auto;font-size:.82rem;color:var(--tx2);text-align:right}
+.rep-zh{font-family:var(--kaiti);font-size:1.48rem;line-height:1.6;margin:8px 0 0;color:var(--tx)}
+.rep-py{font-size:.82rem;color:var(--ac);margin-top:1px}
+.rep-row{display:flex;gap:8px;margin-top:8px}
+.rep-in{flex:1;min-width:0;background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:6px;padding:7px 10px;font-family:var(--kaiti);font-size:1.2rem}
+.rep-in:focus{outline:none;border-color:var(--ac)}
+.rep-fb{font-size:.85rem;margin-top:6px;min-height:1.2em}
+.rep-fb.ok{color:var(--ok)}
+.rep-fb.bad{color:var(--bad)}
+.score-chip{display:inline-flex;align-items:center;gap:6px;background:var(--in);border:1px solid var(--bd);border-radius:99px;padding:5px 12px;font-size:.88rem;color:var(--tx2)}
+.score-chip b{color:var(--hl)}
+
+/* ---------- Vocab ---------- */
+.searchrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+#vocabSearch{flex:1;min-width:190px;background:var(--in);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:9px 12px;font-family:inherit;font-size:.94rem}
+#vocabSearch:focus{outline:none;border-color:var(--ac)}
+
+/* ---------- Page links ---------- */
+.pgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px}
+.pcard{display:block;text-decoration:none;color:var(--tx);background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;transition:.15s}
+.pcard:hover{border-color:var(--ac);background:var(--card);transform:translateY(-1px)}
+.pcard b{color:var(--ac);display:block;font-size:.97rem;margin-bottom:2px}
+.pcard small{color:var(--tx2);font-size:.8rem}
+.pcard.current{border-color:var(--ok);background:rgba(76,175,80,.06)}
+.pcard.current b{color:var(--ok)}
+tr.now{background:rgba(187,134,252,.14) !important}
+tr.now td{font-weight:700}
+tr.now td:first-child{box-shadow:inset 3px 0 0 var(--ac)}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);z-index:99;background:var(--card);border:1px solid var(--ac);color:var(--tx);padding:9px 16px;border-radius:99px;font-size:.88rem;box-shadow:0 10px 26px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:.2s;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Responsive ---------- */
+@media(max-width:920px){
+  body{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+  #side{width:100% !important;height:auto;max-height:230px;border-right:0;border-bottom:1px solid var(--bd)}
+  #side .header-box{padding:10px 14px}
+  #side h1{font-size:1.05rem}
+  .exam-chip{margin:6px 14px 0}
+  #nav{display:flex;flex-direction:row;overflow-x:auto;padding:0}
+  #nav a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:10px 13px;font-size:.9rem}
+  #nav a i{width:auto}
+  #nav a.on,#nav a:hover{border-left-color:transparent;border-bottom-color:var(--ac)}
+  .nav-sep{display:none}
+  #side.collapsed #nav{display:none}
+  #side.collapsed h1{display:inline-block}
+  #main{padding:18px 16px 50px}
+  h2{font-size:1.55rem}
+  .card{padding:15px 14px}
+  .sim{padding:14px}
+  .sim-clock{font-size:2.6rem}
+  .sim-q .zh{font-size:1.18rem}
+  .pic{padding:13px 12px}
+  .pic-head .zh{font-size:1.14rem}
+  .pic-tools{margin-left:0;width:100%}
+  .rep-tr{margin-left:0;text-align:left;width:100%}
+  .rep-zh{font-size:1.28rem}
+  .toast{left:12px;right:12px;transform:translateY(14px)}
+  .toast.show{transform:translateY(0)}
+}
+@media(max-width:520px){
+  #nav a span{display:inline}
+  .scorebar{height:36px;font-size:.78rem}
+  .pnum{font-size:1.45rem}
+  table{min-width:400px;font-size:.9rem}
+  th,td{padding:7px 8px}
+  .rep-row{flex-wrap:wrap}
+  .rep-in{width:100%}
+}
+</style>
+</head>
+<body>
+
+<div id="side">
+  <div class="header-box">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" title="Menüyü Daralt/Genişlet" aria-label="Menü">☰</button>
+    <h1>Günlük Konuşma · <span class="zh">日常口语</span></h1>
+  </div>
+  <nav id="nav">
+    <a data-id="m-bilgi" class="on"><i>📌</i><span>1. Sınav Bilgileri</span></a>
+    <a data-id="m-resim"><i>🖼️</i><span>2. Resim Anlatma · 看图说话</span></a>
+    <a data-id="m-ornek"><i>📚</i><span>3. Örnek Resimler (6)</span></a>
+    <a data-id="m-kisi"><i>🧑</i><span>4. Soru-Cevap · Kişi Tanıtma</span></a>
+    <a data-id="m-plan"><i>🗓️</i><span>5. Soru-Cevap · Plan Anlatma</span></a>
+    <a data-id="m-tekrar"><i>🔁</i><span>6. 重复 Alıştırması (18)</span></a>
+    <a data-id="m-kelime"><i>🗂️</i><span>7. Kelime Hazinesi</span></a>
+    <a data-id="m-sayfalar"><i>🔗</i><span>8. Tüm Sayfalar &amp; Program</span></a>
+  </nav>
+</div>
+
+<div id="main">
+
+<!-- ================= 1. SINAV BİLGİLERİ ================= -->
+<section class="mod on" id="m-bilgi">
+  <h2>Sınav Bilgileri</h2>
+  <p class="sub">Günlük Konuşma · 05.11.2026 · 13.00–16.30 · DD Kütüphanesi</p>
+
+  <div class="card">
+    <div class="ct">Hocanın verdiği bilgiler</div>
+    <ul class="raw">
+      <li><b>Derste işlediklerimize önem ver.</b></li>
+      <li>Bir tane soru-cevap. - 2.5 dakika hazırlanma - 2 dakika konuşma - 40 Puan</li>
+      <li>Bir resim hakkında konuşma. - 30 Puan</li>
+      <li>Altı tane <span class="zh-inline">重复</span> sorusu. (Çoğu 8-12 <span class="zh-inline">汉字</span>) - 30 Puan</li>
+      <li>Fotoğrafı tanıtırken bütün detayları (<span class="zh-inline">人物、事件、环境、人物的神情、道具</span>) tanıtmak gerekiyor.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="ct">Puan dağılımı</div>
+    <div class="scorebar" role="img" aria-label="40 puan soru-cevap, 30 puan resim, 30 puan tekrar">
+      <span class="s1" style="width:40%">40</span>
+      <span class="s2" style="width:30%">30</span>
+      <span class="s3" style="width:30%">30</span>
+    </div>
+    <div class="scorelegend">
+      <span><i style="background:var(--ac)"></i>Soru-Cevap</span>
+      <span><i style="background:var(--hl)"></i>Resim Anlatma</span>
+      <span><i style="background:#4dd0e1"></i>重复</span>
+      <span>Toplam: 100 puan</span>
+    </div>
+    <div class="parts">
+      <div class="part p1">
+        <div class="pnum">40<small>puan</small></div>
+        <div class="pt">Soru-Cevap</div>
+        <div class="pd">1 soru · 2,5 dk hazırlık · 2 dk konuşma</div>
+      </div>
+      <div class="part p2">
+        <div class="pnum">30<small>puan</small></div>
+        <div class="pt">Resim Anlatma</div>
+        <div class="pd">1 fotoğraf · 2 dk konuşma</div>
+      </div>
+      <div class="part p3">
+        <div class="pnum">30<small>puan</small></div>
+        <div class="pt">重复</div>
+        <div class="pd">6 cümle · çoğu 8–12 汉字</div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px;margin-bottom:0">
+      <b>Resimde neye bakacaksın?</b> <span class="zh-inline">人物</span> (kimler), <span class="zh-inline">事件</span> (ne oluyor),
+      <span class="zh-inline">环境</span> (nerede), <span class="zh-inline">人物的神情</span> (yüz ifadesi), <span class="zh-inline">道具</span> (eşyalar).
+      Bunların hepsi anlatılmalı; sonra öncesi ve sonrasıyla küçük bir hikâye kurulmalı.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Bu sayfada ne çalışacaksın?</div>
+    <div class="roadmap">
+      <button class="road" onclick="show('m-tekrar')"><b>30 puan</b><span>Altı 重复 sorusu</span><small>Bölüm 6 · dinle → birebir tekrar et</small></button>
+      <button class="road" onclick="show('m-ornek')"><b>30 puan</b><span>Resim anlatma</span><small>Bölüm 2–3 · bilgi noktaları + 6 örnek</small></button>
+      <button class="road" onclick="show('m-kisi')"><b>40 puan</b><span>Kişi tanıtma</span><small>Bölüm 4 · çerçeve + 17 kalıp</small></button>
+      <button class="road" onclick="show('m-plan')"><b>40 puan</b><span>Plan anlatma</span><small>Bölüm 5 · hafta sonu / tatil</small></button>
+    </div>
+  </div>
+
+  <div class="sim" id="sim">
+    <div class="sim-head">
+      <b>🎤 Sınav provası</b>
+      <span class="sim-phase" id="simPhase">HAZIRLIK</span>
+    </div>
+    <div class="sim-clock" id="simTime">02:30</div>
+    <div class="sim-bar"><i id="simFill"></i></div>
+    <div class="sim-q">
+      <div class="zh" id="simQzh">请介绍一下你的一个好朋友。</div>
+      <div class="py" id="simQpy">Qǐng jièshào yíxià nǐ de yí gè hǎo péngyou.</div>
+      <div class="tr" id="simQtr">Yakın bir arkadaşını tanıt.</div>
+    </div>
+    <div class="sim-btns">
+      <button class="btn" id="simBtn" onclick="simToggle()">▶ Başlat</button>
+      <button class="btn ghost" onclick="simReset()">↺ Sıfırla</button>
+      <button class="btn ghost" onclick="simRandom()">🎲 Rastgele soru</button>
+      <button class="mini ghost" onclick="speakEl('simQzh')">🔊 Soruyu dinle</button>
+    </div>
+    <textarea id="simNotes" placeholder="Hazırlık notları… (人物 / 事件 / 环境 / 神情 / 道具)"></textarea>
+    <div class="notes-row">
+      <span>Notlar bu tarayıcıda saklanır · Enter değil, kısa anahtar kelimeler yaz.</span>
+      <button class="mini ghost" onclick="clearNotes()">Temizle</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Sınav taktikleri</div>
+    <div class="checkwrap">
+      <div class="clist">
+        <label class="chk"><input type="checkbox"><span>Derste işlenen metinleri, örnek cümleleri ve kelimeleri tekrar et.</span></label>
+        <label class="chk"><input type="checkbox"><span>Resimde beş bilgi noktasını da not al: <span class="zh-inline">人物、事件、环境、神情、道具</span>.</span></label>
+        <label class="chk"><input type="checkbox"><span>Resmi sadece betimleme; öncesi (起因) ve sonrası (结果) ile hikâye kur.</span></label>
+        <label class="chk"><input type="checkbox"><span>Kişi tanıtımında sırayı koru: temel bilgi → dış görünüş → kişilik → ilgi alanları → sonuç.</span></label>
+        <label class="chk"><input type="checkbox"><span>Plan anlatırken zaman sırası kullan: <span class="zh-inline">早上 → 下午 → 晚上</span>, <span class="zh-inline">先 → 然后 → 之后 → 最后</span>.</span></label>
+        <label class="chk"><input type="checkbox"><span>En az 1–2 zor kalıp ve 2–3 üst düzey kelime kullan (ör. <span class="zh-inline">不仅……而且……</span>, <span class="zh-inline">对……有很大的影响</span>).</span></label>
+        <label class="chk"><input type="checkbox"><span>重复 bölümünde cümleyi anlamına göre değil, duyduğun seslerle birebir tekrar et.</span></label>
+      </div>
+      <div class="cprog"><span class="bar"><i></i></span><span class="cnt">0/7</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2. RESİM ANLATMA ================= -->
+<section class="mod" id="m-resim">
+  <h2>Resim Anlatma · <span class="zh">看图说话</span></h2>
+  <p class="sub">30 puan · 1 fotoğraf · 2 dakika · bilgi noktaları + hikâye çerçevesi</p>
+
+  <div class="card">
+    <div class="ct">5 adımda resim anlatma</div>
+    <div class="info-box"><b>1. Gözlemle.</b> Kim var, ne yapıyor, nerede, ne zaman, yüz ifadesi ne, elinde/çevresinde ne var?</div>
+    <div class="info-box"><b>2. En önemli noktayı seç.</b> Hikâyeyi başlatacak “özel ayrıntı” hangisi? (ör. <span class="zh-inline">渴</span>, <span class="zh-inline">惊喜</span>, <span class="zh-inline">着急</span>, <span class="zh-inline">专注</span>)</div>
+    <div class="info-box"><b>3. Öncesini ve sonrasını tahmin et.</b> Neden oldu? Sonra ne oldu? Duygu ne değiştirdi?</div>
+    <div class="info-box"><b>4. Çerçeve kur.</b> <span class="zh-inline">前</span> (起因) → <span class="zh-inline">画面</span> (经过) → <span class="zh-inline">后</span> (结果 + duygu).</div>
+    <div class="info-box" style="margin-bottom:0"><b>5. Konuş.</b> 2 dakika kesintisiz; bağlaçları ve en az bir zor kalıbı kullan.</div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Bilgi noktaları · <span class="zh">信息点</span></div>
+    <div class="tw">
+      <table class="info">
+        <thead><tr><th>Kategori</th><th>Neye bakılır?</th><th>Örnek</th></tr></thead>
+        <tbody>
+          <tr><td>人物和身份</td><td>Tek kişi mi, birden fazla mı? Kim?</td><td class="zh">一个女职员 · 一对年轻恋人</td></tr>
+          <tr><td>人物关系</td><td>Arkadaş, aile, sevgili, iş arkadaşı, öğretmen-öğrenci, doktor-hasta…</td><td class="zh">一对朋友 · 一对母女</td></tr>
+          <tr><td>环境</td><td>Ev, sınıf, ofis, sokak, spor salonu, bar, bahçe…</td><td class="zh">健身房 · 酒吧 · 花园</td></tr>
+          <tr><td>事件</td><td>Fotoğraftaki kişi ne yapıyor?</td><td class="zh">喝水 · 送礼物 · 安慰 · 看病</td></tr>
+          <tr><td>时间</td><td>Sabah, öğle, akşam, gece yarısı…</td><td class="zh">下班后 · 中午 · 早上</td></tr>
+          <tr><td>季节</td><td>İlkbahar, yaz, sonbahar, kış</td><td class="zh">夏天</td></tr>
+          <tr><td>节日 / 纪念日</td><td>Doğum günü, bayram, yıl dönümü…</td><td class="zh">生日</td></tr>
+          <tr><td>天气</td><td>Güneşli, yağmurlu, rüzgârlı…</td><td class="zh">晴天</td></tr>
+          <tr><td>人物的神情</td><td>Telaşlı, şaşkın, üzgün, sevinçli, odaklanmış…</td><td class="zh">惊喜 · 着急 · 专注</td></tr>
+          <tr><td>道具</td><td>Hediye, çiçek, telefon, şemsiye, su bardağı, havlu…</td><td class="zh">礼物 · 体温表 · 毛巾</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:8px">Önce tüm bilgi noktalarını çıkar; sonra “en önemli bilgi noktaları”nı seç. Bunlar olayı anlatmaya ve hikâyeyi genişletmeye yarayan noktalardır.</p>
+  </div>
+
+  <div class="card">
+    <div class="ct">Genel bilgi → en önemli bilgi</div>
+    <p class="muted" style="margin-bottom:10px">Örnek: doğum günü hediyesi verilen fotoğraf.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Genel bilgi noktaları</th><th>En önemli bilgi noktaları</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>人物：一对年轻男女 · 关系：恋人 · 事件：送礼物 · 环境：室外 · 时间：白天 · 季节：夏天 · 天气：晴天 · 神情：高兴、惊喜 · 道具：礼物</td>
+            <td class="zh">人物：一对年轻恋人<br>事件：送礼物<br>时节：生日<br>神情：高兴、惊喜<br>道具：礼物</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box" style="margin-top:12px;margin-bottom:0">
+      Kilit nokta <span class="zh-inline">惊喜</span>: Sadece “erkek arkadaş kız arkadaşına hediye verdi” deme.
+      <b>Neden?</b> <span class="zh-inline">女朋友过生日 / 认识一年 / 表示道歉</span>.
+      <b>Öncesi?</b> <span class="zh-inline">女朋友正坐在花园里喝茶，男朋友走过来</span>.
+      <b>Sonrası?</b> <span class="zh-inline">惊喜地叫起来，想起了今天是她的生日</span>.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Hikâye çerçevesi · <span class="zh">前 → 画面 → 后</span></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Bölüm</th><th>Ne anlatılır?</th><th>Başlangıç kalıpları</th></tr></thead>
+        <tbody>
+          <tr><td><b class="gold">前</b> · 起因</td><td>Zaman, yer, kişiler, olayın sebebi</td><td class="zh">今天下班后…… / 那天是……，……正在……</td></tr>
+          <tr><td><b class="gold">画面</b> · 经过</td><td>Fotoğrafta görünen an: hareket, yüz ifadesi, eşyalar</td><td class="zh">图片上，……正坐在…… / 他（她）手里拿着……</td></tr>
+          <tr><td><b class="gold">后</b> · 结果</td><td>Sonuç, duygu, küçük bir yorum</td><td class="zh">最后，…… / 从那以后，…… / 我想，……</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:8px">İpucu: <span class="zh-inline">时间 + 地点 + 人物 + 起因 + 经过 + 结果</span> — bir olayı anlatmanın altı temel öğesi.</p>
+  </div>
+
+  <div class="card">
+    <div class="ct">Resim anlatma kalıpları</div>
+    <div class="pgrid">
+      <div class="ph"><div class="zh">图片上有一个/两个……</div><div class="py">Túpiàn shàng yǒu yí gè / liǎng gè…</div><div class="tr">Fotoğrafta bir/iki … var.</div></div>
+      <div class="ph"><div class="zh">从图片上看，……</div><div class="py">Cóng túpiàn shàng kàn,…</div><div class="tr">Fotoğrafa bakılırsa, …</div></div>
+      <div class="ph"><div class="zh">他/她正在……</div><div class="py">Tā zhèngzài…</div><div class="tr">O şu anda … yapıyor.</div></div>
+      <div class="ph"><div class="zh">他/她看起来又……又……</div><div class="py">Tā kàn qǐlái yòu… yòu…</div><div class="tr">Hem … hem … görünüyor.</div></div>
+      <div class="ph"><div class="zh">他/她看上去很……</div><div class="py">Tā kàn shàngqù hěn…</div><div class="tr">Çok … görünüyor.</div></div>
+      <div class="ph"><div class="zh">周围的环境是……</div><div class="py">Zhōuwéi de huánjìng shì…</div><div class="tr">Çevre/ortam …</div></div>
+      <div class="ph"><div class="zh">桌子上/旁边放着……</div><div class="py">Zhuōzi shàng / pángbiān fàngzhe…</div><div class="tr">Masanın üstünde/yanında … duruyor.</div></div>
+      <div class="ph"><div class="zh">他们一边……一边……</div><div class="py">Tāmen yìbiān… yìbiān…</div><div class="tr">Bir yandan …, bir yandan …</div></div>
+      <div class="ph"><div class="zh">我猜……</div><div class="py">Wǒ cāi…</div><div class="tr">Sanırım …</div></div>
+      <div class="ph"><div class="zh">可能是因为……</div><div class="py">Kěnéng shì yīnwèi…</div><div class="tr">Belki de … yüzündendir.</div></div>
+      <div class="ph"><div class="zh">就在这时，……</div><div class="py">Jiù zài zhè shí,…</div><div class="tr">Tam o sırada, …</div></div>
+      <div class="ph"><div class="zh">结果，……</div><div class="py">Jiéguǒ,…</div><div class="tr">Sonunda, …</div></div>
+      <div class="ph"><div class="zh">这让我想起……</div><div class="py">Zhè ràng wǒ xiǎngqǐ…</div><div class="tr">Bu bana …yı hatırlatıyor.</div></div>
+      <div class="ph"><div class="zh">可以说，……</div><div class="py">Kěyǐ shuō,…</div><div class="tr">Şöyle diyebiliriz ki, …</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Sık yapılan hatalar</div>
+    <ul>
+      <li><b class="bad">1. Sınavın ne istediğini bilmemek.</b> Hazırlıksız, rastgele konuşmak. → Önce bilgi noktalarını çıkar.</li>
+      <li><b class="bad">2. Bilgi noktalarını kaçırmak.</b> Açılmış şemsiye, saate bakma, telaşlı yüz ifadesi gibi ayrıntıları atlamak.</li>
+      <li><b class="bad">3. Aşırı basit anlatmak.</b> “Bir adam bir kadına hediye veriyor.” → Neden? Öncesi? Sonrası? Duygu?</li>
+      <li><b class="bad">4. Not almamak.</b> Hazırlıkta anahtar kelime yazmamak → dağınık, kopuk anlatım.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="ct">Resim anlatma kontrol listesi</div>
+    <div class="checkwrap">
+      <div class="clist">
+        <label class="chk"><input type="checkbox"><span>Beş bilgi noktasını söyledim: <span class="zh-inline">人物、事件、环境、神情、道具</span>.</span></label>
+        <label class="chk"><input type="checkbox"><span>Öncesini (起因) ve sonrasını (结果) ekledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>En az iki sahne/ayrıntı betimledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>Duygu veya küçük bir yorumla bitirdim.</span></label>
+        <label class="chk"><input type="checkbox"><span>2 dakika boyunca kesintisiz konuştum.</span></label>
+      </div>
+      <div class="cprog"><span class="bar"><i></i></span><span class="cnt">0/5</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. ÖRNEK RESİMLER ================= -->
+<section class="mod" id="m-ornek">
+  <h2>Örnek Resimler · <span class="zh">图片描述</span></h2>
+  <p class="sub">6 resim · bilgi noktaları + hikâye çerçevesi + 2 dakika konuşma</p>
+
+  <div class="info-box">
+    <b>Nasıl çalışılır?</b> Önce resme bak ve bilgi noktalarını oku → çerçeveyi gizle → kendi cümlelerinle 2 dakika anlat →
+    sonra çerçeveyi aç ve karşılaştır. Türkçe çeviri, anlamı kontrol etmek için.
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">健身房喝水</span><span class="tr-title">Spor salonunda su içmek</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr1')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr1',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr1',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Spor salonunda bench üzerinde oturan kadın su içiyor, omzunda havlu, yanında dambıl rafı ve koşu bandı">
+        <rect width="640" height="340" fill="#1d1a31"/>
+        <rect y="250" width="640" height="90" fill="#161327"/>
+        <rect y="250" width="640" height="3" fill="#3a3154"/>
+        <g stroke="#2a2442" stroke-width="2"><path d="M0 66h640M0 140h640M0 214h640"/></g>
+        <rect x="26" y="26" width="170" height="120" rx="8" fill="#251f3f" stroke="#4a3a63" stroke-width="3"/>
+        <path d="M44 122l34-36 26 24 30-38 28 30" stroke="#3a3154" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="188" width="176" height="10" rx="5" fill="#4a3a63"/>
+        <g fill="#7b68a8">
+          <rect x="46" y="170" width="9" height="18" rx="4"/><rect x="55" y="174" width="30" height="10" rx="5"/><rect x="85" y="170" width="9" height="18" rx="4"/>
+          <rect x="110" y="170" width="9" height="18" rx="4"/><rect x="119" y="174" width="30" height="10" rx="5"/><rect x="149" y="170" width="9" height="18" rx="4"/>
+        </g>
+        <rect x="34" y="232" width="176" height="10" rx="5" fill="#4a3a63"/>
+        <g fill="#6b5b8a">
+          <rect x="52" y="214" width="9" height="18" rx="4"/><rect x="61" y="218" width="26" height="10" rx="5"/><rect x="87" y="214" width="9" height="18" rx="4"/>
+          <rect x="112" y="214" width="9" height="18" rx="4"/><rect x="121" y="218" width="26" height="10" rx="5"/><rect x="147" y="214" width="9" height="18" rx="4"/>
+        </g>
+        <g stroke="#4a3a63" stroke-width="6" fill="none" stroke-linecap="round">
+          <path d="M470 240V146"/><path d="M470 146h64"/><path d="M446 240h150"/>
+        </g>
+        <rect x="452" y="118" width="76" height="28" rx="7" fill="#2a2442" stroke="#4a3a63" stroke-width="3"/>
+        <rect x="512" y="150" width="8" height="52" rx="4" fill="#4a3a63"/>
+        <rect x="446" y="236" width="150" height="12" rx="6" fill="#4a3a63"/>
+        <rect x="258" y="236" width="128" height="14" rx="7" fill="#5a4680"/>
+        <rect x="268" y="250" width="10" height="36" rx="4" fill="#3a3154"/>
+        <rect x="366" y="250" width="10" height="36" rx="4" fill="#3a3154"/>
+        <path d="M304 164h44a14 14 0 0 1 14 14v42a14 14 0 0 1-14 14h-44a14 14 0 0 1-14-14v-42a14 14 0 0 1 14-14z" fill="#4dd0e1"/>
+        <rect x="340" y="208" width="54" height="20" rx="10" fill="#33415a"/>
+        <rect x="382" y="222" width="20" height="38" rx="9" fill="#33415a"/>
+        <rect x="368" y="250" width="40" height="12" rx="6" fill="#e8e8f0"/>
+        <path d="M340 178l16-26" stroke="#f2c9a0" stroke-width="14" stroke-linecap="round"/>
+        <rect x="350" y="112" width="21" height="42" rx="7" fill="#bfe9ff"/>
+        <rect x="354" y="104" width="13" height="10" rx="3" fill="#ffd54f"/>
+        <path d="M348 146h26" stroke="#8fd6f5" stroke-width="4"/>
+        <circle cx="322" cy="142" r="22" fill="#f2c9a0"/>
+        <path d="M300 140a22 22 0 0 1 44 0c-9-9-35-9-44 0z" fill="#2b2334"/>
+        <path d="M301 138c-9 12-11 28-7 40" stroke="#2b2334" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <path d="M304 162c-8 12-7 28 0 40" stroke="#ffd54f" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <path d="M356 118c4 6 6 10 6 13a6 6 0 0 1-12 0c0-3 2-7 6-13z" fill="#4dd0e1"/>
+        <path d="M286 166c3 5 5 8 5 10a5 5 0 0 1-10 0c0-2 2-5 5-10z" fill="#4dd0e1" opacity=".75"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 人物 · 环境 · 道具</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 一个女子</span>
+      <span class="ip"><b>事件</b> 喝水</span>
+      <span class="ip"><b>环境</b> 健身房</span>
+      <span class="ip"><b>时间</b> 运动之后</span>
+      <span class="ip"><b>神情</b> 热、渴</span>
+      <span class="ip"><b>道具</b> 水杯、毛巾</span>
+      <span class="ip key"><b>核心</b> 渴 → 运动后喝水</span>
+    </div>
+    <div class="frame" id="fr1">
+      <div class="f-label">故事框架</div>
+      <div class="zh">今天下班后，我去健身房运动了两个小时。我很热，也很渴。我用毛巾擦了一下汗，又喝了一大杯水。喝完水以后，我感觉好多了。</div>
+    </div>
+    <div class="trbox hide" id="tr1">Bugün işten çıktıktan sonra spor salonunda iki saat spor yaptım. Çok sıcaklamış ve çok susamıştım. Havluyla terimi sildim, sonra büyük bir bardak su içtim. Su içtikten sonra çok daha iyi hissettim.</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">生日送礼物</span><span class="tr-title">Doğum günü hediyesi</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr2')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr2',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr2',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Bahçede masada oturan genç kadına erkek arkadaşı kutu hediye veriyor, kadın şaşkın ve mutlu">
+        <rect width="640" height="340" fill="#17251f"/>
+        <rect y="250" width="640" height="90" fill="#12201a"/>
+        <rect y="250" width="640" height="3" fill="#274538"/>
+        <circle cx="52" cy="228" r="62" fill="#1e3d31"/>
+        <circle cx="132" cy="246" r="48" fill="#234739"/>
+        <circle cx="596" cy="220" r="64" fill="#1e3d31"/>
+        <rect x="520" y="150" width="15" height="110" rx="7" fill="#3d3326"/>
+        <circle cx="527" cy="126" r="56" fill="#234739"/>
+        <rect x="84" y="228" width="140" height="13" rx="6" fill="#6b5540"/>
+        <rect x="98" y="241" width="11" height="44" rx="4" fill="#4a3a2c"/>
+        <rect x="200" y="241" width="11" height="44" rx="4" fill="#4a3a2c"/>
+        <rect x="128" y="208" width="30" height="20" rx="4" fill="#e8e8f0"/>
+        <path d="M158 213c10 0 10 12 0 12" stroke="#e8e8f0" stroke-width="4" fill="none"/>
+        <path d="M134 202c2-7 9-7 11 0M148 202c2-7 9-7 11 0" stroke="#9fb8ad" stroke-width="3" fill="none" stroke-linecap="round" opacity=".55"/>
+        <rect x="246" y="176" width="56" height="74" rx="16" fill="#bb86fc"/>
+        <path d="M244 226h60l12 26h-84z" fill="#a06de0"/>
+        <rect x="256" y="252" width="19" height="34" rx="9" fill="#f2c9a0"/>
+        <rect x="282" y="252" width="19" height="34" rx="9" fill="#f2c9a0"/>
+        <rect x="248" y="284" width="34" height="12" rx="6" fill="#2f2a3e"/>
+        <rect x="278" y="284" width="34" height="12" rx="6" fill="#2f2a3e"/>
+        <circle cx="274" cy="152" r="22" fill="#f2c9a0"/>
+        <path d="M252 150a22 22 0 0 1 44 0c-4-12-40-12-44 0z" fill="#3a2b22"/>
+        <path d="M252 148c-3 14-2 26 2 34M296 148c3 14 2 26-2 34" stroke="#3a2b22" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M296 198l40-16" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <path d="M252 198l-14 20" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <rect x="430" y="156" width="58" height="94" rx="17" fill="#3f6fa8"/>
+        <rect x="438" y="248" width="20" height="40" rx="9" fill="#2f3b52"/>
+        <rect x="462" y="248" width="20" height="40" rx="9" fill="#2f3b52"/>
+        <rect x="432" y="284" width="34" height="12" rx="6" fill="#232c3c"/>
+        <rect x="462" y="284" width="34" height="12" rx="6" fill="#232c3c"/>
+        <circle cx="459" cy="128" r="23" fill="#f2c9a0"/>
+        <path d="M436 126a23 23 0 0 1 46 0c-11-10-35-10-46 0z" fill="#241d18"/>
+        <path d="M432 180l-52 20" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <rect x="332" y="184" width="54" height="42" rx="6" fill="#ffd54f"/>
+        <rect x="326" y="176" width="66" height="14" rx="5" fill="#ffca28"/>
+        <rect x="352" y="176" width="12" height="50" fill="#4dd0e1"/>
+        <path d="M352 176c-12-10-22-2-14 6M364 176c12-10 22-2 14 6" stroke="#4dd0e1" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M414 150l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="#ffd54f"/>
+        <path d="M396 126l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#ffd54f" opacity=".8"/>
+        <path d="M322 152l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#4dd0e1" opacity=".8"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 惊喜 anı · 礼物 kutunun üstünde</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 一对年轻恋人</span>
+      <span class="ip"><b>事件</b> 送礼物</span>
+      <span class="ip"><b>环境</b> 花园（室外）</span>
+      <span class="ip"><b>时间</b> 白天 · 夏天</span>
+      <span class="ip"><b>神情</b> 高兴、惊喜</span>
+      <span class="ip"><b>道具</b> 礼物</span>
+      <span class="ip key"><b>核心</b> 惊喜</span>
+    </div>
+    <div class="frame" id="fr2">
+      <div class="f-label">故事框架</div>
+      <div class="zh">今天是小美的生日。女孩儿正坐在花园里喝茶，她的男朋友走过来，拿出一个礼物送给她，说：“生日快乐！”女孩子看到礼物非常惊喜，高兴地叫了起来。她说：“谢谢你，我很喜欢！”</div>
+    </div>
+    <div class="trbox hide" id="tr2">Bugün Xiaomei'nin doğum günü. Kız bahçede çay içerken erkek arkadaşı yanına geliyor, bir hediye çıkarıp “Doğum günün kutlu olsun!” diyor. Kız hediyeyi görünce çok şaşırıyor ve sevinçle bağırıyor: “Teşekkür ederim, çok beğendim!”</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">酒吧安慰</span><span class="tr-title">Barda teselli</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr3')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr3',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr3',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Barda iki arkadaş bira içiyor, biri üzgün olanın omzuna kolunu atmış teselli ediyor">
+        <rect width="640" height="340" fill="#201722"/>
+        <ellipse cx="320" cy="70" rx="250" ry="150" fill="#2b2032" opacity=".7"/>
+        <rect y="286" width="640" height="54" fill="#16111b"/>
+        <rect y="278" width="640" height="12" rx="6" fill="#5a4680"/>
+        <rect x="64" y="76" width="512" height="10" rx="5" fill="#4a3a63"/>
+        <rect x="64" y="146" width="512" height="10" rx="5" fill="#4a3a63"/>
+        <g>
+          <rect x="86" y="42" width="20" height="34" rx="5" fill="#7b68a8"/><rect x="91" y="28" width="10" height="16" rx="4" fill="#7b68a8"/>
+          <rect x="126" y="48" width="18" height="28" rx="5" fill="#b5883f"/><rect x="131" y="36" width="8" height="14" rx="4" fill="#b5883f"/>
+          <rect x="164" y="38" width="22" height="38" rx="5" fill="#4dd0e1" opacity=".8"/><rect x="170" y="24" width="10" height="16" rx="4" fill="#4dd0e1" opacity=".8"/>
+          <rect x="212" y="46" width="18" height="30" rx="5" fill="#bb86fc"/><rect x="217" y="34" width="8" height="14" rx="4" fill="#bb86fc"/>
+          <rect x="256" y="40" width="20" height="36" rx="5" fill="#7b68a8"/><rect x="261" y="26" width="10" height="16" rx="4" fill="#7b68a8"/>
+          <rect x="386" y="44" width="18" height="32" rx="5" fill="#4dd0e1" opacity=".8"/><rect x="391" y="32" width="8" height="14" rx="4" fill="#4dd0e1" opacity=".8"/>
+          <rect x="426" y="38" width="20" height="38" rx="5" fill="#b5883f"/><rect x="431" y="24" width="10" height="16" rx="4" fill="#b5883f"/>
+          <rect x="466" y="48" width="18" height="28" rx="5" fill="#bb86fc"/><rect x="471" y="36" width="8" height="14" rx="4" fill="#bb86fc"/>
+          <rect x="508" y="42" width="20" height="34" rx="5" fill="#7b68a8"/><rect x="513" y="28" width="10" height="16" rx="4" fill="#7b68a8"/>
+        </g>
+        <g fill="#3a3154">
+          <rect x="96" y="120" width="16" height="26" rx="3"/><rect x="126" y="116" width="16" height="30" rx="3"/><rect x="158" y="122" width="16" height="24" rx="3"/>
+          <rect x="452" y="118" width="16" height="28" rx="3"/><rect x="486" y="122" width="16" height="24" rx="3"/><rect x="518" y="116" width="16" height="30" rx="3"/>
+        </g>
+        <rect x="196" y="196" width="62" height="92" rx="18" fill="#8a5a7a"/>
+        <circle cx="228" cy="170" r="23" fill="#f2c9a0"/>
+        <path d="M205 168a23 23 0 0 1 46 0c-11-10-35-10-46 0z" fill="#241d18"/>
+        <path d="M214 176c3-3 7-3 10 0M234 176c3-3 7-3 10 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M220 190c5-4 12-4 17 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="384" y="196" width="62" height="92" rx="18" fill="#3f6fa8"/>
+        <circle cx="416" cy="170" r="23" fill="#f2c9a0"/>
+        <path d="M393 168a23 23 0 0 1 46 0c-11-10-35-10-46 0z" fill="#2b2334"/>
+        <path d="M404 176c3-3 7-3 10 0M424 176c3-3 7-3 10 0" stroke="#2b2334" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M408 190c5 5 14 5 19 0" stroke="#2b2334" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M384 214c-30-26-84-30-126-8" stroke="#f2c9a0" stroke-width="15" stroke-linecap="round" fill="none"/>
+        <path d="M228 222c-14 10-22 30-20 50" stroke="#f2c9a0" stroke-width="15" stroke-linecap="round" fill="none"/>
+        <g>
+          <rect x="292" y="246" width="28" height="34" rx="4" fill="#ffca28"/>
+          <rect x="292" y="244" width="28" height="8" rx="4" fill="#fff3cd"/>
+          <path d="M320 252c9 0 9 16 0 16" stroke="#ffca28" stroke-width="5" fill="none"/>
+          <rect x="322" y="246" width="26" height="34" rx="4" fill="#ffca28" opacity=".55"/>
+          <rect x="322" y="244" width="26" height="8" rx="4" fill="#fff3cd" opacity=".55"/>
+        </g>
+        <ellipse cx="236" cy="200" rx="9" ry="5" fill="#f2c9a0"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 安慰 · omuza kol</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 一对朋友</span>
+      <span class="ip"><b>事件</b> 安慰</span>
+      <span class="ip"><b>环境</b> 酒吧</span>
+      <span class="ip"><b>神情</b> 不开心、鼓励</span>
+      <span class="ip"><b>道具</b> 两杯啤酒</span>
+      <span class="ip key"><b>核心</b> 友谊</span>
+    </div>
+    <div class="frame" id="fr3">
+      <div class="f-label">故事框架</div>
+      <div class="zh">汤姆今天输球了，非常难过。他的朋友杰克和他一起来到酒吧，他们每人要了一杯啤酒。汤姆一直闷闷不乐，杰克拍拍他的肩，说：“高兴一点儿，还有下一场比赛呢。难过的时候，朋友最重要。”</div>
+    </div>
+    <div class="trbox hide" id="tr3">Tom bugün maçı kaybetti, çok üzgün. Arkadaşı Jack ile bara geliyorlar, ikisi de birer bira söylüyor. Tom'un keyfi hiç yerine gelmiyor; Jack omzuna vurup “Neşelen, daha sonraki maçlar da var. Üzüldüğünde arkadaş en önemlisidir.” diyor.</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">母女生病</span><span class="tr-title">Anne ve hasta kızı</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr4')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr4',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr4',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Kızı yatakta hasta yatıyor, annesi elinde termometre ve telefonla okulu arıyor">
+        <rect width="640" height="340" fill="#1e1a2b"/>
+        <rect y="300" width="640" height="40" fill="#171326"/>
+        <rect x="316" y="52" width="112" height="96" rx="8" fill="#241f38" stroke="#4a3a63" stroke-width="3"/>
+        <path d="M372 52v96M316 100h112" stroke="#4a3a63" stroke-width="3"/>
+        <circle cx="398" cy="78" r="11" fill="#ffd54f" opacity=".75"/>
+        <rect x="52" y="164" width="36" height="92" rx="8" fill="#4a3a63"/>
+        <rect x="80" y="240" width="272" height="44" rx="10" fill="#3c3352"/>
+        <rect x="80" y="274" width="272" height="10" rx="5" fill="#2c2542"/>
+        <rect x="96" y="220" width="92" height="30" rx="12" fill="#e8e8f0"/>
+        <rect x="180" y="210" width="172" height="58" rx="12" fill="#bb86fc"/>
+        <rect x="180" y="210" width="172" height="16" rx="8" fill="#a06de0"/>
+        <circle cx="128" cy="218" r="22" fill="#f2c9a0"/>
+        <path d="M106 216a22 22 0 0 1 44 0c-9-12-35-12-44 0z" fill="#3a2b22"/>
+        <path d="M118 221c3 3 8 3 11 0M134 221c3 3 7 3 10 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M123 232c4-3 9-3 13 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path d="M164 190c4 6 6 10 6 13a6 6 0 0 1-12 0c0-3 2-7 6-13z" fill="#4dd0e1" opacity=".9"/>
+        <rect x="372" y="252" width="60" height="48" rx="6" fill="#4a3a63"/>
+        <rect x="386" y="234" width="18" height="20" rx="3" fill="#bfe9ff"/>
+        <rect x="412" y="238" width="14" height="16" rx="3" fill="#e8e8f0"/>
+        <rect x="412" y="238" width="14" height="6" rx="3" fill="#ef5350"/>
+        <rect x="470" y="150" width="58" height="102" rx="17" fill="#4dd0e1"/>
+        <rect x="478" y="250" width="20" height="50" rx="9" fill="#33415a"/>
+        <rect x="504" y="250" width="20" height="50" rx="9" fill="#33415a"/>
+        <rect x="472" y="292" width="34" height="12" rx="6" fill="#232c3c"/>
+        <rect x="504" y="292" width="34" height="12" rx="6" fill="#232c3c"/>
+        <circle cx="499" cy="122" r="23" fill="#f2c9a0"/>
+        <path d="M476 122a23 23 0 0 1 46 0c-11-12-35-12-46 0z" fill="#2b2334"/>
+        <circle cx="524" cy="104" r="11" fill="#2b2334"/>
+        <path d="M528 176l30-24" stroke="#f2c9a0" stroke-width="14" stroke-linecap="round"/>
+        <rect x="548" y="130" width="16" height="28" rx="3" fill="#2a2442" stroke="#4dd0e1" stroke-width="2"/>
+        <path d="M470 196l-28 14" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <rect x="412" y="204" width="34" height="9" rx="4" fill="#e8e8f0"/>
+        <circle cx="414" cy="208" r="5" fill="#ef5350"/>
+        <rect x="352" y="172" width="6" height="26" rx="3" fill="#ffd54f" opacity=".5"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 体温表 · 打电话请假</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 一对母女</span>
+      <span class="ip"><b>事件</b> 生病</span>
+      <span class="ip"><b>环境</b> 家里</span>
+      <span class="ip"><b>神情</b> 着急、担心</span>
+      <span class="ip"><b>道具</b> 体温表、电话</span>
+      <span class="ip key"><b>核心</b> 着急</span>
+    </div>
+    <div class="frame" id="fr4">
+      <div class="f-label">故事框架</div>
+      <div class="zh">早上起来，女儿觉得不舒服。妈妈让她躺在床上休息，给她量了体温，发现是三十八度五，发烧了。妈妈着急地给学校打了电话，为女儿请假。今天女儿得在家里休息了。</div>
+    </div>
+    <div class="trbox hide" id="tr4">Sabah kalkan kız kendini iyi hissetmiyor. Annesi onu yatağa yatırıp dinlendiriyor, ateşini ölçüyor ve 38,5 olduğunu, ateşi olduğunu fark ediyor. Annesi telaşla okulu arayıp kızı için izin istiyor. Kız bugün evde dinlenmek zorunda.</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">办公楼外吃饭工作</span><span class="tr-title">Ofis önünde yemek yerken çalışmak</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr5')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr5',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr5',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Ofis binasının önünde bankta oturan kadın bir yandan sandviç yiyor bir yandan dizüstü bilgisayarda çalışıyor">
+        <rect width="640" height="340" fill="#1a2030"/>
+        <rect x="36" y="16" width="568" height="248" fill="#232c42"/>
+        <rect x="36" y="16" width="568" height="10" fill="#2e3a55"/>
+        <g fill="#2c3850">
+          <rect x="64" y="46" width="56" height="42" rx="4"/><rect x="140" y="46" width="56" height="42" rx="4"/><rect x="216" y="46" width="56" height="42" rx="4"/>
+          <rect x="416" y="46" width="56" height="42" rx="4"/><rect x="492" y="46" width="56" height="42" rx="4"/><rect x="556" y="46" width="30" height="42" rx="4"/>
+          <rect x="64" y="108" width="56" height="42" rx="4"/><rect x="140" y="108" width="56" height="42" rx="4"/><rect x="216" y="108" width="56" height="42" rx="4"/>
+          <rect x="416" y="108" width="56" height="42" rx="4"/><rect x="492" y="108" width="56" height="42" rx="4"/><rect x="556" y="108" width="30" height="42" rx="4"/>
+        </g>
+        <g fill="#4dd0e1" opacity=".35">
+          <rect x="70" y="52" width="44" height="30" rx="2"/><rect x="422" y="114" width="44" height="30" rx="2"/><rect x="146" y="52" width="44" height="30" rx="2"/>
+        </g>
+        <rect x="292" y="120" width="96" height="144" fill="#1b2233" stroke="#3a4864" stroke-width="3"/>
+        <rect x="300" y="128" width="80" height="128" fill="#2c3850"/>
+        <rect x="318" y="196" width="44" height="60" rx="4" fill="#4dd0e1" opacity=".3"/>
+        <rect x="336" y="196" width="6" height="60" fill="#1b2233"/>
+        <rect y="264" width="640" height="76" fill="#1b2130"/>
+        <rect y="264" width="640" height="4" fill="#33415a"/>
+        <rect x="60" y="262" width="250" height="14" rx="7" fill="#5a4680"/>
+        <rect x="76" y="276" width="12" height="38" rx="4" fill="#3a3154"/>
+        <rect x="282" y="276" width="12" height="38" rx="4" fill="#3a3154"/>
+        <rect x="146" y="198" width="58" height="76" rx="16" fill="#e8e8f0"/>
+        <path d="M146 236h58" stroke="#bb86fc" stroke-width="8"/>
+        <rect x="152" y="272" width="20" height="30" rx="9" fill="#33415a"/>
+        <rect x="180" y="272" width="20" height="30" rx="9" fill="#33415a"/>
+        <circle cx="175" cy="172" r="22" fill="#f2c9a0"/>
+        <path d="M153 170a22 22 0 0 1 44 0c-9-11-35-11-44 0z" fill="#2b2334"/>
+        <circle cx="198" cy="150" r="10" fill="#2b2334"/>
+        <path d="M200 214l14-22" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <ellipse cx="220" cy="182" rx="15" ry="10" transform="rotate(-16 220 182)" fill="#d9a86c"/>
+        <rect x="196" y="246" width="72" height="8" rx="4" fill="#3a3154"/>
+        <rect x="206" y="196" width="58" height="52" rx="4" fill="#2a2442" stroke="#4dd0e1" stroke-width="3"/>
+        <rect x="212" y="202" width="46" height="40" rx="2" fill="#4dd0e1" opacity=".28"/>
+        <g stroke="#8fd6f5" stroke-width="2" opacity=".7"><path d="M218 210h34M218 218h30M218 226h34M218 234h22"/></g>
+        <rect x="296" y="228" width="26" height="34" rx="5" fill="#ef5350"/>
+        <rect x="300" y="216" width="6" height="16" rx="3" fill="#e8e8f0"/>
+        <rect x="312" y="216" width="6" height="16" rx="3" fill="#e8e8f0"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 一边吃饭一边工作</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 一个女职员</span>
+      <span class="ip"><b>事件</b> 边吃饭边用电脑</span>
+      <span class="ip"><b>环境</b> 办公楼外</span>
+      <span class="ip"><b>神情</b> 专注</span>
+      <span class="ip"><b>道具</b> 面包、电脑</span>
+      <span class="ip key"><b>核心</b> 努力</span>
+    </div>
+    <div class="frame" id="fr5">
+      <div class="f-label">故事框架</div>
+      <div class="zh">今天下午我要做一个报告，可是我的文件还没有准备好。中午，我买了一杯可乐和一个面包，在办公楼外边，一边吃面包，一边在电脑上修改文件。终于弄完了，我松了一口气。</div>
+    </div>
+    <div class="trbox hide" id="tr5">Bugün öğleden sonra bir sunum yapmam gerekiyor ama dosyalarım henüz hazır değil. Öğlen bir kola ve bir sandviç alıp ofis binasının dışında, bir yandan sandviç yiyip bir yandan bilgisayarda dosyaları düzeltiyorum. Sonunda bitirdim, derin bir nefes aldım.</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+
+  <div class="pic">
+    <div class="pic-head">
+      <span class="zh">妈妈生病看医生</span><span class="tr-title">Annem hastalandı, doktor çağırdım</span>
+      <div class="pic-tools">
+        <button class="mini ghost" onclick="speakEl('fr6')">🔊 Dinle</button>
+        <button class="mini ghost" onclick="toggleBox('fr6',this)" data-hide="Çerçeveyi gizle" data-show="Çerçeveyi göster">Çerçeveyi gizle</button>
+        <button class="mini ghost" onclick="toggleBox('tr6',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+      </div>
+    </div>
+    <div class="pic-img">
+      <svg viewBox="0 0 640 340" role="img" aria-label="Evde kanepede oturan anne elini alnına koymuş, beyaz önlüklü doktor ateşini ölçüyor">
+        <rect width="640" height="340" fill="#1c1a2e"/>
+        <rect y="300" width="640" height="40" fill="#151327"/>
+        <circle cx="480" cy="70" r="70" fill="#241f38"/>
+        <rect x="40" y="60" width="96" height="76" rx="6" fill="#241f38" stroke="#4a3a63" stroke-width="3"/>
+        <path d="M56 116l22-26 18 16 20-28" stroke="#3a3154" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="404" y="150" width="34" height="150" rx="8" fill="#4a3a63"/>
+        <rect x="296" y="196" width="124" height="90" rx="11" fill="#5a4680"/>
+        <rect x="282" y="246" width="152" height="24" rx="10" fill="#4a3a63"/>
+        <rect x="300" y="268" width="16" height="34" rx="6" fill="#3a3154"/>
+        <rect x="396" y="268" width="16" height="34" rx="6" fill="#3a3154"/>
+        <rect x="288" y="240" width="118" height="30" rx="10" fill="#3c3352"/>
+        <rect x="318" y="178" width="54" height="86" rx="17" fill="#bb86fc"/>
+        <circle cx="345" cy="152" r="22" fill="#f2c9a0"/>
+        <path d="M323 150a22 22 0 0 1 44 0c-9-11-35-11-44 0z" fill="#2b2334"/>
+        <circle cx="370" cy="132" r="10" fill="#2b2334"/>
+        <path d="M332 156c3 3 7 3 10 0M352 156c3 3 7 3 10 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M338 170c5-4 11-4 16 0" stroke="#8a5a7a" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>
+        <path d="M368 196l6-26" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <circle cx="374" cy="168" r="9" fill="#f2c9a0"/>
+        <path d="M336 186c-6 14-4 30 0 42" stroke="#f2c9a0" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <rect x="140" y="150" width="60" height="106" rx="17" fill="#e8e8f0"/>
+        <path d="M170 150l-14 34 14 24 14-24z" fill="#4dd0e1"/>
+        <rect x="150" y="254" width="20" height="46" rx="9" fill="#33415a"/>
+        <rect x="176" y="254" width="20" height="46" rx="9" fill="#33415a"/>
+        <rect x="142" y="292" width="34" height="12" rx="6" fill="#232c3c"/>
+        <rect x="176" y="292" width="34" height="12" rx="6" fill="#232c3c"/>
+        <circle cx="170" cy="122" r="23" fill="#f2c9a0"/>
+        <path d="M147 120a23 23 0 0 1 46 0c-11-11-35-11-46 0z" fill="#241d18"/>
+        <path d="M156 128c3-3 7-3 10 0M174 128c3-3 7-3 10 0" stroke="#241d18" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M156 146c0 20 20 26 20 6" stroke="#4dd0e1" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="178" cy="164" r="6" fill="#4dd0e1"/>
+        <path d="M200 186l30 12" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <rect x="226" y="192" width="34" height="9" rx="4" fill="#e8e8f0"/>
+        <circle cx="228" cy="196" r="5" fill="#ef5350"/>
+        <path d="M148 196l-24 24" stroke="#f2c9a0" stroke-width="13" stroke-linecap="round"/>
+        <rect x="88" y="218" width="54" height="42" rx="7" fill="#6b4a3a"/>
+        <rect x="106" y="218" width="18" height="10" rx="4" fill="#54382c"/>
+        <path d="M115 232v18M106 241h18" stroke="#e8e8f0" stroke-width="5"/>
+        <rect x="452" y="248" width="62" height="52" rx="6" fill="#4a3a63"/>
+        <rect x="466" y="228" width="16" height="22" rx="3" fill="#bfe9ff"/>
+        <rect x="492" y="230" width="14" height="20" rx="4" fill="#e8e8f0"/>
+        <rect x="492" y="230" width="14" height="7" rx="3" fill="#ef5350"/>
+      </svg>
+    </div>
+    <div class="pic-cap">Taslak çizim · 看病 · 量体温、量血压</div>
+    <div class="ipwrap">
+      <span class="ip"><b>人物</b> 妈妈和医生</span>
+      <span class="ip"><b>事件</b> 看病</span>
+      <span class="ip"><b>环境</b> 家里</span>
+      <span class="ip"><b>神情</b> 着急、担心</span>
+      <span class="ip"><b>道具</b> 体温表、血压计、药</span>
+      <span class="ip key"><b>核心</b> 照顾</span>
+    </div>
+    <div class="frame" id="fr6">
+      <div class="f-label">故事框架</div>
+      <div class="zh">我妈妈今天早上生病了，起不了床。我叫来医生给她看病。医生问她哪儿不舒服，妈妈把手放在头上，说头很热，可能发烧了。医生先给妈妈量了体温，三十八度五，真的发烧了。医生还给她量了血压，最后给妈妈开了药，让她多喝水，按时吃药，好好休息。我要照顾好妈妈，让她尽快好起来。</div>
+    </div>
+    <div class="trbox hide" id="tr6">Annem bugün sabah hastalandı, yataktan kalkamıyor. Doktoru eve çağırdım. Doktor neresinin ağrıdığını sorunca annem elini başına koyup başının çok sıcak olduğunu, belki ateşi olduğunu söylüyor. Doktor önce ateşini ölçüyor: 38,5, gerçekten ateşi var. Tansiyonunu da ölçüyor, sonra ilaç yazıp bol su içmesini, ilacını zamanında almasını ve iyi dinlenmesini söylüyor. Anneme iyi bakıp bir an önce iyileşmesini sağlayacağım.</div>
+    <div class="pic-foot">
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. KİŞİ TANITMA ================= -->
+<section class="mod" id="m-kisi">
+  <h2>Soru-Cevap · Kişi Tanıtma</h2>
+  <p class="sub">40 puan · 2,5 dk hazırlık · 2 dk konuşma · <span class="zh">描述一个人</span></p>
+
+  <div class="card">
+    <div class="ct">Temel çerçeve</div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Aşama</th><th>Ne söylenir?</th><th>Örnek</th></tr></thead>
+        <tbody>
+          <tr><td><b class="gold">基本情况</b></td><td>Ad, cinsiyet, yaş, kim olduğu, seninle ilişkisi</td><td class="zh">她叫苏珊，今年二十二岁，是我的大学同学。</td></tr>
+          <tr><td><b class="gold">具体描述</b></td><td>Dış görünüş → kişilik → ilgi alanları ve alışkanlıklar → en belirgin özellik</td><td class="zh">她长得很可爱，性格很开朗，很喜欢旅游。</td></tr>
+          <tr><td><b class="gold">结尾</b></td><td>Senin için ne ifade ettiği, sende bıraktığı iz, özet</td><td class="zh">和她在一起，我总是很开心。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:8px">
+      Girişte <span class="zh-inline">我来介绍一下我的朋友，他叫……</span> veya <span class="zh-inline">我有一个朋友，他叫……</span> ile başla;
+      doğrudan isimle başlama. Sıra genelde <span class="zh-inline">外貌 → 性格 → 爱好和习惯</span>; ama esnek.
+      Dış görünüş için <span class="zh-inline">长得……</span> kullan. Sonu aniden kesme, özetle bitir.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="ct">17 temel kalıp</div>
+    <div class="pgrid">
+      <div class="ph"><div class="zh">我来介绍一下我的朋友，他叫……</div><div class="py">Wǒ lái jièshào yíxià wǒ de péngyou, tā jiào…</div><div class="tr">Arkadaşımı tanıtayım, adı …</div></div>
+      <div class="ph"><div class="zh">我有一个朋友，他叫……</div><div class="py">Wǒ yǒu yí gè péngyou, tā jiào…</div><div class="tr">Bir arkadaşım var, adı …</div></div>
+      <div class="ph"><div class="zh">她是一个女孩子／女同学。</div><div class="py">Tā shì yí gè nǚháizi / nǚ tóngxué.</div><div class="tr">O bir kız / kız öğrenci. <span class="muted">(“女人” deme.)</span></div></div>
+      <div class="ph"><div class="zh">他现在是……（身份）。</div><div class="py">Tā xiànzài shì…</div><div class="tr">Şu anda … (öğrenci/öğretmen).</div></div>
+      <div class="ph"><div class="zh">他在……工作／上学。</div><div class="py">Tā zài… gōngzuò / shàngxué.</div><div class="tr">…de çalışıyor / okuyor.</div></div>
+      <div class="ph"><div class="zh">他是我的……（关系）。</div><div class="py">Tā shì wǒ de…</div><div class="tr">O benim … (arkadaşım/öğretmenim).</div></div>
+      <div class="ph"><div class="zh">我们是……认识的。</div><div class="py">Wǒmen shì… rènshi de.</div><div class="tr">Biz … tanıştık.</div></div>
+      <div class="ph"><div class="zh">我们认识已经……年了。</div><div class="py">Wǒmen rènshi yǐjīng… nián le.</div><div class="tr">Tanışalı … yıl oldu.</div></div>
+      <div class="ph"><div class="zh">他长得很……</div><div class="py">Tā zhǎng de hěn…</div><div class="tr">Çok … görünüyor.</div></div>
+      <div class="ph"><div class="zh">他的性格很……</div><div class="py">Tā de xìnggé hěn…</div><div class="tr">Kişiliği çok …</div></div>
+      <div class="ph"><div class="zh">他很喜欢……（动宾短语）。</div><div class="py">Tā hěn xǐhuan…</div><div class="tr">… yapmayı çok sever.</div></div>
+      <div class="ph"><div class="zh">他常常……</div><div class="py">Tā chángcháng…</div><div class="tr">Sık sık …</div></div>
+      <div class="ph"><div class="zh">他对……特别感兴趣。</div><div class="py">Tā duì… tèbié gǎn xìngqù.</div><div class="tr">…ya özellikle ilgi duyar.</div></div>
+      <div class="ph"><div class="zh">他最大的特点是……</div><div class="py">Tā zuìdà de tèdiǎn shì…</div><div class="tr">En büyük özelliği …</div></div>
+      <div class="ph"><div class="zh">他给我印象最深的是……</div><div class="py">Tā gěi wǒ yìnxiàng zuì shēn de shì…</div><div class="tr">Bende en derin iz bırakan şey …</div></div>
+      <div class="ph"><div class="zh">他对我的……有很大的影响。</div><div class="py">Tā duì wǒ de… yǒu hěn dà de yǐngxiǎng.</div><div class="tr">…m üzerinde büyük etkisi var.</div></div>
+      <div class="ph"><div class="zh">和她在一起，我总是很……</div><div class="py">Hé tā zài yìqǐ, wǒ zǒngshì hěn…</div><div class="tr">Onunla birlikteyken her zaman çok …</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Örnek cevap <span class="tag gold">~200 汉字</span></div>
+    <div class="info-box" style="margin-bottom:8px">
+      <b>Soru:</b> <span class="zh-inline">请介绍一下你的一个好朋友。</span>
+      <span class="muted">Yakın bir arkadaşını tanıt.</span>
+    </div>
+    <div class="frame" id="frKisi" style="background:var(--in)">
+      <div class="zh" style="font-size:1.2rem">我来介绍一下我的好朋友，她叫苏珊。她今年二十二岁，是我的大学同学。我们是大一的时候认识的，已经认识三年了。她长得不算很高，笑起来眼睛弯弯的，声音很好听。她的性格特别开朗，也很热心，每次我遇到困难，她都会主动帮忙。她很喜欢旅游，也对摄影特别感兴趣，周末常常带着相机去公园拍照。她最大的特点是不怕麻烦，做事一定要做到最好。她给我印象最深的是去年我生病的时候，她每天下课都来看我，还帮我补课。和她在一起，我总是很开心。可以说，她是我大学里最重要的朋友。</div>
+    </div>
+    <div class="trbox hide" id="trKisi" style="border-left:3px solid var(--ac);padding:8px 0 8px 12px;color:var(--tx2);font-size:.92rem;margin-top:10px">
+      Yakın arkadaşımı tanıtayım; adı Su Shan. Bu yıl 22 yaşında, üniversiteden sınıf arkadaşım. Birinci sınıfta tanıştık, tanışalı üç yıl oldu. Çok uzun değil; gülünce gözleri kıvrılıyor, sesi çok güzel. Kişiliği çok neşeli ve yardımsever; ne zaman bir zorlukla karşılaşsam hemen yardıma koşar. Seyahat etmeyi çok sever, fotoğrafçılığa özellikle ilgi duyar; hafta sonları sık sık fotoğraf makinesiyle parka gidip fotoğraf çeker. En büyük özelliği zahmetten korkmaması; bir işi mutlaka en iyi şekilde yapmak ister. Bende en derin iz bırakan şey, geçen yıl hastalandığımda her gün dersten sonra beni görmeye gelmesi ve derslerimi telafi etmeme yardım etmesiydi. Onunla birlikteyken her zaman çok mutluyum. Şöyle diyebilirim: O, üniversitedeki en önemli arkadaşım.
+    </div>
+    <div class="pic-foot" style="margin-top:10px">
+      <button class="mini" onclick="speakEl('frKisi')">🔊 Dinle</button>
+      <button class="mini ghost" onclick="toggleBox('trKisi',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Sık yapılan hatalar</div>
+    <ul>
+      <li><b class="bad">1. Aşırı basit anlatım.</b> “Arkadaşımın adı Su Shan, 22 yaşında, üniversite öğrencisi, iyi arkadaşız.” → Hobi, kişilik ve somut bir anı ekle.</li>
+      <li><b class="bad">2. Düzen yok.</b> Dış görünüş, kişilik ve hobiler birbirine karışırsa dinleyici takip edemez. → Çerçeveyi kullan.</li>
+      <li><b class="bad">3. Paragraf bilinci yok.</b> Sadece kısa tek cümleler. → <span class="zh-inline">而且、但是、因为、所以、特别是</span> gibi bağlaçlarla bağla.</li>
+      <li><b class="bad">4. Zor kelime/kalıp yok.</b> → En az 2 zor kalıp + 2–3 üst düzey kelime kullan: <span class="zh-inline">乐于助人、印象最深、对……有很大的影响</span>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="ct">Pratik · kişi tanıtma</div>
+    <p style="margin-bottom:10px"><b>Soru:</b> <span class="zh-inline">请介绍一下你的一个好朋友。</span> <span class="muted">Yakın bir arkadaşını tanıt.</span></p>
+    <div style="margin-bottom:10px">
+      <div class="timer" data-sec="150"><button class="tbtn" data-label="▶ 2,5 dk hazırlık">▶ 2,5 dk hazırlık</button><span class="tdisp">02:30</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+    <p class="muted">Hazırlıkta sadece anahtar kelimeler yaz: isim, yaş, ilişki, dış görünüş, 2 kişilik özelliği, 2 hobi, 1 anı, kapanış.</p>
+    <div class="checkwrap" style="margin-top:12px">
+      <div class="clist">
+        <label class="chk"><input type="checkbox"><span>Ad, cinsiyet, yaş söyledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>Kim olduğunu ve seninle ilişkisini söyledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>Nerede ve kaç yıl önce tanıştığımızı söyledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>Dış görünüşünü <span class="zh-inline">长得……</span> ile anlattım.</span></label>
+        <label class="chk"><input type="checkbox"><span>İki kişilik özelliği + somut bir örnek verdim.</span></label>
+        <label class="chk"><input type="checkbox"><span>İlgi alanlarını ve alışkanlıklarını anlattım.</span></label>
+        <label class="chk"><input type="checkbox"><span>En belirgin özelliğini / sende bıraktığı izi söyledim.</span></label>
+        <label class="chk"><input type="checkbox"><span>Duygu belirten bir kapanış cümlesi kullandım.</span></label>
+      </div>
+      <div class="cprog"><span class="bar"><i></i></span><span class="cnt">0/8</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. PLAN ANLATMA ================= -->
+<section class="mod" id="m-plan">
+  <h2>Soru-Cevap · Plan Anlatma</h2>
+  <p class="sub">40 puan · <span class="zh">描述简单的日常活动安排</span> · hafta sonu / tatil / gezi rotası</p>
+
+  <div class="card">
+    <div class="ct">Zaman çizgisi</div>
+    <div class="pgrid">
+      <div class="ph"><div class="zh">早上</div><div class="tr">Sabah · kalkmak, kahvaltı, temizlik</div></div>
+      <div class="ph"><div class="zh">上午</div><div class="tr">Öğleden önce · pazar, alışveriş, hazırlık</div></div>
+      <div class="ph"><div class="zh">下午</div><div class="tr">Öğleden sonra · spor, sergi, ders</div></div>
+      <div class="ph"><div class="zh">晚上</div><div class="tr">Akşam · kitap, film, arkadaşlar</div></div>
+    </div>
+    <p class="muted" style="margin-top:10px">Plan anlatırken zaman sırası şart: <span class="zh-inline">早上 → 上午 → 下午 → 晚上</span>. Bağlaçlar: <span class="zh-inline">先……然后……之后……最后……</span></p>
+  </div>
+
+  <div class="card">
+    <div class="ct">Örnek 1 · Hafta sonu planı <span class="tag">周末安排</span></div>
+    <div class="frame" id="frPlan1" style="background:var(--in)">
+      <div class="zh" style="font-size:1.16rem">我周末一般都比较悠闲。早上八点起床，吃过早饭后，我会先打扫房间，边听音乐，一边把桌子、地板都擦得干干净净的，再把一个星期的报纸、工作材料整理好。然后我会到外边的市场买些蔬菜、水果什么的，回来做午饭。下午我有时候会去运动，有时候去看艺术展。晚上我常常在家里看书，有时候也和女朋友或男朋友一起去看电影。</div>
+    </div>
+    <div class="trbox hide" id="trPlan1" style="border-left:3px solid var(--ac);padding:8px 0 8px 12px;color:var(--tx2);font-size:.92rem;margin-top:10px">
+      Hafta sonlarım genellikle oldukça rahat. Sabah sekizde kalkarım; kahvaltıdan sonra önce odamı temizlerim, müzik dinleyerek masa ve zemini tertemiz silerim, sonra bir haftalık gazete ve iş materyallerini düzenlerim. Ardından dışarıdaki pazardan sebze, meyve alır, dönüp öğle yemeği yaparım. Öğleden sonra bazen spora giderim, bazen sanat sergisine. Akşamları sık sık evde kitap okurum, bazen de kız/erkek arkadaşımla sinemaya giderim.
+    </div>
+    <div class="pic-foot" style="margin-top:10px">
+      <button class="mini" onclick="speakEl('frPlan1')">🔊 Dinle</button>
+      <button class="mini ghost" onclick="toggleBox('trPlan1',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Örnek 2 · Tatil planı <span class="tag">假期计划</span></div>
+    <div class="frame" id="frPlan2" style="background:var(--in)">
+      <div class="zh" style="font-size:1.16rem">这个假期我会过得很充实。我打算一放暑假就先到东北农村住一段时间，平时太忙了，我想换个环境，离开大城市的污染，这样对我的健康有好处。然后我计划回家乡参加大学同学毕业十年聚会。之后，我得去南方办点儿事儿，回来时顺便会去山东旅游一趟，参观五岳之首泰山和孔子的老家曲阜。总之，我打算动静结合，好好休息，这样假期结束后才能更好地工作。</div>
+    </div>
+    <div class="trbox hide" id="trPlan2" style="border-left:3px solid var(--ac);padding:8px 0 8px 12px;color:var(--tx2);font-size:.92rem;margin-top:10px">
+      Bu tatil çok dolu geçecek. Yaz tatili başlar başlamaz önce kuzeydoğu kırsalında bir süre kalmayı planlıyorum; normalde çok yoğunum, ortam değiştirmek, büyük şehrin kirliliğinden uzaklaşmak istiyorum, bu sağlığıma iyi gelir. Sonra memleketime dönüp üniversite arkadaşlarımın mezuniyetinin 10. yıl buluşmasına katılmayı planlıyorum. Ardından güneye bir iş için gitmem gerekiyor; dönerken fırsattan istifade Shandong'a bir gezi yapıp Beş Kutsal Dağ'ın başı Tai Shan'ı ve Konfüçyüs'ün memleketi Qufu'yu gezeceğim. Kısacası, hareket ve dinlenmeyi dengelemeyi, iyi dinlenmeyi planlıyorum; ancak böylece tatil bitince daha iyi çalışabilirim.
+    </div>
+    <div class="pic-foot" style="margin-top:10px">
+      <button class="mini" onclick="speakEl('frPlan2')">🔊 Dinle</button>
+      <button class="mini ghost" onclick="toggleBox('trPlan2',this)" data-hide="Türkçeyi gizle" data-show="Türkçeyi göster">Türkçeyi göster</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">İskelet kalıplar · kendi planını doldur</div>
+    <div class="frame" style="background:var(--in)">
+      <div class="f-label">周末安排</div>
+      <div class="zh" style="font-size:1.1rem;line-height:2">我周末一般都比较<span class="gold">____</span>。早上<span class="gold">____</span>点起床，吃过早饭后，我会先<span class="gold">____</span>。然后我会<span class="gold">____</span>。下午我有时候会去<span class="gold">____</span>，有时候去<span class="gold">____</span>。晚上我常常<span class="gold">____</span>，有时候也<span class="gold">____</span>。</div>
+    </div>
+    <div class="frame" style="background:var(--in)">
+      <div class="f-label">假期计划</div>
+      <div class="zh" style="font-size:1.1rem;line-height:2">这个假期我会很<span class="gold">____</span>。我打算先到<span class="gold">____</span>，然后我计划<span class="gold">____</span>。之后，我还会<span class="gold">____</span>，顺便<span class="gold">____</span>，参观<span class="gold">____</span>。总之，我打算<span class="gold">____</span>，这样<span class="gold">____</span>。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Plan kalıpları ve bağlaçlar</div>
+    <div class="pgrid">
+      <div class="ph"><div class="zh">先……然后……之后……最后……</div><div class="py">xiān… ránhòu… zhīhòu… zuìhòu…</div><div class="tr">Önce … sonra … ardından … son olarak …</div></div>
+      <div class="ph"><div class="zh">一边……一边……</div><div class="py">yìbiān… yìbiān…</div><div class="tr">Bir yandan …, bir yandan …</div></div>
+      <div class="ph"><div class="zh">有时候……有时候……</div><div class="py">yǒu shíhou… yǒu shíhou…</div><div class="tr">Bazen …, bazen …</div></div>
+      <div class="ph"><div class="zh">因为……所以……</div><div class="py">yīnwèi… suǒyǐ…</div><div class="tr">…dığı için …</div></div>
+      <div class="ph"><div class="zh">虽然……但是……</div><div class="py">suīrán… dànshì…</div><div class="tr">Her ne kadar … olsa da …</div></div>
+      <div class="ph"><div class="zh">这样对我的健康有好处。</div><div class="py">Zhèyàng duì wǒ de jiànkāng yǒu hǎochù.</div><div class="tr">Bu sağlığıma iyi gelir.</div></div>
+      <div class="ph"><div class="zh">我想换个环境。</div><div class="py">Wǒ xiǎng huàn gè huánjìng.</div><div class="tr">Ortam değiştirmek istiyorum.</div></div>
+      <div class="ph"><div class="zh">总之，……</div><div class="py">Zǒngzhī,…</div><div class="tr">Kısacası, …</div></div>
+      <div class="ph"><div class="zh">顺便……</div><div class="py">shùnbiàn…</div><div class="tr">Fırsattan istifade …</div></div>
+      <div class="ph"><div class="zh">把桌子擦得干干净净的</div><div class="py">bǎ zhuōzi cā de gāngānjìngjìng de</div><div class="tr">Masayı tertemiz silmek <span class="muted">(把字句)</span></div></div>
+      <div class="ph"><div class="zh">我打算…… / 我计划……</div><div class="py">Wǒ dǎsuàn… / Wǒ jìhuà…</div><div class="tr">… yapmayı planlıyorum.</div></div>
+      <div class="ph"><div class="zh">一……就……</div><div class="py">yī… jiù…</div><div class="tr">…ar …maz hemen …</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Pratik · plan anlatma</div>
+    <div class="pgrid" style="margin-bottom:12px">
+      <div class="ph"><div class="zh">你周末一般是怎么安排的？</div><div class="tr">Hafta sonlarını genellikle nasıl planlarsın?</div></div>
+      <div class="ph"><div class="zh">这个假期你有什么计划？</div><div class="tr">Bu tatilde ne planlıyorsun?</div></div>
+      <div class="ph"><div class="zh">介绍一下你的一次旅游线路。</div><div class="tr">Bir gezi rotanı anlat.</div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div class="timer" data-sec="150"><button class="tbtn" data-label="▶ 2,5 dk hazırlık">▶ 2,5 dk hazırlık</button><span class="tdisp">02:30</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+      <div class="timer" data-sec="120"><button class="tbtn" data-label="▶ 2 dk konuş">▶ 2 dk konuş</button><span class="tdisp">02:00</span><button class="treset" aria-label="Sıfırla">↺</button></div>
+    </div>
+    <div class="checkwrap">
+      <div class="clist">
+        <label class="chk"><input type="checkbox"><span>Zaman ifadeleri kullandım: <span class="zh-inline">早上、下午、晚上；先、然后、之后、最后</span>.</span></label>
+        <label class="chk"><input type="checkbox"><span>En az 5 aktivite söyledim.</span></label>
+        <label class="chk"><input type="checkbox"><span><span class="zh-inline">有时候……有时候……</span> veya <span class="zh-inline">一边……一边……</span> kullandım.</span></label>
+        <label class="chk"><input type="checkbox"><span>Bir <span class="zh-inline">把</span>字句 kullandım.</span></label>
+        <label class="chk"><input type="checkbox"><span>Bir sebep/sonuç cümlesi kurdum (<span class="zh-inline">因为……所以…… / 这样对……有好处</span>).</span></label>
+        <label class="chk"><input type="checkbox"><span><span class="zh-inline">总之……</span> ile toparladım.</span></label>
+      </div>
+      <div class="cprog"><span class="bar"><i></i></span><span class="cnt">0/6</span></div>
+    </div>
+    <p class="muted" style="margin-top:10px">Kelime eksiğin varsa <a href="#" onclick="show('m-kelime');return false;">Bölüm 7 · Kelime Hazinesi</a> bölümüne geç.</p>
+  </div>
+</section>
+
+<!-- ================= 6. 重复 ================= -->
+<section class="mod" id="m-tekrar">
+  <h2>重复 Alıştırması</h2>
+  <p class="sub">30 puan · 6 cümle · çoğu 8–12 <span class="zh-inline">汉字</span> · duyduğunu birebir tekrar et</p>
+
+  <div class="card">
+    <div class="ct">Nasıl çalışır?</div>
+    <div class="info-box"><b>1. Dinle.</b> Cümleyi bir kez dinle; anlamına değil, seslere ve tonlara odaklan.</div>
+    <div class="info-box"><b>2. Tekrar et.</b> Yüksek sesle, duyduğun ritimle söyle. Anlamına göre değiştirme.</div>
+    <div class="info-box"><b>3. Yaz ve kontrol et.</b> Duyduğun cümleyi yaz; doğru cevapla karşılaştır.</div>
+    <div class="info-box" style="margin-bottom:0"><b>4. Zorlanırsan.</b> Cümlenin sonunu mutlaka tamamla; <span class="zh-inline">了、的、得</span> gibi ekleri atlama.</div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Tekrar antrenmanı</div>
+    <div class="settabs" id="setTabs"></div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px">
+      <span class="score-chip">Skor: <b id="repScore">0/6</b></span>
+      <button class="mini" onclick="repSpeakSet()">🔊 Seti dinle</button>
+      <button class="mini ghost" onclick="repReset()">↺ Sıfırla</button>
+      <span class="muted" style="font-size:.8rem">Sınavda her cümle genelde bir kez çalınır; burada tekrar dinleyebilirsin.</span>
+    </div>
+    <div id="repList" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">重复 taktikleri</div>
+    <ul>
+      <li><b>Cümleyi anlamına göre değil, duyduğun seslerle tekrar et.</b> Anlamı düşünüp kelime değiştirmek puan kaybettirir.</li>
+      <li><b>Tonlara dikkat:</b> <span class="zh-inline">mā / má / mǎ / mà</span> — yanlış ton, yanlış kelime demektir.</li>
+      <li><b>İlk dinlemede iskeleti yakala:</b> kim + ne yaptı + ne zaman. İkinci dinlemede ayrıntıları ekle.</li>
+      <li><b>8–12 karakter kısa ama yoğun.</b> <span class="zh-inline">了、的、得、过</span> gibi ekleri duymayı alışkanlık yap.</li>
+      <li><b>Takılsan bile devam et.</b> Cümlenin sonunu getirmek, baştan tekrar etmekten daha iyidir.</li>
+      <li><b>Hızını konuşma hızına yaklaştır.</b> Çok yavaş tekrar, akıcılık puanını düşürür.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 7. KELİME ================= -->
+<section class="mod" id="m-kelime">
+  <h2>Kelime Hazinesi</h2>
+  <p class="sub">Derste işlenen kelimeler · plan, aktivite, yer, sıfat, deyim</p>
+
+  <div class="card">
+    <div class="searchrow">
+      <input id="vocabSearch" type="search" placeholder="Kelime ara… (汉字, pinyin veya Türkçe)" oninput="filterVocab(this.value)">
+      <span class="score-chip"><b id="vocabCount">—</b> kelime</span>
+    </div>
+
+    <div id="vocabTables">
+      <h3 style="margin-top:6px">Plan fiilleri</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>汉字</th><th>Pinyin</th><th>Türkçe</th></tr></thead>
+          <tbody>
+            <tr><td class="zh">打算</td><td class="py">dǎsuàn</td><td>planlamak; niyetinde olmak</td></tr>
+            <tr><td class="zh">计划</td><td class="py">jìhuà</td><td>planlamak; plan</td></tr>
+            <tr><td class="zh">决定</td><td class="py">juédìng</td><td>karar vermek</td></tr>
+            <tr><td class="zh">考虑</td><td class="py">kǎolǜ</td><td>düşünmek; göz önünde bulundurmak</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Aktivite fiilleri</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>汉字</th><th>Pinyin</th><th>Türkçe</th></tr></thead>
+          <tbody>
+            <tr><td class="zh">帮忙</td><td class="py">bāngmáng</td><td>yardım etmek</td></tr>
+            <tr><td class="zh">报名</td><td class="py">bàomíng</td><td>kayıt yaptırmak; başvurmak</td></tr>
+            <tr><td class="zh">参观</td><td class="py">cānguān</td><td>ziyaret etmek; gezmek</td></tr>
+            <tr><td class="zh">参加</td><td class="py">cānjiā</td><td>katılmak</td></tr>
+            <tr><td class="zh">乘坐</td><td class="py">chéngzuò</td><td>binmek (araç)</td></tr>
+            <tr><td class="zh">出差</td><td class="py">chūchāi</td><td>iş seyahatine çıkmak</td></tr>
+            <tr><td class="zh">打扮</td><td class="py">dǎban</td><td>giyinip süslenmek</td></tr>
+            <tr><td class="zh">打篮球</td><td class="py">dǎ lánqiú</td><td>basketbol oynamak</td></tr>
+            <tr><td class="zh">打乒乓球</td><td class="py">dǎ pīngpāngqiú</td><td>masa tenisi oynamak</td></tr>
+            <tr><td class="zh">打扫</td><td class="py">dǎsǎo</td><td>temizlemek</td></tr>
+            <tr><td class="zh">打网球</td><td class="py">dǎ wǎngqiú</td><td>tenis oynamak</td></tr>
+            <tr><td class="zh">锻炼</td><td class="py">duànliàn</td><td>egzersiz yapmak; vücudu çalıştırmak</td></tr>
+            <tr><td class="zh">访问</td><td class="py">fǎngwèn</td><td>ziyaret etmek</td></tr>
+            <tr><td class="zh">复习</td><td class="py">fùxí</td><td>tekrar etmek</td></tr>
+            <tr><td class="zh">购物</td><td class="py">gòuwù</td><td>alışveriş yapmak</td></tr>
+            <tr><td class="zh">减肥</td><td class="py">jiǎnféi</td><td>kilo vermek</td></tr>
+            <tr><td class="zh">看表演</td><td class="py">kàn biǎoyǎn</td><td>gösteri izlemek</td></tr>
+            <tr><td class="zh">留学</td><td class="py">liúxué</td><td>yurtdışında okumak</td></tr>
+            <tr><td class="zh">旅游</td><td class="py">lǚyóu</td><td>seyahat etmek; gezi</td></tr>
+            <tr><td class="zh">爬山</td><td class="py">páshān</td><td>dağa tırmanmak</td></tr>
+            <tr><td class="zh">跑步</td><td class="py">pǎobù</td><td>koşmak</td></tr>
+            <tr><td class="zh">起床</td><td class="py">qǐchuáng</td><td>yataktan kalkmak</td></tr>
+            <tr><td class="zh">请客</td><td class="py">qǐngkè</td><td>ikram etmek; misafir ağırlamak</td></tr>
+            <tr><td class="zh">散步</td><td class="py">sànbù</td><td>yürüyüşe çıkmak</td></tr>
+            <tr><td class="zh">弹钢琴</td><td class="py">tán gāngqín</td><td>piyano çalmak</td></tr>
+            <tr><td class="zh">踢足球</td><td class="py">tī zúqiú</td><td>futbol oynamak</td></tr>
+            <tr><td class="zh">跳舞</td><td class="py">tiàowǔ</td><td>dans etmek</td></tr>
+            <tr><td class="zh">游览</td><td class="py">yóulǎn</td><td>gezmek; tur atmak</td></tr>
+            <tr><td class="zh">运动</td><td class="py">yùndòng</td><td>spor yapmak</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Yer, kültür ve ortam</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>汉字</th><th>Pinyin</th><th>Türkçe</th></tr></thead>
+          <tbody>
+            <tr><td class="zh">长城</td><td class="py">Chángchéng</td><td>Çin Seddi</td></tr>
+            <tr><td class="zh">超市</td><td class="py">chāoshì</td><td>süpermarket</td></tr>
+            <tr><td class="zh">电视</td><td class="py">diànshì</td><td>televizyon</td></tr>
+            <tr><td class="zh">电影</td><td class="py">diànyǐng</td><td>film</td></tr>
+            <tr><td class="zh">风景</td><td class="py">fēngjǐng</td><td>manzara</td></tr>
+            <tr><td class="zh">花园</td><td class="py">huāyuán</td><td>bahçe</td></tr>
+            <tr><td class="zh">环境</td><td class="py">huánjìng</td><td>çevre; ortam</td></tr>
+            <tr><td class="zh">会议</td><td class="py">huìyì</td><td>toplantı</td></tr>
+            <tr><td class="zh">京剧</td><td class="py">jīngjù</td><td>Pekin operası</td></tr>
+            <tr><td class="zh">历史</td><td class="py">lìshǐ</td><td>tarih</td></tr>
+            <tr><td class="zh">南方</td><td class="py">nánfāng</td><td>güney</td></tr>
+            <tr><td class="zh">农村</td><td class="py">nóngcūn</td><td>kırsal; köy</td></tr>
+            <tr><td class="zh">森林</td><td class="py">sēnlín</td><td>orman</td></tr>
+            <tr><td class="zh">市场</td><td class="py">shìchǎng</td><td>pazar; market</td></tr>
+            <tr><td class="zh">图书馆</td><td class="py">túshūguǎn</td><td>kütüphane</td></tr>
+            <tr><td class="zh">文化</td><td class="py">wénhuà</td><td>kültür</td></tr>
+            <tr><td class="zh">艺术</td><td class="py">yìshù</td><td>sanat</td></tr>
+            <tr><td class="zh">音乐</td><td class="py">yīnyuè</td><td>müzik</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Sıfat, zarf ve deyimler</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>汉字</th><th>Pinyin</th><th>Türkçe</th></tr></thead>
+          <tbody>
+            <tr><td class="zh">快乐</td><td class="py">kuàilè</td><td>mutlu</td></tr>
+            <tr><td class="zh">浪漫</td><td class="py">làngmàn</td><td>romantik</td></tr>
+            <tr><td class="zh">忙</td><td class="py">máng</td><td>meşgul</td></tr>
+            <tr><td class="zh">轻松</td><td class="py">qīngsōng</td><td>rahat; hafif</td></tr>
+            <tr><td class="zh">舒服</td><td class="py">shūfu</td><td>rahat; konforlu</td></tr>
+            <tr><td class="zh">有名</td><td class="py">yǒumíng</td><td>ünlü</td></tr>
+            <tr><td class="zh">著名</td><td class="py">zhùmíng</td><td>tanınmış; ünlü</td></tr>
+            <tr><td class="zh">上网</td><td class="py">shàngwǎng</td><td>internete girmek</td></tr>
+            <tr><td class="zh">顺便</td><td class="py">shùnbiàn</td><td>bu arada; fırsattan istifade</td></tr>
+            <tr><td class="zh">丰富多彩</td><td class="py">fēngfù duōcǎi</td><td>renkli ve çeşitli</td></tr>
+            <tr><td class="zh">名胜古迹</td><td class="py">míngshèng gǔjì</td><td>ünlü tarihî yerler</td></tr>
+            <tr><td class="zh">悠闲自得</td><td class="py">yōuxián zìdé</td><td>rahat ve keyifli</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. TÜM SAYFALAR ================= -->
+<section class="mod" id="m-sayfalar">
+  <h2>Tüm Sayfalar &amp; Sınav Programı</h2>
+  <p class="sub">Bu sayfa, diğer çalışma portallarıyla aynı klasörde çalışır.</p>
+
+  <div class="card">
+    <div class="ct">Çalışma portalları</div>
+    <div class="pgrid2">
+      <div class="pcard current"><b>Günlük Konuşma · 日常口语</b><small>Bu sayfa · 05.11.2026</small></div>
+      <a class="pcard" href="All in One.html"><b>🏠 Ana Portal</b><small>Tüm portallar tek ekranda</small></a>
+      <a class="pcard" href="Çeviri.html"><b>🈴 Çeviri ve Okuma</b><small>02.11 · kelimeler + çeviri pratiği</small></a>
+      <a class="pcard" href="HSK Hazırlık H51001-3-5.html"><b>📝 HSK 5 Practice</b><small>02.11 · deneme soruları</small></a>
+      <a class="pcard" href="Dinleme Anlama 1-5.html"><b>🎧 Dinleme Anlama</b><small>03.11 · 1–5 dinleme</small></a>
+      <a class="pcard" href="Okuma Anlama 1-6.html"><b>📖 Okuma Anlama</b><small>03.11 · 1–6 okuma</small></a>
+      <a class="pcard" href="OSD.html"><b>🌐 Uluslararası Örgütler</b><small>04.11 · OSD</small></a>
+      <a class="pcard" href="Sözlü Anlatım.html"><b>🗣️ Sözlü Anlatım</b><small>06.11 · sunum ve kalıplar</small></a>
+      <a class="pcard" href="Yazılı Anlatım.html"><b>✍️ Yazılı Anlatım</b><small>06.11 · 4 konu + taslak kaydı</small></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Ara sınav programı · Kasım 2026</div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Tarih</th><th>Gün</th><th>Saat</th><th>Ders</th><th>Salon</th><th>Hoca</th></tr></thead>
+        <tbody>
+          <tr><td>02.11.26</td><td>Pazartesi</td><td>9.30–10.30</td><td>Çeviri</td><td>164</td><td>İmge</td></tr>
+          <tr><td>02.11.26</td><td>Pazartesi</td><td>14.30–15.15</td><td>HSK Hazırlık</td><td>179</td><td>Ecem</td></tr>
+          <tr><td>03.11.26</td><td>Salı</td><td>9.30–10.30</td><td>Dinleme Anlama</td><td>179</td><td>Adila</td></tr>
+          <tr><td>03.11.26</td><td>Salı</td><td>13.30–14.30</td><td>Okuma Anlama</td><td>179</td><td>龙</td></tr>
+          <tr><td>04.11.26</td><td>Çarşamba</td><td>15.30–16.05</td><td>UA Örgütler ve BM</td><td>Zemin 101</td><td>Derya</td></tr>
+          <tr class="now"><td>05.11.26</td><td>Perşembe</td><td>13.00–16.30</td><td>Günlük Konuşma</td><td>DD Kütüphanesi</td><td>麦</td></tr>
+          <tr><td>06.11.26</td><td>Cuma</td><td>9.30–10.30</td><td>Sözlü Anlatım</td><td>179</td><td>麦</td></tr>
+          <tr><td>06.11.26</td><td>Cuma</td><td>14.30–15.30</td><td>Yazılı Anlatım</td><td>179</td><td>李</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Son hatırlatma</div>
+    <ul>
+      <li><b class="gold">Derste işlediklerimize önem ver.</b> Sınavda geçen kelimeler genel olarak da çıkabilir.</li>
+      <li>Resimde <span class="zh-inline">人物、事件、环境、人物的神情、道具</span> — hepsini tanıt.</li>
+      <li>Soru-cevapta 2,5 dakika hazırlan: anahtar kelimeler yaz, sonra 2 dakika kesintisiz konuş.</li>
+      <li>重复 bölümünde cümleyi birebir tekrar et; anlamına göre değiştirme.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------------- Navigasyon ---------------- */
+function toggleSidebar() {
+  document.getElementById('side').classList.toggle('collapsed');
+}
+
+var IDS = ["m-bilgi", "m-resim", "m-ornek", "m-kisi", "m-plan", "m-tekrar", "m-kelime", "m-sayfalar"];
+var nav = document.getElementById('nav');
+
+nav.querySelectorAll('a[data-id]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    show(a.dataset.id);
+  });
+});
+
+function show(id) {
+  document.querySelectorAll('.mod').forEach(function(m) {
+    m.classList.toggle('on', m.id === id);
+  });
+  nav.querySelectorAll('a[data-id]').forEach(function(a) {
+    a.classList.toggle('on', a.dataset.id === id);
+  });
+  var main = document.getElementById('main');
+  main.scrollTop = 0;
+  window.scrollTo(0, 0);
+  try { history.replaceState(null, '', '#' + id); } catch (e) {}
+}
+
+/* ---------------- Bildirim ---------------- */
+var toastTimer = null;
+function toast(msg) {
+  var el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove('show'); }, 2200);
+}
+
+/* ---------------- Ses (TTS) ---------------- */
+var zhVoice = null;
+var voiceWarned = false;
+
+function loadVoices() {
+  if (!('speechSynthesis' in window)) return;
+  var vs = speechSynthesis.getVoices() || [];
+  zhVoice = vs.filter(function(v) {
+    return /zh|cmn|chinese|中文|普通话/i.test((v.lang || '') + ' ' + (v.name || ''));
+  })[0] || null;
+}
+
+if ('speechSynthesis' in window) {
+  loadVoices();
+  if (speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged', loadVoices);
+  else speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, rate, keep) {
+  if (!text) return;
+  if (!('speechSynthesis' in window)) {
+    toast('Bu tarayıcı sesli okumayı desteklemiyor');
+    return;
+  }
+  if (!keep) speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = rate || 0.9;
+  if (zhVoice) u.voice = zhVoice;
+  try { speechSynthesis.speak(u); } catch (e) { toast('Ses çalınamadı'); }
+  if (!zhVoice && !voiceWarned) {
+    voiceWarned = true;
+    toast('Çince ses paketi bulunamadı; sistem sesi kullanılıyor');
+  }
+}
+
+function speakEl(id) {
+  var el = document.getElementById(id);
+  if (!el) { toast('Metin bulunamadı'); return; }
+  speak(el.textContent.replace(/\s+/g, ' ').trim());
+}
+
+/* ---------------- Bip ---------------- */
+var audioCtx = null;
+function beep(times) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    for (var i = 0; i < (times || 1); i++) {
+      var o = audioCtx.createOscillator();
+      var g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.value = 880;
+      var t0 = audioCtx.currentTime + i * 0.2;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.2, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.15);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(t0);
+      o.stop(t0 + 0.17);
+    }
+  } catch (e) {}
+}
+
+/* ---------------- Geri sayım ---------------- */
+function fmt(s) {
+  s = Math.max(0, Math.ceil(s));
+  var m = Math.floor(s / 60);
+  var x = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x;
+}
+
+var timers = [];
+document.querySelectorAll('.timer').forEach(function(t) {
+  var sec = parseInt(t.dataset.sec || '120', 10);
+  var st = { el: t, total: sec, left: sec, iv: null, running: false };
+  var btn = t.querySelector('.tbtn');
+  var disp = t.querySelector('.tdisp');
+  var rst = t.querySelector('.treset');
+  var label = (btn && btn.dataset.label) || ('▶ ' + Math.round(sec / 60) + ' dk');
+  if (!btn || !disp || !rst) return;
+  timers.push(st);
+
+  function paint() { disp.textContent = fmt(st.left); }
+  paint();
+
+  btn.addEventListener('click', function() {
+    if (st.running) {
+      clearInterval(st.iv);
+      st.running = false;
+      t.classList.remove('run');
+      btn.textContent = '▶ Devam';
+      return;
+    }
+    if (st.left <= 0) {
+      st.left = st.total;
+      t.classList.remove('done');
+    }
+    st.running = true;
+    t.classList.add('run');
+    btn.textContent = '⏸ Duraklat';
+    paint();
+    st.iv = setInterval(function() {
+      st.left -= 0.25;
+      if (st.left <= 0) {
+        st.left = 0;
+        clearInterval(st.iv);
+        st.running = false;
+        t.classList.remove('run');
+        t.classList.add('done');
+        btn.textContent = '▶ Tekrar';
+        disp.textContent = 'Süre doldu';
+        beep(2);
+        toast('Süre doldu');
+        return;
+      }
+      paint();
+    }, 250);
+  });
+
+  rst.addEventListener('click', function() {
+    clearInterval(st.iv);
+    st.running = false;
+    st.left = st.total;
+    t.classList.remove('run', 'done');
+    btn.textContent = label;
+    paint();
+  });
+});
+
+/* ---------------- Sınav provası ---------------- */
+var PREP = 150, TALK = 120;
+var simState = { phase: 'prep', left: PREP, running: false, iv: null };
+var simQIndex = 0;
+
+function simRender() {
+  var t = document.getElementById('sim');
+  var disp = document.getElementById('simTime');
+  var ph = document.getElementById('simPhase');
+  var fill = document.getElementById('simFill');
+  if (!t || !disp || !ph || !fill) return;
+  t.classList.toggle('talk', simState.phase === 'talk');
+  t.classList.toggle('done', simState.phase === 'done');
+  if (simState.phase === 'done') {
+    disp.textContent = '00:00';
+    fill.style.width = '100%';
+    ph.textContent = 'SÜRE DOLDU';
+    return;
+  }
+  var total = simState.phase === 'talk' ? TALK : PREP;
+  disp.textContent = fmt(simState.left);
+  fill.style.width = (100 * (1 - simState.left / total)) + '%';
+  ph.textContent = simState.phase === 'prep' ? 'HAZIRLIK · 2:30' : 'KONUŞMA · 2:00';
+}
+
+function simToggle() {
+  var btn = document.getElementById('simBtn');
+  if (simState.phase === 'done') simReset();
+  if (simState.running) {
+    clearInterval(simState.iv);
+    simState.running = false;
+    btn.textContent = '▶ Devam';
+    return;
+  }
+  simState.running = true;
+  btn.textContent = '⏸ Duraklat';
+  simState.iv = setInterval(function() {
+    simState.left -= 0.25;
+    if (simState.left <= 0) {
+      if (simState.phase === 'prep') {
+        simState.phase = 'talk';
+        simState.left = TALK;
+        beep(1);
+        toast('Hazırlık bitti · konuşmaya başla!');
+      } else {
+        simState.left = 0;
+        simState.phase = 'done';
+        clearInterval(simState.iv);
+        simState.running = false;
+        simState.iv = null;
+        btn.textContent = '↺ Tekrar dene';
+        beep(3);
+        toast('Süre doldu · 2 dakika konuşma bitti');
+      }
+    }
+    simRender();
+  }, 250);
+}
+
+function simReset() {
+  clearInterval(simState.iv);
+  simState.phase = 'prep';
+  simState.left = PREP;
+  simState.running = false;
+  simState.iv = null;
+  var btn = document.getElementById('simBtn');
+  if (btn) btn.textContent = '▶ Başlat';
+  simRender();
+}
+
+function simLoadQuestion(i) {
+  if (!window.QUESTIONS || !QUESTIONS.length) return;
+  simQIndex = i;
+  var q = QUESTIONS[i];
+  document.getElementById('simQzh').textContent = q.zh;
+  document.getElementById('simQpy').textContent = q.py;
+  document.getElementById('simQtr').textContent = q.tr;
+}
+
+function simRandom() {
+  if (!window.QUESTIONS || !QUESTIONS.length) return;
+  var i = simQIndex;
+  while (QUESTIONS.length > 1 && i === simQIndex) i = Math.floor(Math.random() * QUESTIONS.length);
+  simLoadQuestion(i);
+  simReset();
+}
+
+/* ---------------- Notlar ---------------- */
+var notesEl = document.getElementById('simNotes');
+var notesTimer = null;
+if (notesEl) {
+  try { notesEl.value = localStorage.getItem('gunluk.notes.v1') || ''; } catch (e) {}
+  notesEl.addEventListener('input', function() {
+    clearTimeout(notesTimer);
+    notesTimer = setTimeout(function() {
+      try { localStorage.setItem('gunluk.notes.v1', notesEl.value); } catch (e) {}
+    }, 400);
+  });
+}
+
+function clearNotes() {
+  if (!notesEl) return;
+  notesEl.value = '';
+  try { localStorage.removeItem('gunluk.notes.v1'); } catch (e) {}
+  toast('Notlar temizlendi');
+}
+
+/* ---------------- Aç/kapa kutuları ---------------- */
+function toggleBox(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var hidden = el.classList.toggle('hide');
+  if (btn) btn.textContent = hidden ? (btn.dataset.show || 'Göster') : (btn.dataset.hide || 'Gizle');
+}
+
+/* ---------------- Kontrol listeleri ---------------- */
+document.querySelectorAll('.checkwrap').forEach(function(w) {
+  var boxes = w.querySelectorAll('input[type="checkbox"]');
+  var fill = w.querySelector('.cprog .bar i');
+  var cnt = w.querySelector('.cprog .cnt');
+  if (!boxes.length || !fill || !cnt) return;
+
+  function update() {
+    var n = 0;
+    boxes.forEach(function(b) {
+      var row = b.closest('.chk');
+      if (row) row.classList.toggle('done', b.checked);
+      if (b.checked) n++;
+    });
+    fill.style.width = (100 * n / boxes.length) + '%';
+    cnt.textContent = n + '/' + boxes.length;
+  }
+
+  boxes.forEach(function(b) { b.addEventListener('change', update); });
+  update();
+});
+
+/* ---------------- Kelime arama ---------------- */
+var vocabRows = document.querySelectorAll('#vocabTables tbody tr');
+var vocabCount = document.getElementById('vocabCount');
+if (vocabCount) vocabCount.textContent = vocabRows.length;
+
+function filterVocab(q) {
+  q = (q || '').trim().toLowerCase();
+  var n = 0;
+  vocabRows.forEach(function(tr) {
+    var hit = !q || tr.textContent.toLowerCase().indexOf(q) >= 0;
+    tr.style.display = hit ? '' : 'none';
+    if (hit) n++;
+  });
+  if (vocabCount) vocabCount.textContent = n;
+}
+
+/* ---------------- Soru bankası ---------------- */
+var QUESTIONS = [
+  { zh: '请介绍一下你的一个好朋友。', py: 'Qǐng jièshào yíxià nǐ de yí gè hǎo péngyou.', tr: 'Yakın bir arkadaşını tanıt.' },
+  { zh: '你周末一般是怎么安排的？', py: 'Nǐ zhōumò yìbān shì zěnme ānpái de?', tr: 'Hafta sonlarını genellikle nasıl planlarsın?' },
+  { zh: '这个假期你有什么计划？', py: 'Zhège jiàqī nǐ yǒu shénme jìhuà?', tr: 'Bu tatilde ne planlıyorsun?' },
+  { zh: '介绍一下你的一次旅游线路。', py: 'Jièshào yíxià nǐ de yí cì lǚyóu xiànlù.', tr: 'Bir gezi rotanı anlat.' },
+  { zh: '你平时喜欢做什么运动？', py: 'Nǐ píngshí xǐhuan zuò shénme yùndòng?', tr: 'Normalde hangi sporu yapmayı seversin?' },
+  { zh: '请描述一下你最好的朋友的外貌和性格。', py: 'Qǐng miáoshù yíxià nǐ zuì hǎo de péngyou de wàimào hé xìnggé.', tr: 'En iyi arkadaşının dış görünüşünü ve kişiliğini betimle.' },
+  { zh: '你最喜欢的一个节日是什么？为什么？', py: 'Nǐ zuì xǐhuan de yí gè jiérì shì shénme? Wèishénme?', tr: 'En sevdiğin bayram hangisi? Neden?' },
+  { zh: '介绍一下你的家庭。', py: 'Jièshào yíxià nǐ de jiātíng.', tr: 'Aileni tanıt.' },
+  { zh: '你平常的一天是怎么过的？', py: 'Nǐ píngcháng de yì tiān shì zěnme guò de?', tr: 'Sıradan bir günün nasıl geçiyor?' },
+  { zh: '你怎么安排学习和休息的时间？', py: 'Nǐ zěnme ānpái xuéxí hé xiūxi de shíjiān?', tr: 'Ders ve dinlenme zamanını nasıl ayarlıyorsun?' },
+  { zh: '请说说你最近看的一部电影。', py: 'Qǐng shuōshuo nǐ zuìjìn kàn de yí bù diànyǐng.', tr: 'Son izlediğin bir filmi anlat.' },
+  { zh: '你觉得怎样才能学好汉语？', py: 'Nǐ juéde zěnyàng cái néng xué hǎo Hànyǔ?', tr: 'Sence Çince nasıl iyi öğrenilir?' }
+];
+
+/* ---------------- 重复 cümleleri (8–12 汉字) ---------------- */
+var SETS = [
+  {
+    name: 'Set 1 · Hafta sonu & spor',
+    items: [
+      { zh: '我周末喜欢去健身房运动。', py: 'Wǒ zhōumò xǐhuan qù jiànshēnfáng yùndòng.', tr: 'Hafta sonları spor salonuna gitmeyi severim.' },
+      { zh: '他每天早上去公园跑步。', py: 'Tā měitiān zǎoshang qù gōngyuán pǎobù.', tr: 'Her sabah parkta koşmaya gider.' },
+      { zh: '我们打算下个月去南方旅游。', py: 'Wǒmen dǎsuàn xià gè yuè qù nánfāng lǚyóu.', tr: 'Gelecek ay güneye seyahat etmeyi planlıyoruz.' },
+      { zh: '运动以后一定要多喝点儿水。', py: 'Yùndòng yǐhòu yídìng yào duō hē diǎnr shuǐ.', tr: 'Spordan sonra mutlaka bolca su içmelisin.' },
+      { zh: '她一边听音乐一边打扫房间。', py: 'Tā yìbiān tīng yīnyuè yìbiān dǎsǎo fángjiān.', tr: 'Müzik dinlerken odasını temizliyor.' },
+      { zh: '周末常和朋友一起看电影。', py: 'Zhōumò cháng hé péngyou yìqǐ kàn diànyǐng.', tr: 'Hafta sonları sık sık arkadaşlarla film izlerim.' }
+    ]
+  },
+  {
+    name: 'Set 2 · Resim sahneleri',
+    items: [
+      { zh: '他看起来很累，也很渴。', py: 'Tā kàn qǐlái hěn lèi, yě hěn kě.', tr: 'Çok yorgun ve çok susamış görünüyor.' },
+      { zh: '女孩儿收到礼物非常惊喜。', py: 'Nǚháir shōudào lǐwù fēicháng jīngxǐ.', tr: 'Kız hediyeyi alınca çok şaşırdı, çok sevindi.' },
+      { zh: '妈妈着急地给学校打了电话。', py: 'Māma zháojí de gěi xuéxiào dǎ le diànhuà.', tr: 'Annesi telaşla okulu aradı.' },
+      { zh: '医生先给病人量了体温。', py: 'Yīshēng xiān gěi bìngrén liáng le tǐwēn.', tr: 'Doktor önce hastanın ateşini ölçtü.' },
+      { zh: '他一边吃面包一边修改文件。', py: 'Tā yìbiān chī miànbāo yìbiān xiūgǎi wénjiàn.', tr: 'Bir yandan sandviç yiyor, bir yandan dosyayı düzeltiyor.' },
+      { zh: '朋友拍拍他的肩，安慰了他。', py: 'Péngyou pāipāi tā de jiān, ānwèi le tā.', tr: 'Arkadaşı omzuna vurup onu teselli etti.' }
+    ]
+  },
+  {
+    name: 'Set 3 · Kişi & plan',
+    items: [
+      { zh: '她性格开朗，也很乐于助人。', py: 'Tā xìnggé kāilǎng, yě hěn lèyú zhùrén.', tr: 'Neşeli bir kişiliği var, yardım etmeyi de çok sever.' },
+      { zh: '我们是大一的时候认识的。', py: 'Wǒmen shì dà yī de shíhou rènshi de.', tr: 'Biz birinci sınıfta tanıştık.' },
+      { zh: '他对摄影特别感兴趣。', py: 'Tā duì shèyǐng tèbié gǎn xìngqù.', tr: 'Fotoğrafçılığa özellikle ilgi duyuyor.' },
+      { zh: '她给我留下的印象特别深。', py: 'Tā gěi wǒ liúxià de yìnxiàng tèbié shēn.', tr: 'Bende bıraktığı iz çok derin.' },
+      { zh: '这个假期我打算回家乡看看。', py: 'Zhège jiàqī wǒ dǎsuàn huí jiāxiāng kànkan.', tr: 'Bu tatilde memleketime dönüp bakmayı planlıyorum.' },
+      { zh: '我先打扫房间，然后去买菜。', py: 'Wǒ xiān dǎsǎo fángjiān, ránhòu qù mǎi cài.', tr: 'Önce odayı temizlerim, sonra alışverişe giderim.' }
+    ]
+  }
+];
+
+/* ---------------- 重复 antrenmanı ---------------- */
+var curSet = 0;
+var repRevealed = [{}, {}, {}];
+var repOk = [{}, {}, {}];
+var repVals = [{}, {}, {}];
+
+function renderSetTabs() {
+  var tabs = document.getElementById('setTabs');
+  if (!tabs) return;
+  tabs.innerHTML = '';
+  SETS.forEach(function(s, i) {
+    var b = document.createElement('button');
+    b.className = 'settab' + (i === curSet ? ' on' : '');
+    b.type = 'button';
+    b.textContent = s.name;
+    b.onclick = function() {
+      curSet = i;
+      renderSetTabs();
+      renderSet(i);
+    };
+    tabs.appendChild(b);
+  });
+}
+
+function renderSet(i) {
+  var list = document.getElementById('repList');
+  if (!list || !SETS[i]) return;
+  var html = '';
+  SETS[i].items.forEach(function(it, k) {
+    var rev = !!repRevealed[i][k];
+    html += '<div class="rep" id="rep-' + i + '-' + k + '">' +
+      '<div class="rep-head">' +
+        '<span class="rep-n">' + (k + 1) + '</span>' +
+        '<button class="mini ghost" type="button" onclick="repSpeak(' + i + ',' + k + ')">🔊 Dinle</button>' +
+        '<button class="mini ghost" type="button" onclick="repReveal(' + i + ',' + k + ')" id="repRb-' + i + '-' + k + '">' + (rev ? '🙈 Gizle' : '👁 Göster') + '</button>' +
+        '<span class="rep-tr">' + it.tr + '</span>' +
+      '</div>' +
+      '<div class="rep-zh' + (rev ? '' : ' hide') + '" id="repZh-' + i + '-' + k + '">' + it.zh + '</div>' +
+      '<div class="rep-py' + (rev ? '' : ' hide') + '" id="repPy-' + i + '-' + k + '">' + it.py + '</div>' +
+      '<div class="rep-row">' +
+        '<input class="rep-in" id="repIn-' + i + '-' + k + '" type="text" autocomplete="off" spellcheck="false" placeholder="Duyduğunu yaz…">' +
+        '<button class="mini" type="button" onclick="checkRep(' + i + ',' + k + ')">Kontrol</button>' +
+      '</div>' +
+      '<div class="rep-fb" id="repFb-' + i + '-' + k + '"></div>' +
+    '</div>';
+  });
+  list.innerHTML = html;
+
+  SETS[i].items.forEach(function(it, k) {
+    var inp = document.getElementById('repIn-' + i + '-' + k);
+    if (!inp) return;
+    inp.value = repVals[i][k] || '';
+    inp.addEventListener('input', function() { repVals[i][k] = inp.value; });
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); checkRep(i, k); }
+    });
+    if (repOk[i][k]) {
+      var box = document.getElementById('rep-' + i + '-' + k);
+      var fb = document.getElementById('repFb-' + i + '-' + k);
+      if (box) box.classList.add('ok');
+      if (fb) { fb.textContent = '✓ Doğru'; fb.className = 'rep-fb ok'; }
+    }
+  });
+  updateRepScore();
+}
+
+function repSpeak(i, k) {
+  var it = SETS[i] && SETS[i].items[k];
+  if (it) speak(it.zh, 0.88);
+}
+
+function repReveal(i, k) {
+  repRevealed[i][k] = !repRevealed[i][k];
+  var rev = repRevealed[i][k];
+  var zh = document.getElementById('repZh-' + i + '-' + k);
+  var py = document.getElementById('repPy-' + i + '-' + k);
+  var btn = document.getElementById('repRb-' + i + '-' + k);
+  if (zh) zh.classList.toggle('hide', !rev);
+  if (py) py.classList.toggle('hide', !rev);
+  if (btn) btn.textContent = rev ? '🙈 Gizle' : '👁 Göster';
+}
+
+function normZh(s) {
+  return (s || '').replace(/[\s\u3000，。、！？；：""''（）()《》〈〉,\.!\?;:'"\-—…]/g, '');
+}
+
+function checkRep(i, k) {
+  var it = SETS[i] && SETS[i].items[k];
+  var inp = document.getElementById('repIn-' + i + '-' + k);
+  var fb = document.getElementById('repFb-' + i + '-' + k);
+  var box = document.getElementById('rep-' + i + '-' + k);
+  if (!it || !inp || !fb || !box) return;
+
+  var typed = inp.value.trim();
+  if (!typed) {
+    fb.textContent = 'Önce duyduğunu yaz.';
+    fb.className = 'rep-fb';
+    return;
+  }
+  if (normZh(typed) === normZh(it.zh)) {
+    repOk[i][k] = true;
+    box.classList.remove('bad');
+    box.classList.add('ok');
+    fb.textContent = '✓ Doğru · ' + it.zh;
+    fb.className = 'rep-fb ok';
+    beep(1);
+  } else {
+    repOk[i][k] = false;
+    box.classList.remove('ok');
+    box.classList.add('bad');
+    fb.textContent = '✗ Doğrusu: ' + it.zh + '  —  tekrar dinle ve yeniden dene.';
+    fb.className = 'rep-fb bad';
+    repRevealed[i][k] = true;
+    var zh = document.getElementById('repZh-' + i + '-' + k);
+    var py = document.getElementById('repPy-' + i + '-' + k);
+    var btn = document.getElementById('repRb-' + i + '-' + k);
+    if (zh) zh.classList.remove('hide');
+    if (py) py.classList.remove('hide');
+    if (btn) btn.textContent = '🙈 Gizle';
+  }
+  updateRepScore();
+}
+
+function updateRepScore() {
+  var el = document.getElementById('repScore');
+  if (!el || !SETS[curSet]) return;
+  var n = 0;
+  SETS[curSet].items.forEach(function(_, k) { if (repOk[curSet][k]) n++; });
+  el.textContent = n + '/' + SETS[curSet].items.length;
+}
+
+function repSpeakSet() {
+  if (!('speechSynthesis' in window)) {
+    toast('Bu tarayıcı sesli okumayı desteklemiyor');
+    return;
+  }
+  if (!SETS[curSet]) return;
+  speechSynthesis.cancel();
+  SETS[curSet].items.forEach(function(it, idx) {
+    speak(it.zh, 0.88, idx > 0);
+  });
+  toast('Set okunuyor · ' + SETS[curSet].items.length + ' cümle');
+}
+
+function repReset() {
+  repRevealed[curSet] = {};
+  repOk[curSet] = {};
+  repVals[curSet] = {};
+  renderSet(curSet);
+  toast('Set sıfırlandı');
+}
+
+/* ---------------- Başlangıç ---------------- */
+renderSetTabs();
+renderSet(0);
+simLoadQuestion(0);
+simRender();
+
+var initialHash = location.hash.slice(1);
+show(IDS.indexOf(initialHash) >= 0 ? initialHash : IDS[0]);
+</script>
+</body>
+</html>

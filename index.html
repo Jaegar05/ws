@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüm Eğitim ve Sınav Portalları - Ana Merkez</title>
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --sidebar-bg: #181818;
+            --card-bg: #242424;
+            --text-main: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --accent-color: #bb86fc;
+            --border-color: #333333;
+            --highlight-text: #ffd54f;
+            --sidebar-width: 320px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Master Sidebar */
+        #master-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Collapsed Sidebar */
+        #master-sidebar.collapsed {
+            width: 60px;
+        }
+        #master-sidebar.collapsed .header-title,
+        #master-sidebar.collapsed nav a span {
+            display: none;
+        }
+        #master-sidebar.collapsed nav a {
+            padding: 14px 0;
+            text-align: center;
+            font-size: 1.1rem;
+            border-left: 4px solid transparent;
+        }
+
+        /* Collapsed (desktop): center header button and nav icons exactly */
+        @media (min-width: 901px) {
+            #master-sidebar.collapsed .header {
+                padding: 16px 0;
+                justify-content: center;
+            }
+            #master-sidebar.collapsed nav a {
+                justify-content: center;
+                gap: 0;
+                padding: 14px 0;
+                border-left: 0;
+            }
+            #master-sidebar.collapsed nav a:hover,
+            #master-sidebar.collapsed nav a.active {
+                box-shadow: inset 4px 0 0 var(--accent-color);
+            }
+        }
+
+        #master-sidebar .header {
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #121212;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .toggle-btn:hover {
+            background-color: #2a2a2a;
+        }
+
+        #master-sidebar nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+        #master-sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.92rem;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        #master-sidebar nav a:hover, #master-sidebar nav a.active {
+            background-color: #2a2a2a;
+            color: var(--accent-color);
+            border-left-color: var(--accent-color);
+        }
+        
+        /* Master Content */
+        #master-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--primary-bg);
+            position: relative;
+        }
+        .portal-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+        .portal-frame.active {
+            display: block;
+        }
+
+        /* Responsive navigation control */
+        #mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: max(12px, env(safe-area-inset-top));
+            left: max(12px, env(safe-area-inset-left));
+            z-index: 30;
+            min-width: 46px;
+            min-height: 46px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: rgba(24, 24, 24, .96);
+            color: var(--accent-color);
+            font-size: 1.35rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,.35);
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        #sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 19;
+            background: rgba(0,0,0,.62);
+        }
+
+        @media (max-width: 900px) {
+            html, body {
+                width: 100%;
+                min-width: 0;
+                height: 100%;
+                min-height: 100%;
+                overflow: hidden;
+            }
+            body { display: block; }
+            #mobile-menu-toggle { display: flex; align-items: center; justify-content: center; }
+            #master-sidebar {
+                position: fixed;
+                inset: 0 auto 0 0;
+                width: min( min(86vw, 340px), 340px ) !important;
+                height: 100vh;
+                height: 100dvh;
+                max-height: none;
+                transform: translateX(-105%);
+                transition: transform .25s ease;
+                z-index: 20;
+                box-shadow: 12px 0 32px rgba(0,0,0,.38);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            #master-sidebar.mobile-open { transform: translateX(0); }
+            #master-sidebar.collapsed {
+                width: min( min(86vw, 340px), 340px ) !important;
+                height: 100vh;
+                height: 100dvh;
+            }
+            #master-sidebar.collapsed .header-title,
+            #master-sidebar.collapsed nav a span { display: initial; }
+            #master-sidebar.collapsed nav a {
+                padding: 14px 20px;
+                text-align: left;
+                border-left: 4px solid transparent;
+            }
+            #master-sidebar nav { min-height: 0; }
+            #master-sidebar nav a { min-height: 48px; padding-top: 13px; padding-bottom: 13px; }
+            #master-sidebar .toggle-btn { min-width: 44px; min-height: 44px; }
+            #master-content {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100vh;
+                height: 100dvh;
+                min-height: 0;
+            }
+            .portal-frame { width: 100%; height: 100%; }
+            body.mobile-menu-open #sidebar-backdrop { display: block; }
+        }
+
+        @media (max-width: 480px) {
+            #master-sidebar { width: min(88vw, 320px) !important; }
+            .header { padding: 12px; font-size: .95rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <button id="mobile-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" onclick="toggleSidebar()">☰</button>
+    <div id="sidebar-backdrop" onclick="closeMobileSidebar()" aria-hidden="true"></div>
+
+    <!-- Sidebar Navigation (Sınav Takvimi Sırasına Göre Düzenlendi) -->
+    <div id="master-sidebar">
+        <div class="header">
+            <button class="toggle-btn" onclick="toggleSidebar()" title="Menüyü Daralt/Genişlet">☰</button>
+            <span class="header-title">🎓 Eğitim & Sınav Portalları</span>
+        </div>
+
+        <nav>
+            <a class="active" onclick="switchPortal(event, 'p6')" title="1. Çeviri ve Okuma Dersi (02.11)">
+                <i>🈴</i><span>1. Çeviri ve Okuma Dersi</span>
+            </a>
+            <a onclick="switchPortal(event, 'p7')" title="2. HSK 5 Practice Platform (02.11)">
+                <i>📝</i><span>2. HSK 5 Practice Platform</span>
+            </a>
+            <a onclick="switchPortal(event, 'p1')" title="3. Çince Dinleme Anlama (03.11)">
+                <i>🎧</i><span>3. Çince Dinleme Anlama (1-5)</span>
+            </a>
+            <a onclick="switchPortal(event, 'p2')" title="4. Çince Okuma Anlama (03.11)">
+                <i>📖</i><span>4. Çince Okuma Anlama (1-6)</span>
+            </a>
+            <a onclick="switchPortal(event, 'p3')" title="5. Uluslararası Örgütler (04.11)">
+                <i>🌐</i><span>5. Uluslararası Örgütler (OSD)</span>
+            </a>
+            <a onclick="switchPortal(event, 'p8')" title="6. Günlük Konuşma (05.11)">
+                <i>🎤</i><span>6. Günlük Konuşma</span>
+            </a>
+            <a onclick="switchPortal(event, 'p4')" title="7. Sözlü Anlatım Portalı (06.11)">
+                <i>🗣️</i><span>7. Sözlü Anlatım Portalı</span>
+            </a>
+            <a onclick="switchPortal(event, 'p5')" title="8. Yazılı Anlatım Portalı (06.11)">
+                <i>✍️</i><span>8. Yazılı Anlatım Portalı</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Portal Frames -->
+    <div id="master-content">
+        <iframe id="p6" class="portal-frame active" src="Çeviri.html"></iframe>
+        <iframe id="p7" class="portal-frame" src="HSK Hazırlık H51001-3-5.html"></iframe>
+        <iframe id="p1" class="portal-frame" src="Dinleme Anlama 1-5.html"></iframe>
+        <iframe id="p2" class="portal-frame" src="Okuma Anlama 1-6.html"></iframe>
+        <iframe id="p3" class="portal-frame" src="OSD.html"></iframe>
+        <iframe id="p8" class="portal-frame" src="Günlük Konuşma.html"></iframe>
+        <iframe id="p4" class="portal-frame" src="Sözlü Anlatım.html"></iframe>
+        <iframe id="p5" class="portal-frame" src="Yazılı Anlatım.html"></iframe>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('master-sidebar');
+            const mobile = window.matchMedia('(max-width: 900px)').matches;
+            if (mobile) {
+                const isOpen = sidebar.classList.toggle('mobile-open');
+                document.body.classList.toggle('mobile-menu-open', isOpen);
+                document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', String(isOpen));
+            } else {
+                sidebar.classList.toggle('collapsed');
+            }
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('master-sidebar').classList.remove('mobile-open');
+            document.body.classList.remove('mobile-menu-open');
+            document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+        }
+
+        function switchPortal(event, portalId) {
+            document.querySelectorAll('.portal-frame').forEach(frame => {
+                frame.classList.remove('active');
+            });
+            document.getElementById(portalId).classList.add('active');
+
+            document.querySelectorAll('#master-sidebar nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.currentTarget.classList.add('active');
+            if (window.matchMedia('(max-width: 900px)').matches) closeMobileSidebar();
+        }
+
+        window.addEventListener('resize', () => {
+            if (!window.matchMedia('(max-width: 900px)').matches) closeMobileSidebar();
+        });
+    </script>
+</body>
+</html>
