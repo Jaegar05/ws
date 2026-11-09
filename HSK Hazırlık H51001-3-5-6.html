@@ -427,7 +427,7 @@
                                 <span class="text-sm font-bold text-gray-100">{{ selectedExamKey }} · 录音</span>
                             </div>
                             <audio ref="examAudio" :key="audioSrc" :src="audioSrc" controls preload="metadata" controlsList="nodownload"
-                                @error="audioError = true" @loadedmetadata="audioError = false; applyAudioRate()" class="flex-1 min-w-[220px] h-10"></audio>
+                                @error="handleAudioError" @loadedmetadata="handleAudioReady" class="flex-1 min-w-[220px] h-10"></audio>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <button type="button" @click="skipAudio(-10)" class="bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs transition" title="10 sn geri"><i class="fa-solid fa-rotate-left mr-1"></i>10</button>
                                 <button type="button" @click="skipAudio(10)" class="bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs transition" title="10 sn ileri">10<i class="fa-solid fa-rotate-right ml-1"></i></button>
@@ -439,8 +439,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div v-if="audioError" class="text-xs text-amber-300 bg-amber-950/40 border border-amber-800/50 rounded-lg px-3 py-2">
-                            Ses dosyası bulunamadı: <code class="font-mono">{{ audioSrcLabel }}</code>. HTML dosyasının yanında <strong>HSK Hazırlık H51001-3-5</strong> klasörü ve içinde 1.mp3, 3.mp3, 5.mp3, 6.mp3 olmalı. H51006 ses dosyası (6.mp3) henüz eklenmemişse dinleme bölümünü yine de okuyabilirsiniz.
+                        <div v-if="audioError" class="text-xs text-amber-300 bg-amber-950/40 border border-amber-800/50 rounded-lg px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+                            <span>Ses dosyası yüklenemedi: <code class="font-mono">{{ audioSrcLabel }}</code>. Dosyanın HTML ile aynı klasördeki <strong>HSK Hazırlık H51001-3-5</strong> dizininde olduğundan emin olun. Sorun tarayıcı önbelleğinden kaynaklanıyorsa yeniden deneyin veya sayfayı Ctrl+F5 ile yenileyin.</span>
+                            <button type="button" @click="retryAudio" class="shrink-0 bg-amber-900/60 hover:bg-amber-800/70 text-amber-100 border border-amber-700/60 rounded-lg px-2.5 py-1 text-xs transition">
+                                <i class="fa-solid fa-rotate-right mr-1"></i>Sesi yeniden dene
+                            </button>
                         </div>
                     </div>
 
@@ -2689,6 +2692,8 @@
                     HSK_VOCAB_CATEGORIES: HSK_VOCAB_CATEGORIES,
                     selectedExamKey: 'H51001',
                     audioError: false,
+                    audioVersion: 0,
+                    audioAutoRetried: false,
                     audioRate: 1,
                     showSidebar: true,
                     activeSection: 'listening',
@@ -2835,7 +2840,8 @@
                     return 'HSK Hazırlık H51001-3-5/' + n + '.mp3';
                 },
                 audioSrc() {
-                    return encodeURI(this.audioSrcLabel);
+                    const base = encodeURI(this.audioSrcLabel);
+                    return this.audioVersion ? base + '?v=' + this.audioVersion : base;
                 },
                 memoryExamTotal() {
                     const out = { H51001: 0, H51003: 0, H51005: 0, H51006: 0 };
@@ -2941,8 +2947,30 @@
                     const a = this.$refs.examAudio;
                     if (a) a.playbackRate = this.audioRate;
                 },
+                handleAudioError() {
+                    // İlk deneme tarayıcı önbelleğindeki eski 404'ü kullanmış olabilir:
+                    // bir kez sürüm ekli URL ile otomatik yeniden dene.
+                    if (!this.audioAutoRetried) {
+                        this.audioAutoRetried = true;
+                        this.audioVersion += 1;
+                        this.audioError = false;
+                        return;
+                    }
+                    this.audioError = true;
+                },
+                handleAudioReady() {
+                    this.audioError = false;
+                    this.audioAutoRetried = false;
+                    this.applyAudioRate();
+                },
+                retryAudio() {
+                    this.audioError = false;
+                    this.audioAutoRetried = true;
+                    this.audioVersion += 1;
+                },
                 changeExam() {
                     this.audioError = false;
+                    this.audioAutoRetried = false;
                     this.openTranscripts = {};
                     this.resultFilter = { listening: 'all', reading: 'all' };
                     this.loadExamState(this.selectedExamKey);
