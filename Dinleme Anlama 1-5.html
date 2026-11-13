@@ -11,6 +11,18 @@
    Ink & Jade design system
    ============================================================ */
 
+/* Çince karakterler: yalnızca CJK aralığında Kaiti kullan,
+   Latin harfler Segoe UI'da kalsın. */
+@font-face {
+  font-family: "KaitiCJK";
+  src: local("Kaiti SC"), local("STKaiti"), local("KaiTi"),
+       local("KaiTi_GB2312"), local("楷体"), local("BiauKai"),
+       local("DFKai-SB"), local("SimKai");
+  unicode-range: U+2E80-2FFF, U+3000-303F, U+31C0-31EF, U+3400-4DBF,
+                 U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+  font-display: swap;
+}
+
 :root {
   --bg: #080c11;
   --bg-soft: #0c1219;
@@ -55,7 +67,7 @@ html {
 }
 
 body {
-  font-family: var(--font-ui);
+  font-family: "KaitiCJK", var(--font-ui);
   font-size: 1rem;
   background: var(--bg);
   color: var(--text);
@@ -125,6 +137,7 @@ a { color: var(--jade); }
   z-index: 40;
   transition: width 0.32s var(--ease), transform 0.32s var(--ease);
   position: relative;
+  overflow-x: hidden;
 }
 
 #sidebar.collapsed { width: 78px; flex-basis: 78px; }
@@ -161,9 +174,9 @@ a { color: var(--jade); }
   box-shadow: 0 8px 24px rgba(45, 212, 191, 0.28), inset 0 1px 0 rgba(255,255,255,0.45);
 }
 
-.brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-.brand-text strong { font-size: 0.98rem; letter-spacing: 0.01em; white-space: nowrap; }
-.brand-text span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; flex: 1 1 auto; }
+.brand-text strong { font-size: 0.98rem; letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.brand-text span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
 .sidebar-close { display: none; margin-left: auto; }
 
@@ -199,6 +212,7 @@ a { color: var(--jade); }
   color: var(--muted-2);
   padding: 16px 12px 8px;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 #sidebar nav a {
@@ -299,8 +313,8 @@ a { color: var(--jade); }
   border: 1px solid var(--line);
 }
 .progress-card > div:last-child { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
-.progress-card b { font-size: 0.78rem; font-weight: 600; }
-.progress-card small { font-size: 0.68rem; color: var(--muted-2); }
+.progress-card b { font-size: 0.78rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.progress-card small { font-size: 0.68rem; color: var(--muted-2); overflow: hidden; text-overflow: ellipsis; }
 
 .progress-ring { position: relative; width: 46px; height: 46px; flex: 0 0 46px; }
 .progress-ring svg { transform: rotate(-90deg); width: 46px; height: 46px; }
@@ -397,7 +411,49 @@ body.sidebar-collapsed .scroll-progress { left: 78px; }
   text-overflow: ellipsis;
 }
 
-.topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; position: relative; }
+
+/* Yazı boyutu paneli */
+.font-pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 252px;
+  padding: 14px 15px 13px;
+  border-radius: 16px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel-solid);
+  box-shadow: var(--shadow);
+  z-index: 80;
+  display: none;
+}
+.font-pop.open { display: block; animation: popIn 0.18s var(--ease); }
+@keyframes popIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
+.font-pop-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.font-pop-head b { font-size: 0.82rem; color: var(--text); }
+.font-pop-head span { font-family: var(--font-mono); font-size: 0.82rem; color: var(--jade); }
+.font-pop input[type="range"] {
+  width: 100%;
+  height: 22px;
+  accent-color: var(--jade);
+  cursor: pointer;
+  background: transparent;
+}
+.font-pop-scale { display: flex; justify-content: space-between; font-size: 0.64rem; color: var(--muted-2); margin-top: 2px; }
+.font-pop-reset {
+  margin-top: 11px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(148, 184, 214, 0.05);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.font-pop-reset:hover { color: var(--jade); border-color: rgba(79, 209, 197, 0.35); }
 
 .icon-btn {
   width: 38px;
@@ -773,7 +829,45 @@ body.sidebar-collapsed .scroll-progress { left: 78px; }
   background: rgba(148, 184, 214, 0.035);
 }
 .audio-mini label { font-size: 0.74rem; color: var(--muted); }
+.audio-mini label b { color: var(--jade); font-weight: 600; font-family: var(--font-mono); font-size: 0.7rem; }
 .audio-mini audio { flex: 1 1 280px; height: 34px; min-width: 200px; accent-color: var(--jade); }
+.audio-extra { margin-top: 18px; border-style: dashed; }
+.audio-hint {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: -4px 0 14px;
+  font-size: 0.72rem;
+  color: var(--muted-2);
+}
+.audio-hint b { color: var(--amber); font-weight: 600; }
+
+/* Sınav bilgileri */
+.exam-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.exam-meta {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(79, 209, 197, 0.06), rgba(148, 184, 214, 0.02));
+}
+.exam-meta span { display: block; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 3px; }
+.exam-meta b { font-size: 1.02rem; color: var(--text); font-weight: 600; }
+.exam-final {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--line-strong);
+  background: rgba(148, 184, 214, 0.025);
+  text-align: center;
+}
+.exam-final .ico { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+.exam-final b { display: block; color: var(--text); margin-bottom: 3px; }
+.exam-final small { color: var(--muted-2); font-size: 0.78rem; }
 
 /* ============================================================
    Grammar
@@ -1535,9 +1629,14 @@ body.font-xl { font-size: 19px; }
 
         <nav id="unitNav">
             <div class="nav-group-label">Genel</div>
-            <a href="#info" data-module="info" data-search="sınav bilgileri genel bakış info">
+            <a href="#info" data-module="info" data-search="genel bakış info özet istatistik">
                 <span class="nav-num">i</span>
-                <span class="nav-body"><b>Sınav Bilgileri</b><small>Genel bakış ve kapsam</small></span>
+                <span class="nav-body"><b>Genel Bakış</b><small>Kapsam, istatistik ve ünite haritası</small></span>
+                <span class="nav-dot"></span>
+            </a>
+            <a href="#sinav" data-module="sinav" data-search="sınav bilgileri ara sınav final vize">
+                <span class="nav-num">🎓</span>
+                <span class="nav-body"><b>Sınav Bilgileri</b><small>Ara Sınav · Final (yakında)</small></span>
                 <span class="nav-dot"></span>
             </a>
 
@@ -1568,7 +1667,7 @@ body.font-xl { font-size: 19px; }
                 <span class="nav-dot"></span>
             </a>
 
-            <div class="nav-group-label">Ünite 6–10 · Metin + TTS</div>
+            <div class="nav-group-label">Ünite 6–10 · Sesli</div>
             <a href="#m6" data-module="m6" data-search="6 20美元 20 dolar">
                 <span class="nav-num">06</span>
                 <span class="nav-body"><b>20美元</b><small>20 Dolar</small></span>
@@ -1622,66 +1721,68 @@ body.font-xl { font-size: 19px; }
             <button class="icon-btn menu-btn" onclick="toggleSidebar()" aria-label="Menü">☰</button>
             <div class="topbar-title">
                 <span id="topbarEyebrow">GENEL BAKIŞ</span>
-                <h2 id="topbarTitle">Sınav Bilgileri</h2>
+                <h2 id="topbarTitle">Genel Bakış</h2>
             </div>
             <div class="topbar-actions">
                 <button class="icon-btn" id="toggleTurkishBtn" data-tip="Türkçeyi gizle" onclick="toggleTurkish()" aria-label="Türkçeyi gizle">🌐</button>
                 <button class="icon-btn" id="toggleAllAnswersBtn" data-tip="Tüm cevapları göster" onclick="toggleAllAnswers()" aria-label="Tüm cevapları göster">💡</button>
                 <button class="icon-btn optional" data-tip="Seçenekleri karıştır" onclick="randomizeExercises()" aria-label="Seçenekleri karıştır">🔀</button>
-                <button class="icon-btn optional" data-tip="Yazı boyutu" onclick="cycleFont()" aria-label="Yazı boyutu">Aa</button>
+                <button class="icon-btn" data-tip="Yazı boyutu" data-font-btn onclick="openFontPanel(event)" aria-label="Yazı boyutu">Aa</button>
                 <button class="icon-btn optional" data-tip="Odak modu" id="focusBtn" onclick="toggleFocus()" aria-label="Odak modu">🎯</button>
                 <button class="icon-btn" data-tip="Yardım ve kısayollar" onclick="openHelp()" aria-label="Yardım">?</button>
+                <div class="font-pop" id="fontPop" role="dialog" aria-label="Yazı boyutu">
+                    <div class="font-pop-head"><b>Yazı boyutu</b><span id="fontValue">100%</span></div>
+                    <input type="range" id="fontRange" min="100" max="200" step="5" value="100" aria-label="Yazı boyutu yüzdesi">
+                    <div class="font-pop-scale"><span>100%</span><span>150%</span><span>200%</span></div>
+                    <button class="font-pop-reset" onclick="setFontScale(100)">Varsayılana dön</button>
+                </div>
             </div>
         </header>
 
         <div id="main">
-        <!-- MODULE: SINAV BİLGİLERİ -->
+        <!-- MODULE: GENEL BAKIŞ -->
         <div id="info" class="module active">
             <section class="hero">
                 <div class="hero-kicker">中级听力 · Orta Seviye Dinleme</div>
                 <h1>Dinleme Anlama<br>1–10</h1>
-                <p>On ünite, tek bir modern çalışma alanı. Metinleri okuyun, ses kayıtlarını dinleyin, dil kalıplarını inceleyin ve her alıştırmayı anında kontrol edin. İlerlemeniz otomatik olarak kaydedilir.</p>
+                <p>On ünite, tek bir modern çalışma alanı. Metinleri okuyun, gerçek ses kayıtlarını dinleyin, dil kalıplarını inceleyin ve her alıştırmayı anında kontrol edin. İlerlemeniz otomatik olarak kaydedilir.</p>
                 <div class="hero-chips">
                     <span class="hero-chip"><b>10</b> ünite</span>
-                    <span class="hero-chip"><b>5</b> ses kaydı</span>
+                    <span class="hero-chip"><b>59</b> ses kaydı</span>
                     <span class="hero-chip"><b>125</b> interaktif alıştırma</span>
-                    <span class="hero-chip"><b>TTS</b> ile metin dinleme</span>
+                    <span class="hero-chip"><b>46</b> dil kalıbı</span>
                     <span class="hero-chip"><b>%100</b> çevrimdışı</span>
                 </div>
             </section>
 
             <div class="stat-grid">
                 <div class="stat-card"><div class="num">10</div><div class="lbl">Ünite · 课文</div></div>
-                <div class="stat-card"><div class="num">5</div><div class="lbl">Ses kaydı (Ünite 1–5)</div></div>
+                <div class="stat-card"><div class="num">59</div><div class="lbl">Gerçek ses kaydı</div></div>
                 <div class="stat-card"><div class="num">125</div><div class="lbl">Kontrol edilebilir alıştırma</div></div>
                 <div class="stat-card"><div class="num">46</div><div class="lbl">Dil kalıbı ve örnek</div></div>
             </div>
 
             <div class="info-grid">
                 <div class="info-card">
-                    <h3><span class="ico">🎯</span> Sınav kapsamı ve dağılım</h3>
-                    <div class="scope-row">
-                        <div class="scope-top"><b>Kitaptaki alıştırmaların aynısı</b><span>%70</span></div>
-                        <div class="scope-bar"><i style="width:70%"></i></div>
+                    <h3><span class="ico">🎧</span> Ses kayıtları</h3>
+                    <div class="note" style="margin-bottom:10px;">
+                        <span class="ico">✅</span>
+                        <span><strong>10 ünitenin tamamı</strong> gerçek MP3 kayıtlarıyla çalışır. Her kayıt, ait olduğu bölümün yanında yer alır.</span>
                     </div>
-                    <div class="scope-row">
-                        <div class="scope-top"><b>Kitapta olmayan yeni alıştırmalar</b><span>%30</span></div>
-                        <div class="scope-bar"><i style="width:30%"></i></div>
+                    <div class="note" style="margin-bottom:10px;">
+                        <span class="ico">📚</span>
+                        <span><strong>Ders girişi + 生词</strong>, <strong>dil bilgisi kalıpları</strong>, <strong>课文</strong> ve alıştırma kayıtları ayrı ayrıdır.</span>
                     </div>
-                    <div class="scope-row">
-                        <div class="scope-top"><b>Dinleme + okuma + dil bilgisi</b><span>Karma</span></div>
-                        <div class="scope-bar"><i style="width:100%"></i></div>
-                    </div>
-                    <div class="note" style="margin-top:16px;">
-                        <span class="ico">📌</span>
-                        <span><strong>Sınav konuları:</strong> 1–10. üniteler dahildir. Ünite 6–10 için kitabın “文本与答案” sayfalarındaki metinler ve cevap anahtarları eklendi.</span>
+                    <div class="note">
+                        <span class="ico">📴</span>
+                        <span>Kayıtlar yerel <code>audio/</code> klasöründen yüklenir; internet bağlantısı gerekmez.</span>
                     </div>
                 </div>
 
                 <div class="info-card">
                     <h3><span class="ico">🧭</span> Nasıl çalışmalı?</h3>
                     <div class="steps">
-                        <div class="step"><span class="n">1</span><div><b>Önce dinle, sonra oku</b><small>Ses kaydı olan ünitelerde metne bakmadan dinleyin. Ardından Çince metni takip edin.</small></div></div>
+                        <div class="step"><span class="n">1</span><div><b>Önce dinle, sonra oku</b><small>Metne bakmadan dinleyin. Ardından Çince metni takip edin.</small></div></div>
                         <div class="step"><span class="n">2</span><div><b>Kelime ve kalıpları işaretle</b><small>Sarı kelime havuzları ve mor dil kalıpları sınavda tekrar eden yapılardır.</small></div></div>
                         <div class="step"><span class="n">3</span><div><b>Alıştırmayı çöz ve kontrol et</b><small>Her bölümün “Kontrol Et” düğmesi anında geri bildirim verir; “Cevapları Göster” çözümü açar.</small></div></div>
                         <div class="step"><span class="n">4</span><div><b>Yanlışları sıfırla ve tekrar dene</b><small>Her alıştırmanın yanındaki ↺ Sıfırla düğmesi yalnızca o bölümü temizler.</small></div></div>
@@ -1692,16 +1793,16 @@ body.font-xl { font-size: 19px; }
             <div class="info-card" style="margin-bottom:20px;">
                 <h3><span class="ico">🗺️</span> Ünite haritası</h3>
                 <div class="unit-map">
-                    <a class="unit-card" onclick="showModule(event,'m1')"><span class="u-num">01</span><span class="u-body"><b>画家和他的孙女</b><small>Ressam ve Torunu · 5 ses</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m2')"><span class="u-num">02</span><span class="u-body"><b>最好的年龄</b><small>En Güzel Yaş · 3 ses</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m3')"><span class="u-num">03</span><span class="u-body"><b>交换人生</b><small>Hayatları Değiştirmek · 3 ses</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m4')"><span class="u-num">04</span><span class="u-body"><b>为什么烦恼</b><small>Neden Sıkıntı? · 4 ses</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m5')"><span class="u-num">05</span><span class="u-body"><b>乞丐的故事</b><small>Dilencinin Hikâyesi · 1 ses</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m6')"><span class="u-num">06</span><span class="u-body"><b>20美元</b><small>20 Dolar · TTS</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m7')"><span class="u-num">07</span><span class="u-body"><b>别活得太累</b><small>Fazla Yorulma · TTS</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m8')"><span class="u-num">08</span><span class="u-body"><b>年龄并不重要</b><small>Yaş Önemli Değil · TTS</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m9')"><span class="u-num">09</span><span class="u-body"><b>猜猜他是谁</b><small>Tahmin Et Kim O · TTS</small></span></a>
-                    <a class="unit-card" onclick="showModule(event,'m10')"><span class="u-num">10</span><span class="u-body"><b>该哭就哭</b><small>Ağlanacaksa Ağla · TTS</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m1')"><span class="u-num">01</span><span class="u-body"><b>画家和他的孙女</b><small>Ressam ve Torunu · 6 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m2')"><span class="u-num">02</span><span class="u-body"><b>最好的年龄</b><small>En Güzel Yaş · 5 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m3')"><span class="u-num">03</span><span class="u-body"><b>交换人生</b><small>Hayatları Değiştirmek · 6 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m4')"><span class="u-num">04</span><span class="u-body"><b>为什么烦恼</b><small>Neden Sıkıntı? · 5 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m5')"><span class="u-num">05</span><span class="u-body"><b>乞丐的故事</b><small>Dilencinin Hikâyesi · 5 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m6')"><span class="u-num">06</span><span class="u-body"><b>20美元</b><small>20 Dolar · 6 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m7')"><span class="u-num">07</span><span class="u-body"><b>别活得太累</b><small>Fazla Yorulma · 6 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m8')"><span class="u-num">08</span><span class="u-body"><b>年龄并不重要</b><small>Yaş Önemli Değil · 4 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m9')"><span class="u-num">09</span><span class="u-body"><b>猜猜他是谁</b><small>Tahmin Et Kim O · 9 ses</small></span></a>
+                    <a class="unit-card" onclick="showModule(event,'m10')"><span class="u-num">10</span><span class="u-body"><b>该哭就哭</b><small>Ağlanacaksa Ağla · 7 ses</small></span></a>
                 </div>
             </div>
 
@@ -1720,14 +1821,92 @@ body.font-xl { font-size: 19px; }
                 <div class="info-card">
                     <h3><span class="ico">💡</span> Kısa notlar</h3>
                     <div class="note" style="margin-bottom:10px;">
+                        <span class="ico">🎓</span>
+                        <span><strong>Sınav bilgileri:</strong> Ara Sınav tarihi, kapsamı ve hazırlık listesi ayrı bir bölümde toplandı. Sol menüden <strong>Sınav Bilgileri</strong>'ni açın.</span>
+                    </div>
+                    <div class="note" style="margin-bottom:10px;">
                         <span class="ico">🎧</span>
-                        <span><strong>Ünite 1–5:</strong> Ders, dil bilgisi ve alıştırma ses kayıtları sayfaya gömülüdür.</span>
+                        <span><strong>Ünite 1–10:</strong> Ders, dil bilgisi, 课文 ve alıştırma kayıtları sayfaya gömülüdür; TTS kullanılmaz.</span>
                     </div>
                     <div class="note">
-                        <span class="ico">🗣️</span>
-                        <span><strong>Ünite 6–10:</strong> Ses dosyası bulunmadığı için metinler tarayıcının Çince seslendirmesi (TTS) ile okunur. “🐢 Yavaş” düğmesi yavaş okuma sağlar.</span>
+                        <span class="ico">🔠</span>
+                        <span><strong>Çince karakterler</strong> Kaiti yazı tipiyle gösterilir. Üst çubuktaki <b>Aa</b> düğmesiyle yazı boyutunu %100–%200 arasında ayarlayabilirsiniz.</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- MODULE: SINAV BİLGİLERİ -->
+        <div id="sinav" class="module">
+            <section class="hero">
+                <div class="hero-kicker">SINAV BİLGİLERİ · 考试信息</div>
+                <h1>Ara Sınav<br><span class="tr-part">Midterm</span></h1>
+                <p>Dinleme Anlama ara sınavının kapsamı, dağılımı ve hazırlık notları. Final sınavı bilgileri dönem sonunda aynı bölüme eklenecek.</p>
+                <div class="hero-chips">
+                    <span class="hero-chip"><b>1–10</b> ünite</span>
+                    <span class="hero-chip"><b>%70</b> kitap alıştırması</span>
+                    <span class="hero-chip"><b>%30</b> yeni alıştırma</span>
+                </div>
+            </section>
+
+            <div class="exam-meta-grid">
+                <div class="exam-meta"><span>Tarih</span><b>03.11.2026</b></div>
+                <div class="exam-meta"><span>Saat</span><b>9.30–10.30</b></div>
+                <div class="exam-meta"><span>Salon</span><b>179</b></div>
+                <div class="exam-meta"><span>Hoca</span><b>Adila</b></div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><span class="ico">🎯</span> Kapsam ve dağılım</h3>
+                    <div class="scope-row">
+                        <div class="scope-top"><b>Kitaptaki alıştırmaların aynısı</b><span>%70</span></div>
+                        <div class="scope-bar"><i style="width:70%"></i></div>
+                    </div>
+                    <div class="scope-row">
+                        <div class="scope-top"><b>Kitapta olmayan yeni alıştırmalar</b><span>%30</span></div>
+                        <div class="scope-bar"><i style="width:30%"></i></div>
+                    </div>
+                    <div class="scope-row">
+                        <div class="scope-top"><b>Dinleme + okuma + dil bilgisi</b><span>Karma</span></div>
+                        <div class="scope-bar"><i style="width:100%"></i></div>
+                    </div>
+                    <div class="note" style="margin-top:16px;">
+                        <span class="ico">📌</span>
+                        <span><strong>Sınav konuları:</strong> 1–10. üniteler dahildir. Her ünitede metin, kelime, dil kalıpları ve dinleme alıştırmaları birlikte çalışılmalı.</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="ico">🧭</span> Sınavda ne var?</h3>
+                    <div class="steps">
+                        <div class="step"><span class="n">1</span><div><b>Dinleme</b><small>Kısa diyalog ve metinleri dinleyip ana fikir, ayrıntı ve çıkarım sorularını yanıtlayın.</small></div></div>
+                        <div class="step"><span class="n">2</span><div><b>Kelime ve dil bilgisi</b><small>Boşluk doldurma, eşleştirme ve doğru ifadeyi seçme soruları.</small></div></div>
+                        <div class="step"><span class="n">3</span><div><b>Okuma ve anlama</b><small>Metindeki bilgiyi soruyla eşleştirme, sıralama ve doğru/yanlış değerlendirme.</small></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card" style="margin-bottom:20px;">
+                <h3><span class="ico">✅</span> Hazırlık kontrol listesi</h3>
+                <div class="note" style="margin-bottom:10px;">
+                    <span class="ico">🎧</span>
+                    <span>Her ünitenin <strong>课文</strong> kaydını en az iki kez, bir kez metne bakmadan dinleyin.</span>
+                </div>
+                <div class="note" style="margin-bottom:10px;">
+                    <span class="ico">📝</span>
+                    <span>Ünite sonundaki <strong>Kontrol Et</strong> ve <strong>Cevapları Göster</strong> düğmeleriyle yanlışlarınızı ayıklayın.</span>
+                </div>
+                <div class="note">
+                    <span class="ico">🔁</span>
+                    <span>Yanlış yaptığınız bölümü <strong>Sıfırla</strong> ile temizleyip tekrar çözün; ilerleme çubuğu doğru sayısını gösterir.</span>
+                </div>
+            </div>
+
+            <div class="exam-final">
+                <span class="ico">🏁</span>
+                <b>Final sınavı</b>
+                <small>Final tarihi, kapsamı ve alıştırmaları dönem sonunda bu bölüme eklenecek.</small>
             </div>
         </div>
 
@@ -1735,20 +1914,14 @@ body.font-xl { font-size: 19px; }
         <div id="m1" class="module">
             <h2 class="module-title">Lesson 1: 画家和他的孙女</h2>
             
-            <div class="audio-container">
-                <label>🎧 Ders Metni Ses Kaydı (Audio 1-1.mp3):</label>
-                <audio controls id="audio-m1">
-                    <source src="audio/01/1-1.mp3" type="audio/mpeg">
-                    Tarayıcınız ses öğesini desteklemiyor.
-                </audio>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m1')">🔊 Metni Seslendir (TTS)</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">1-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>1-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/01/1-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -1774,6 +1947,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>1-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/01/1-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m1">(旁白)画家有一个六岁的孙女,六岁的孙女也喜欢画画儿。她画了一棵树。
 爷爷:孙女,你画的树不对。
 孙女:怎么不对呢?
@@ -1846,9 +2023,10 @@ body.font-xl { font-size: 19px; }
                 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
                 <div class="audio-mini">
-                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (1-2.mp3):</label>
-                    <audio controls><source src="audio/01/1-2.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>1-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/01/1-2.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 (怎么 - Nasıl/Neden?)</div>
                     ① 这么重要的事，你怎么不告诉我？<br>② 你怎么知道这是真的？我可不信！<br>③ 你怎么现在才来？<br><em>(课文例句：怎么不对呢？)</em>
@@ -1932,10 +2110,7 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">三、听课文录音边画√ (Listening Check)</div>
-                <div class="audio-mini">
-                    <label>🎧 Dinleme İşaretleme Alıştırması Ses Kaydı (1-3.mp3):</label>
-                    <audio controls><source src="audio/01/1-3.mp3" type="audio/mpeg"></audio>
-                </div>
+                
                 <div class="quiz-item">
                     • 树 (Tree): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, true)">√ Var</button><button class="tf-btn" onclick="checkTF(this, false)">× Yok</button></span><br>
                     • 花 (Flower): <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">√ Var</button><button class="tf-btn" onclick="checkTF(this, true)">× Yok</button></span><br>
@@ -2017,9 +2192,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">六、根据课文内容，选择正确答案</div>
                 <div class="audio-mini">
-                    <label>🎧 Çoktan Seçmeli Sorular Ses Kaydı (1-4.mp3):</label>
-                    <audio controls><source src="audio/01/1-4.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>1-4.mp3</b> · Çoktan seçmeli (六)</label>
+                    <audio controls preload="none"><source src="audio/01/1-4.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="quiz-item">
                     <div class="quiz-question">1. 爷爷认为孙女的画儿怎么样？ <span class="answer-key">( A )</span></div>
                     <div class="quiz-options">
@@ -2055,10 +2231,7 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、说说写写 (Match sentences with different tones/moods)</div>
-                <div class="audio-mini">
-                    <label>🎧 Konuşma Alıştırması Ses Kaydı (1-5.mp3):</label>
-                    <audio controls><source src="audio/01/1-5.mp3" type="audio/mpeg"></audio>
-                </div>
+                
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Uygun İfade Seçenekleri:</span>
                     <span class="word-tag">A: 我怎么能不去呢？</span>
@@ -2090,26 +2263,33 @@ body.font-xl { font-size: 19px; }
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-title">Ek ses kayıtları</div>
+                <div class="audio-hint">Kitapta bu ünitede yer alan, ancak bu sayfada ilgili alıştırması bulunmayan kayıtlar.</div>
+                <div class="audio-mini audio-extra">
+                    <label>🎧 <b>1-5.mp3</b> · Sesli cevaplama (八)</label>
+                    <audio controls preload="none"><source src="audio/01/1-5.mp3" type="audio/mpeg"></audio>
+                </div>
+                <div class="audio-mini audio-extra">
+                    <label>🎧 <b>1-6.mp3</b> · Boşluk doldurma (九)</label>
+                    <audio controls preload="none"><source src="audio/01/1-6.mp3" type="audio/mpeg"></audio>
+                </div>
+            </div>
         </div>
 
         <!-- LESSON 2 -->
         <div id="m2" class="module">
             <h2 class="module-title">Lesson 2: 最好的年龄</h2>
             
-            <div class="audio-container">
-                <label>🎧 Ders Metni Ses Kaydı (Audio 2-1.mp3):</label>
-                <audio controls id="audio-m2">
-                    <source src="audio/02/2-1.mp3" type="audio/mpeg">
-                    Tarayıcınız ses öğesini desteklemiyor.
-                </audio>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m2')">🔊 Metni Seslendir (TTS)</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">2-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>2-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/02/2-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -2138,6 +2318,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>2-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/02/2-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m2">多大是生命中最好的年龄呢？
 
 电视台采访了很多人。一个小男孩说：“两个月，因为你会被抱着走，你会得到很多的爱和照顾。”
@@ -2177,9 +2361,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
                 <div class="audio-mini">
-                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (2-2.mp3):</label>
-                    <audio controls><source src="audio/02/2-2.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>2-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/02/2-2.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 (越来越…… - Gittikçe...)</div>
                     ① 经过半年的学习，我的汉语越来越好。<br>② 冬天到了，天气越来越冷。<br>③ 我越来越喜欢这个工作。<br><em>(课文例句：他说自己现在走路越来越没劲儿了。)</em>
@@ -2310,10 +2495,11 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">五、听录音，回答问题</div>
-<div class="audio-mini">
-                    <label>听力问答练习音频 (2-5.mp3):</label>
-                    <audio controls><source src="audio/02/2-5.mp3" type="audio/mpeg"></audio>
+                <div class="audio-mini">
+                    <label>🎧 <b>2-4.mp3</b> · Soruları yanıtlama (五)</label>
+                    <audio controls preload="none"><source src="audio/02/2-4.mp3" type="audio/mpeg"></audio>
                 </div>
+
 <div class="quiz-item qa-card">
                     <div class="quiz-question">1. 问：你认为说话的小男孩可能多大？</div>
                     <div class="quiz-options"><button type="button" onclick="checkAnswer(this, true)">A. 三四岁</button>
@@ -2382,6 +2568,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>2-5.mp3</b> · Boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/02/2-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu (Word Bank):</span>
                     <span class="word-tag">任何</span>
@@ -2412,20 +2602,14 @@ body.font-xl { font-size: 19px; }
         <div id="m3" class="module">
             <h2 class="module-title">Lesson 3: 交换人生</h2>
 
-            <div class="audio-container">
-                <label>🎧 Ders Metni Ses Kaydı (Audio 3-1.mp3):</label>
-                <audio controls id="audio-m3">
-                    <source src="audio/03/3-1.mp3" type="audio/mpeg">
-                    Tarayıcınız ses öğesini desteklemiyor.
-                </audio>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m3')">🔊 Metni Seslendir (TTS)</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">3-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>3-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/03/3-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -2457,6 +2641,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>3-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/03/3-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m3">一个身体很差的富翁，一个身体健康的穷人，两人互相羡慕。富翁为了得到健康，愿意放弃他的财富；穷人为了富有，愿意随时放弃健康。
 
 一个医生发现了交换大脑的方法，富翁赶紧提出和穷人交换大脑。这样，富翁会变穷，但能得到健康的身体；穷人会富有，但他会生病。
@@ -2490,9 +2678,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
                 <div class="audio-mini">
-                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (3-2.mp3):</label>
-                    <audio controls><source src="audio/03/3-2.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>3-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/03/3-2.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 (羡慕 - İmrenmek/Kıskanmak)</div>
                     ① 他刚毕业就找到了工作，大家都很羡慕他。<br>② 医生是让人羡慕的职业吗？<br>③ 我最羡慕的是无忧无虑的孩子。<br><em>(课文例句：一个身体很差的富翁，一个身体健康的穷人，两人互相羡慕。)</em>
@@ -2588,9 +2777,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">五、根据课文内容，选择正确答案 (Multiple Choice)</div>
                 <div class="audio-mini">
-                    <label>🎧 Doğru Cevap Seçimi Ses Kaydı (3-4.mp3):</label>
-                    <audio controls><source src="audio/03/3-4.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>3-4.mp3</b> · Çoktan seçmeli (五)</label>
+                    <audio controls preload="none"><source src="audio/03/3-4.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="quiz-item">
                     <div class="quiz-question">1. 富翁愿意放弃什么？ <span class="answer-key">( A )</span></div>
                     <div class="quiz-options">
@@ -2664,6 +2854,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、边听录音边填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>3-5.mp3</b> · Dinleyerek boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/03/3-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu (Word Bank):</span>
                     <span class="word-tag">放弃</span>
@@ -2685,6 +2879,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">九、选词填空 (Vocabulary Fill-in-the-Blanks)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>3-6.mp3</b> · Boşluk doldurma (九)</label>
+                    <audio controls preload="none"><source src="audio/03/3-6.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">羡慕</span>
@@ -2717,20 +2915,14 @@ body.font-xl { font-size: 19px; }
         <div id="m4" class="module">
             <h2 class="module-title">Lesson 4: 为什么烦恼</h2>
 
-            <div class="audio-container">
-                <label>🎧 Ders Metni Ses Kaydı (Audio 4-1.mp3):</label>
-                <audio controls id="audio-m4">
-                    <source src="audio/04/4-1.mp3" type="audio/mpeg">
-                    Tarayıcınız ses öğesini desteklemiyor.
-                </audio>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m4')">🔊 Metni Seslendir (TTS)</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">4-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>4-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/04/4-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -2761,6 +2953,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>4-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/04/4-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m4">星期六，我和妻子去公园玩儿。天气预报说有雨，我们带了伞。那天果然下起了大雨。游客很多，有不少人没带伞，雨下得很大，他们立刻就被淋成了落汤鸡。我和妻子衣服干干的，只是鞋子湿了一点儿。
 
 那天妻子很快乐。
@@ -2800,9 +2996,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
                 <div class="audio-mini">
-                    <label>🎧 Dilbilgisi Alıştırması Ses Kaydı (4-2.mp3):</label>
-                    <audio controls><source src="audio/04/4-2.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>4-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/04/4-2.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 (烦恼 - Endişe/Dert)</div>
                     ① 别老是羡慕别人，每个人都有自己的烦恼。<br>② 有了烦恼，你会跟谁说？<br>③ 他为下星期的考试而烦恼。<br><em>(课文例句：为什么烦恼)</em>
@@ -2825,10 +3022,7 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">二、听全文，选择课文的主要内容是什么，在括号里画 √ (可以多选)</div>
-                <div class="audio-mini">
-                    <label>🎧 Metin İçerik Alıştırması Ses Kaydı (4-3.mp3):</label>
-                    <audio controls><source src="audio/04/4-3.mp3" type="audio/mpeg"></audio>
-                </div>
+                
                 <div class="quiz-item">
                     <div class="exercise-hint">Aşağıdaki ifadelerden metnin ana içeriğini anlatanları seçin. <strong>Birden fazla seçenek doğru olabilir.</strong></div>
                     <div class="multi-options">
@@ -2846,9 +3040,10 @@ body.font-xl { font-size: 19px; }
 
                 <div class="section-header">三、根据课文内容，选择正确答案</div>
                 <div class="audio-mini">
-                    <label>🎧 Doğru Cevap Seçimi Ses Kaydı (4-4.mp3):</label>
-                    <audio controls><source src="audio/04/4-4.mp3" type="audio/mpeg"></audio>
+                    <label>🎧 <b>4-4.mp3</b> · Çoktan seçmeli (三)</label>
+                    <audio controls preload="none"><source src="audio/04/4-4.mp3" type="audio/mpeg"></audio>
                 </div>
+                
                 <div class="quiz-item">
                     <div class="quiz-question">1. 第一天妻子为什么快乐？ <span class="answer-key">( C )</span></div>
                     <div class="quiz-options">
@@ -2951,26 +3146,29 @@ body.font-xl { font-size: 19px; }
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-title">Ek ses kayıtları</div>
+                <div class="audio-hint">Kitapta bu ünitede yer alan, ancak bu sayfada ilgili alıştırması bulunmayan kayıtlar.</div>
+                <div class="audio-mini audio-extra">
+                    <label>🎧 <b>4-5.mp3</b> · Boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/04/4-5.mp3" type="audio/mpeg"></audio>
+                </div>
+            </div>
         </div>
 
         <!-- LESSON 5 -->
         <div id="m5" class="module">
             <h2 class="module-title">Lesson 5: 乞丐的故事</h2>
 
-            <div class="audio-container">
-                <label>🎧 Ders Metni Ses Kaydı (Audio 5-1.mp3):</label>
-                <audio controls id="audio-m5">
-                    <source src="audio/05/5-1.mp3" type="audio/mpeg">
-                    Tarayıcınız ses öğesini desteklemiyor.
-                </audio>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m5')">🔊 Metni Seslendir (TTS)</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">5-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>5-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/05/5-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -3001,6 +3199,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>5-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/05/5-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m5">一个乞丐每天都在想，我要是有两万块钱就好了。一天，这个乞丐无意中发现了一只跑丢了的小狗，这只小狗很可爱。乞丐看看旁边没人，就把狗抱回了他住的地方，栓了起来。
 
 这只狗的主人是一位有名的大富翁，狗丢了，这位富翁十分着急。于是，就写了一个找狗的启事：如有人捡到狗，请马上还给我，付酬金两万元。
@@ -3056,6 +3258,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">四、根据课文内容，选择正确答案 (Multiple Choice)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>5-4.mp3</b> · Çoktan seçmeli (四)</label>
+                    <audio controls preload="none"><source src="audio/05/5-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 乞丐捡到狗以前的愿望是什么？ <span class="answer-key">( B )</span></div>
                     <div class="quiz-options">
@@ -3147,6 +3353,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、选词填空 (有一个词是多余的)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>5-5.mp3</b> · Boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/05/5-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">丢</span>
@@ -3174,26 +3384,29 @@ body.font-xl { font-size: 19px; }
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-title">Ek ses kayıtları</div>
+                <div class="audio-hint">Kitapta bu ünitede yer alan, ancak bu sayfada ilgili alıştırması bulunmayan kayıtlar.</div>
+                <div class="audio-mini audio-extra">
+                    <label>🎧 <b>5-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/05/5-2.mp3" type="audio/mpeg"></audio>
+                </div>
+            </div>
         </div>
 
         <!-- LESSON 6 -->
         <div id="m6" class="module">
             <h2 class="module-title">Lesson 6: 20美元</h2>
 
-            <div class="audio-container no-audio">
-                <div class="audio-head">
-                    <span class="audio-badge">TTS</span>
-                    <div><label>Metni dinle · 课文朗读</label><small>Bu ünitede ses dosyası yok; tarayıcı seslendirmesi kullanılır.</small></div>
-                </div>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m6')">🔊 Metni Seslendir</button>
-                    <button class="tts-btn" onclick="speakText('text-m6', 0.7)">🐢 Yavaş</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">6-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/06/6-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr><th>#</th><th>汉字</th><th>拼音</th><th>词性</th><th>English</th><th>Türkçe Anlamı</th></tr>
@@ -3218,6 +3431,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/06/6-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m6">爸爸下班到家已经很晚了，他很累而且有点儿烦，发现五岁的儿子还在等他。
 “爸，我可以问您一个问题吗？”
 “什么问题？”
@@ -3265,6 +3482,10 @@ body.font-xl { font-size: 19px; }
                 <div class="card-title">Alıştırmalar 6</div>
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/06/6-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 · 赚 (para kazanmak)</div>
                     ① 什么工作赚钱最多？<br>② 他打算赚了钱就去旅行。<br>③ 他卖土豆赚了一千块。<br>
@@ -3334,6 +3555,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">四、根据课文内容，选择正确答案</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-4.mp3</b> · Çoktan seçmeli (四)</label>
+                    <audio controls preload="none"><source src="audio/06/6-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 父亲回家后，儿子问他的第一个问题是什么？ <span class="answer-key">( C )</span></div>
                     <div class="quiz-options">
@@ -3381,6 +3606,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">六、听录音中的问题，然后用所给的词语回答 (Örnek cevaplar)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-5.mp3</b> · Soruları yanıtlama (六)</label>
+                    <audio controls preload="none"><source src="audio/06/6-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 就要放假了，你打算干什么？（好好）<br><span class="answer-key">参考：我打算好好休息一下，再好好陪陪家人。</span></div>
                     <div class="quiz-question">2. 你怎么不坐车来？骑车多累呀。（再说）<br><span class="answer-key">参考：骑车可以锻炼身体，再说路上也不堵车。</span></div>
@@ -3393,6 +3622,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>6-6.mp3</b> · Boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/06/6-6.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">跟……有关系</span>
@@ -3428,20 +3661,14 @@ body.font-xl { font-size: 19px; }
         <div id="m7" class="module">
             <h2 class="module-title">Lesson 7: 别活得太累</h2>
 
-            <div class="audio-container no-audio">
-                <div class="audio-head">
-                    <span class="audio-badge">TTS</span>
-                    <div><label>Metni dinle · 课文朗读</label><small>Bu ünitede ses dosyası yok; tarayıcı seslendirmesi kullanılır.</small></div>
-                </div>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m7')">🔊 Metni Seslendir</button>
-                    <button class="tts-btn" onclick="speakText('text-m7', 0.7)">🐢 Yavaş</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">7-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/07/7-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr><th>#</th><th>汉字</th><th>拼音</th><th>词性</th><th>English</th><th>Türkçe Anlamı</th></tr>
@@ -3466,6 +3693,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/07/7-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m7">有一天，我觉得自己好像生病了，就去图书馆借了一本医学书。当我读完介绍肺病的内容时，才明白我得肺病已经好几个月了，我被吓坏了。后来，我很想知道自己还有什么病，就读完了整本医学书，结果发现，除了没有妇科病以外，我全身什么病都有！
 我想弄清楚我到底还能活多久，就自己给自己作了一次诊断：先找脉搏，开始连脉搏都没有了，后来才发现一分钟140次！接着，我又去找自己的心脏，但无论如何也找不到，我害怕极了！
 我往图书馆走的时候，觉得自己是个幸福的人，可当我走出图书馆，却成了一个浑身都是病的老头儿。
@@ -3492,6 +3723,10 @@ body.font-xl { font-size: 19px; }
                 <div class="card-title">Alıştırmalar 7</div>
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/07/7-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 · ……坏了 (aşırı derecede …)</div>
                     ① 听到这个消息，他急坏了。<br>② 发现自己得了重病，他吓坏了。<br>③ 三天没好好休息，我累坏了。<br>
@@ -3561,6 +3796,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">四、根据课文内容，选择正确答案</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-4.mp3</b> · Çoktan seçmeli (四)</label>
+                    <audio controls preload="none"><source src="audio/07/7-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. “我”为什么要看医学书？ <span class="answer-key">( B )</span></div>
                     <div class="quiz-options">
@@ -3626,6 +3865,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">五、边听录音边填空，然后回答问题</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-5.mp3</b> · Dinleyerek boşluk doldurma (五)</label>
+                    <audio controls preload="none"><source src="audio/07/7-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">除了</span><span class="word-tag">以外</span><span class="word-tag">全身</span>
@@ -3646,6 +3889,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">六、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>7-6.mp3</b> · Boşluk doldurma (六)</label>
+                    <audio controls preload="none"><source src="audio/07/7-6.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">除了……以外</span><span class="word-tag">坏了</span><span class="word-tag">谁/什么/哪儿都</span>
@@ -3675,20 +3922,14 @@ body.font-xl { font-size: 19px; }
         <div id="m8" class="module">
             <h2 class="module-title">Lesson 8: 年龄并不重要</h2>
 
-            <div class="audio-container no-audio">
-                <div class="audio-head">
-                    <span class="audio-badge">TTS</span>
-                    <div><label>Metni dinle · 课文朗读</label><small>Bu ünitede ses dosyası yok; tarayıcı seslendirmesi kullanılır.</small></div>
-                </div>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m8')">🔊 Metni Seslendir</button>
-                    <button class="tts-btn" onclick="speakText('text-m8', 0.7)">🐢 Yavaş</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">8-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>8-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/08/8-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr><th>#</th><th>汉字</th><th>拼音</th><th>词性</th><th>English</th><th>Türkçe Anlamı</th></tr>
@@ -3717,6 +3958,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>8-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/08/8-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m8">有一位80岁的老人，很喜欢下棋，每天都到俱乐部和朋友下几个小时，然后再慢慢散步回家，日子过得很舒服。
 有一次，他的朋友病了，没法和他下棋。管理员为他安排了另外一个人跟他下棋，他觉得不适应，失望地准备回家。管理员说：“如果您不想下棋，还可以换一种方法，比如画画儿。”
 在管理员的建议下，他来到了俱乐部的画画儿教室。那里的管理员说：“先生，您可以在这里试着画画儿。”
@@ -3750,6 +3995,10 @@ body.font-xl { font-size: 19px; }
                 <div class="card-title">Alıştırmalar 8</div>
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>8-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/08/8-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 · 适应 (uyum sağlamak)</div>
                     ① 刚来不久，我慢慢适应了这儿的生活。<br>② 他的适应能力特别强，在哪儿都能愉快地生活。<br>③ 吃的东西我很喜欢，但还不太适应那儿的天气。<br>
@@ -3826,6 +4075,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">五、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>8-4.mp3</b> · Boşluk doldurma (五)</label>
+                    <audio controls preload="none"><source src="audio/08/8-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">适应</span><span class="word-tag">建议</span><span class="word-tag">把时间/钱</span>
@@ -3855,20 +4108,14 @@ body.font-xl { font-size: 19px; }
         <div id="m9" class="module">
             <h2 class="module-title">Lesson 9: 猜猜他是谁</h2>
 
-            <div class="audio-container no-audio">
-                <div class="audio-head">
-                    <span class="audio-badge">TTS</span>
-                    <div><label>Metni dinle · 课文朗读</label><small>Bu ünitede ses dosyası yok; tarayıcı seslendirmesi kullanılır.</small></div>
-                </div>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m9')">🔊 Metni Seslendir</button>
-                    <button class="tts-btn" onclick="speakText('text-m9', 0.7)">🐢 Yavaş</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">9-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/09/9-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr><th>#</th><th>汉字</th><th>拼音</th><th>词性</th><th>English</th><th>Türkçe Anlamı</th></tr>
@@ -3895,6 +4142,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/09/9-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m9">老师：刚才你们在口语课上做了自我介绍，不过，可能彼此还不太熟悉。现在，我们来做一个小练习，我发给每个人一个表，请大家填写。先写上你的性别，男的还是女的。然后再用几个词描写你的外貌，比如你穿什么衣服啊，头发是什么颜色啊，你长得高不高啊什么的。要让别人一看你写的内容，就能猜出来是你。
 学生1：老师，不写名字吗？
 老师：对，不要写名字。下面要写的是你的性格，咱们先一起说说，哪些词是描写性格的？
@@ -3950,6 +4201,10 @@ body.font-xl { font-size: 19px; }
                 <div class="card-title">Alıştırmalar 9</div>
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/09/9-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 · ……什么的 (… gibi şeyler)</div>
                     ① 请写上手机号码、电子邮箱什么的。<br>② 那个商店的裤子、T恤什么的都很便宜。<br>③ 旅行的时候，钱和护照什么的都得带着。<br>
@@ -3977,6 +4232,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">二、根据课文第一段内容，选择正确答案</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-4.mp3</b> · Çoktan seçmeli (二)</label>
+                    <audio controls preload="none"><source src="audio/09/9-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 老师要求学生做什么？ <span class="answer-key">( C )</span></div>
                     <div class="quiz-options">
@@ -4015,6 +4274,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">三、根据课文第一段内容，判断正误</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-3-1.mp3</b> · Birinci paragraf · Doğru/Yanlış (三)</label>
+                    <audio controls preload="none"><source src="audio/09/9-3-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 这个班的同学谁都不认识谁。</div>
                     <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">✓ Doğru</button><button class="tf-btn" onclick="checkTF(this, true)">✗ Yanlış</button></span>
@@ -4033,6 +4296,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">四、边听录音边填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-5.mp3</b> · Dinleyerek boşluk doldurma (四)</label>
+                    <audio controls preload="none"><source src="audio/09/9-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">描写</span><span class="word-tag">比如</span><span class="word-tag">颜色</span>
@@ -4050,6 +4317,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">五、将听到的内容填到表中相应的位置</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-6.mp3</b> · Tablo doldurma (五)</label>
+                    <audio controls preload="none"><source src="audio/09/9-6.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="exercise-hint"><strong>İpucu:</strong> Her seçeneği doğru kategoriyle eşleştir. A–K arasındaki ifadeler bir kişinin formundan alınmıştır.</div>
                 <div class="quiz-item">
                     <div class="matching-list">
@@ -4073,6 +4344,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">六、根据课文第二段内容，完成任务</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-3-2.mp3</b> · İkinci paragraf · Görev (六)</label>
+                    <audio controls preload="none"><source src="audio/09/9-3-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 大山、丹尼和小林分别是男的还是女的？</div>
                     <div class="matching-list">
@@ -4107,6 +4382,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">九、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>9-7.mp3</b> · Boşluk doldurma (九)</label>
+                    <audio controls preload="none"><source src="audio/09/9-7.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">猜</span><span class="word-tag">交给</span><span class="word-tag">发给</span>
@@ -4135,20 +4414,14 @@ body.font-xl { font-size: 19px; }
         <div id="m10" class="module">
             <h2 class="module-title">Lesson 10: 该哭就哭</h2>
 
-            <div class="audio-container no-audio">
-                <div class="audio-head">
-                    <span class="audio-badge">TTS</span>
-                    <div><label>Metni dinle · 课文朗读</label><small>Bu ünitede ses dosyası yok; tarayıcı seslendirmesi kullanılır.</small></div>
-                </div>
-                <div class="tts-controls">
-                    <button class="tts-btn" onclick="speakText('text-m10')">🔊 Metni Seslendir</button>
-                    <button class="tts-btn" onclick="speakText('text-m10', 0.7)">🐢 Yavaş</button>
-                    <button class="tts-btn" onclick="stopSpeech()">⏹️ Durdur</button>
-                </div>
-            </div>
+            
 
             <div class="card">
                 <div class="card-title">10-1 生词 (Yeni Kelimeler / Vocabulary)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-1.mp3</b> · Ders girişi + 生词</label>
+                    <audio controls preload="none"><source src="audio/10/10-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <table class="vocab-table">
                     <thead>
                         <tr><th>#</th><th>汉字</th><th>拼音</th><th>词性</th><th>English</th><th>Türkçe Anlamı</th></tr>
@@ -4184,6 +4457,10 @@ body.font-xl { font-size: 19px; }
             <div class="text-grid">
                 <div class="card chinese-card">
                     <div class="card-title">Metin (Text)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-3.mp3</b> · 课文 · Ders metni</label>
+                    <audio controls preload="none"><source src="audio/10/10-3.mp3" type="audio/mpeg"></audio>
+                </div>
                     <div class="chinese-text" id="text-m10">一位朋友告诉我，他每次遇到生活压力太大时，就去看场电影。他说：“我会找一部特别让人伤心的电影，看完以后，一个人大哭一场。”
 一位有三个儿子的年轻母亲也用同样的方法。每次孩子吵得太厉害或者家里钱实在不够用时，她就把孩子们送到奶奶家去玩儿一个下午，自己听听音乐，哭上一场。她说：“过半个小时，我就又能应付一切麻烦了。”
 许多人都认为哭是不坚强的表现。在一些国家，“以男人为中心”的观念使男人想哭也不敢哭。实际上，如果一个人很悲伤，却忍着不哭，不少疾病都会找上门来。有专家指出，长时间压抑自己，该哭的时候不哭，会引起头疼。
@@ -4207,6 +4484,10 @@ body.font-xl { font-size: 19px; }
                 <div class="card-title">Alıştırmalar 10</div>
 
                 <div class="section-header">一、请仔细听录音，找出每组句子有什么共同的地方 (Grammar Patterns)</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-2.mp3</b> · Dil bilgisi kalıpları (一)</label>
+                    <audio controls preload="none"><source src="audio/10/10-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="grammar-box">
                     <div class="grammar-title">第一组 · 压力 (baskı, stres)</div>
                     ① 运动能减轻压力。<br>② 小学生的压力比大学生还大。<br>③ 赚钱多的工作压力都大。<br>
@@ -4254,6 +4535,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">三、根据课文第一段内容，判断正误</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-3-1.mp3</b> · Birinci paragraf · Doğru/Yanlış (三)</label>
+                    <audio controls preload="none"><source src="audio/10/10-3-1.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <div class="quiz-question">1. 朋友感到压力大时，就去看一个快乐的电影。</div>
                     <span class="tf-btn-group"><button class="tf-btn" onclick="checkTF(this, false)">✓ Doğru</button><button class="tf-btn" onclick="checkTF(this, true)">✗ Yanlış</button></span>
@@ -4280,6 +4565,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">四、先自己填空，然后跟同伴讨论，最后听录音</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-4.mp3</b> · Dinleyerek boşluk doldurma (四)</label>
+                    <audio controls preload="none"><source src="audio/10/10-4.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="quiz-item">
                     <p class="cloze-line">朋友感到压力大时，就去看一个（ <select class="quiz-select" data-answer="伤心"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ）的电影，然后一个人（ <select class="quiz-select" data-answer="哭"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ）一场。一位有三个儿子的母亲，在孩子（ <select class="quiz-select" data-answer="吵"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ）得太厉害，或者家里的钱（ <select class="quiz-select" data-answer="不够用"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ）时，就把孩子送到奶奶家，自己听听（ <select class="quiz-select" data-answer="音乐"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ），哭上一场。过半小时，就能（ <select class="quiz-select" data-answer="应付"><option value="">--Seç--</option><option value="伤心">伤心</option><option value="快乐">快乐</option><option value="哭">哭</option><option value="吵">吵</option><option value="音乐">音乐</option><option value="不够用">不够用</option><option value="应付">应付</option></select> ）一切麻烦了。</p>
                     <div class="exercise-feedback" aria-live="polite"></div>
@@ -4290,6 +4579,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">五、根据课文第二段内容填表</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-3-2.mp3</b> · İkinci paragraf · Tablo (五)</label>
+                    <audio controls preload="none"><source src="audio/10/10-3-2.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="exercise-hint"><strong>İpucu:</strong> “Bu kişiler hangi durumlarda başkalarının önünde ağlayabilir?” Doğru hücreleri işaretle.</div>
                 <div class="quiz-item">
                     <div class="matrix-scroll">
@@ -4340,6 +4633,10 @@ body.font-xl { font-size: 19px; }
                 </div>
 
                 <div class="section-header">七、选词填空</div>
+                <div class="audio-mini">
+                    <label>🎧 <b>10-5.mp3</b> · Boşluk doldurma (七)</label>
+                    <audio controls preload="none"><source src="audio/10/10-5.mp3" type="audio/mpeg"></audio>
+                </div>
                 <div class="word-bank">
                     <span class="word-bank-title">📦 Kelime Havuzu:</span>
                     <span class="word-tag">以……为中心</span><span class="word-tag">偷偷地</span><span class="word-tag">非……不可</span>
@@ -4392,6 +4689,12 @@ body.font-xl { font-size: 19px; }
                 <div class="shortcut"><span>Karıştır</span><span><span class="kbd">Alt</span> <span class="kbd">R</span></span></div>
             </div>
 
+            <h3>Görünüm</h3>
+            <div class="note" style="margin-bottom:14px;">
+                <span class="ico">Aa</span>
+                <span>Üst çubuktaki <b>Aa</b> düğmesi yazı boyutu panelini açar. %100–%200 arasında sürükleyerek tüm sayfayı büyütebilirsiniz.</span>
+            </div>
+
             <h3>Veriler</h3>
             <div class="note" style="margin-bottom:14px;">
                 <span class="ico">💾</span>
@@ -4414,58 +4717,60 @@ body.font-xl { font-size: 19px; }
   const STORE_PROGRESS = 'dl10.progress.v1';
   const STORE_LAST = 'dl10.lastModule';
   const STORE_FONT = 'dl10.font';
+  const STORE_FONT_SCALE = 'dl10.fontScale';
   const STORE_TURKISH = 'dl10.turkish';
 
   const MODULE_META = {
+    sinav: { zh: '考试信息', tr: 'Sınav Bilgileri', eyebrow: 'SINAV' },
     m1: {
       zh: '画家和他的孙女', tr: 'Ressam ve Torunu', eyebrow: 'ÜNİTE 1',
       sub: 'Bir dede ile küçük torunun hayal gücü üzerine tatlı bir tartışma.',
-      tags: ['🎧 5 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#4fd1c5'
+      tags: ['🎧 6 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#4fd1c5'
     },
     m2: {
       zh: '最好的年龄', tr: 'En Güzel Yaş', eyebrow: 'ÜNİTE 2',
       sub: 'Farklı yaşlardan insanlar hayatın en güzel yaşını anlatıyor.',
-      tags: ['🎧 3 ses kaydı', '📝 10 alıştırma', '🧠 5 dil kalıbı'], color: '#60a5fa'
+      tags: ['🎧 5 ses kaydı', '📝 10 alıştırma', '🧠 5 dil kalıbı'], color: '#60a5fa'
     },
     m3: {
       zh: '交换人生', tr: 'Hayatları Değiştirmek', eyebrow: 'ÜNİTE 3',
       sub: 'Zengin ile fakir, sahip olduklarıyla mutlu olmayı öğreniyor.',
-      tags: ['🎧 3 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#a78bfa'
+      tags: ['🎧 6 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#a78bfa'
     },
     m4: {
       zh: '为什么烦恼', tr: 'Neden Sıkıntı?', eyebrow: 'ÜNİTE 4',
       sub: 'Küçük bir kız, büyüklerin dertlerine şaşırtıcı bir cevap veriyor.',
-      tags: ['🎧 4 ses kaydı', '📝 8 alıştırma', '🧠 5 dil kalıbı'], color: '#f6c177'
+      tags: ['🎧 5 ses kaydı', '📝 8 alıştırma', '🧠 5 dil kalıbı'], color: '#f6c177'
     },
     m5: {
       zh: '乞丐的故事', tr: 'Dilencinin Hikâyesi', eyebrow: 'ÜNİTE 5',
       sub: 'Bir dilencinin sıradan görünen günü, beklenmedik bir dönüşle bitiyor.',
-      tags: ['🎧 1 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#fb7185'
+      tags: ['🎧 5 ses kaydı', '📝 9 alıştırma', '🧠 5 dil kalıbı'], color: '#fb7185'
     },
     m6: {
       zh: '20美元', tr: '20 Dolar', eyebrow: 'ÜNİTE 6 · SAYFA 20–23',
       sub: 'Beş yaşındaki bir çocuk, babasından bir saatlik zamanını satın alır.',
-      tags: ['🗣️ TTS', '📝 4 alıştırma', '🧠 5 dil kalıbı'], color: '#4fd1c5'
+      tags: ['🎧 6 ses kaydı', '📝 4 alıştırma', '🧠 5 dil kalıbı'], color: '#4fd1c5'
     },
     m7: {
       zh: '别活得太累', tr: 'Fazla Yorulma', eyebrow: 'ÜNİTE 7 · SAYFA 24–28',
       sub: 'Bir tıp kitabı okuyan adam, kendinde bütün hastalıkları bulur… güya.',
-      tags: ['🗣️ TTS', '📝 4 alıştırma', '🧠 5 dil kalıbı'], color: '#60a5fa'
+      tags: ['🎧 6 ses kaydı', '📝 4 alıştırma', '🧠 5 dil kalıbı'], color: '#60a5fa'
     },
     m8: {
       zh: '年龄并不重要', tr: 'Yaş Önemli Değil', eyebrow: 'ÜNİTE 8 · SAYFA 29–31',
       sub: '80 yaşında resim yapmaya başlayan bir adamın inanılmaz hikâyesi.',
-      tags: ['🗣️ TTS', '📝 3 alıştırma', '🧠 5 dil kalıbı'], color: '#a78bfa'
+      tags: ['🎧 4 ses kaydı', '📝 3 alıştırma', '🧠 5 dil kalıbı'], color: '#a78bfa'
     },
     m9: {
       zh: '猜猜他是谁', tr: 'Tahmin Et Kim O', eyebrow: 'ÜNİTE 9 · SAYFA 32–35',
       sub: 'Bir sınıf oyunu: formdaki ipuçlarından arkadaşını tahmin et.',
-      tags: ['🗣️ TTS', '📝 5 alıştırma', '🧠 5 dil kalıbı'], color: '#f6c177'
+      tags: ['🎧 9 ses kaydı', '📝 5 alıştırma', '🧠 5 dil kalıbı'], color: '#f6c177'
     },
     m10: {
       zh: '该哭就哭', tr: 'Ağlanacaksa Ağla', eyebrow: 'ÜNİTE 10 · SAYFA 36–38',
       sub: 'Ağlamak zayıflık değil; baskıyı azaltmanın en doğal yolu.',
-      tags: ['🗣️ TTS', '📝 5 alıştırma', '🧠 6 dil kalıbı'], color: '#fb7185'
+      tags: ['🎧 7 ses kaydı', '📝 5 alıştırma', '🧠 6 dil kalıbı'], color: '#fb7185'
     }
   };
 
@@ -4473,7 +4778,7 @@ body.font-xl { font-size: 19px; }
     progress: {},
     taskIndex: {},
     moduleTasks: {},
-    allAnswersVisible: false,
+    answersVisible: {},
     currentModule: 'info',
     celebrated: new Set()
   };
@@ -4507,7 +4812,7 @@ body.font-xl { font-size: 19px; }
   /* ---------- module meta / header ---------- */
   function buildModuleHeaders() {
     $$('.module').forEach(mod => {
-      if (mod.id === 'info') return;
+      if (mod.id === 'info' || mod.id === 'sinav') return;
       const meta = MODULE_META[mod.id];
       if (!meta) return;
       const oldTitle = mod.querySelector('.module-title');
@@ -4539,7 +4844,7 @@ body.font-xl { font-size: 19px; }
     state.moduleTasks = {};
 
     $$('.module').forEach(mod => {
-      if (mod.id === 'info') return;
+      if (mod.id === 'info' || mod.id === 'sinav') return;
       state.moduleTasks[mod.id] = [];
       let i = 0;
 
@@ -4696,7 +5001,8 @@ body.font-xl { font-size: 19px; }
     const eyebrow = $('#topbarEyebrow');
     const title = $('#topbarTitle');
     if (eyebrow) eyebrow.textContent = moduleId === 'info' ? 'GENEL BAKIŞ' : (meta ? meta.eyebrow : 'ÜNİTE');
-    if (title) title.textContent = moduleId === 'info' ? 'Sınav Bilgileri' : (meta ? meta.tr : moduleId);
+    if (title) title.textContent = moduleId === 'info' ? 'Genel Bakış' : (meta ? meta.tr : moduleId);
+    setAnswersButtonState(moduleId);
 
     const content = $('#content');
     if (content) content.scrollTop = 0;
@@ -4754,14 +5060,30 @@ body.font-xl { font-size: 19px; }
     if (btn) btn.classList.toggle('on', document.body.classList.contains('focus-mode'));
   }
 
-  const FONT_MODES = ['', 'font-lg', 'font-xl'];
-  let fontIdx = 0;
-  function cycleFont() {
-    document.body.classList.remove('font-lg', 'font-xl');
-    fontIdx = (fontIdx + 1) % FONT_MODES.length;
-    if (FONT_MODES[fontIdx]) document.body.classList.add(FONT_MODES[fontIdx]);
-    try { localStorage.setItem(STORE_FONT, String(fontIdx)); } catch (_) {}
-    toast(['Normal yazı boyutu', 'Büyük yazı boyutu', 'Çok büyük yazı boyutu'][fontIdx], 'info');
+  let fontScale = 100;
+  function applyFontScale(value) {
+    const v = Math.max(100, Math.min(200, Math.round((Number(value) || 100) / 5) * 5));
+    fontScale = v;
+    document.documentElement.style.fontSize = (16 * v / 100) + 'px';
+    const range = $('#fontRange');
+    const label = $('#fontValue');
+    if (range) range.value = String(v);
+    if (label) label.textContent = v + '%';
+    try { localStorage.setItem(STORE_FONT_SCALE, String(v)); } catch (_) {}
+  }
+  function setFontScale(value) {
+    applyFontScale(value);
+  }
+  function openFontPanel(event) {
+    if (event && event.stopPropagation) event.stopPropagation();
+    const pop = $('#fontPop');
+    if (!pop) return;
+    const open = pop.classList.toggle('open');
+    if (open) applyFontScale(fontScale);
+  }
+  function closeFontPanel() {
+    const pop = $('#fontPop');
+    if (pop) pop.classList.remove('open');
   }
 
   function openHelp() { $('#helpModal').classList.add('open'); }
@@ -5054,33 +5376,64 @@ body.font-xl { font-size: 19px; }
     btn.innerHTML = !isShowing ? '🙈 Cevapları Gizle' : originalLabel;
   }
 
+  function setAnswersButtonState(moduleId) {
+    const mainBtn = $('#toggleAllAnswersBtn');
+    if (!mainBtn) return;
+    const isModule = !!moduleId && moduleId !== 'info' && moduleId !== 'sinav';
+    const visible = isModule && !!state.answersVisible[moduleId];
+    mainBtn.classList.toggle('on', visible);
+    mainBtn.style.display = isModule ? '' : 'none';
+    mainBtn.dataset.tip = isModule
+      ? (visible ? 'Bu ünitenin cevaplarını gizle' : 'Bu ünitenin cevaplarını göster')
+      : 'Cevaplar için bir ünite açın';
+  }
+
   function toggleAllAnswers() {
-    state.allAnswersVisible = !state.allAnswersVisible;
-    const btns = $$('.toggle-ans-btn');
+    const moduleId = state.currentModule;
+    if (!moduleId || moduleId === 'info' || moduleId === 'sinav') {
+      toast('Cevapları göstermek için önce bir ünite açın.', 'info');
+      return;
+    }
+
+    const show = !state.answersVisible[moduleId];
+    state.answersVisible[moduleId] = show;
+    const scope = document.getElementById(moduleId) || document;
+
+    const btns = $$('.toggle-ans-btn', scope);
     btns.forEach(btn => {
       const isShowing = btn.getAttribute('data-showing') === 'true';
-      if (state.allAnswersVisible !== isShowing) toggleSingleAnswer(btn);
+      if (show !== isShowing) toggleSingleAnswer(btn);
     });
 
-    // Also reveal standalone answer-key spans (MC questions without a toggle button)
-    $$('.quiz-item').forEach(item => {
+    // Also reveal/hide standalone items (MC / T-F questions without their own toggle button)
+    $$('.quiz-item', scope).forEach(item => {
       if (item.querySelector('.toggle-ans-btn')) return;
-      item.querySelectorAll('.answer-key').forEach(k => k.classList.toggle('visible', state.allAnswersVisible));
-      if (!state.allAnswersVisible) return;
+
+      if (show && !item._standaloneSnapshot) item._standaloneSnapshot = snapshot(item);
+      if (!show && item._standaloneSnapshot) restoreSnapshot(item._standaloneSnapshot);
+
+      item.querySelectorAll('.answer-key').forEach(k => k.classList.toggle('visible', show));
+
       item.querySelectorAll('.quiz-options button').forEach(b => {
-        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('correct');
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.toggle('correct', show);
       });
       item.querySelectorAll('.tf-btn').forEach(b => {
-        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.add('active-correct');
+        if ((b.getAttribute('onclick') || '').includes('true')) b.classList.toggle('active-correct', show);
       });
+      item.querySelectorAll('.multi-option').forEach(b => {
+        b.classList.toggle('selected', show && b.dataset.correct === 'true');
+      });
+      item.querySelectorAll('.matrix-cell').forEach(cell => {
+        const correctValues = (cell.dataset.correct || '').split(',').map(v => v.trim()).filter(Boolean);
+        cell.querySelectorAll('.matrix-chip').forEach(chip => {
+          chip.classList.toggle('selected', show && correctValues.includes(chip.dataset.value));
+        });
+      });
+      if (!show) item._standaloneSnapshot = null;
     });
 
-    const mainBtn = $('#toggleAllAnswersBtn');
-    if (mainBtn) {
-      mainBtn.classList.toggle('on', state.allAnswersVisible);
-      mainBtn.dataset.tip = state.allAnswersVisible ? 'Tüm cevapları gizle' : 'Tüm cevapları göster';
-    }
-    toast(state.allAnswersVisible ? 'Tüm cevaplar gösterildi.' : 'Tüm cevaplar gizlendi.', 'info');
+    setAnswersButtonState(moduleId);
+    toast(show ? 'Bu ünitenin tüm cevapları gösterildi.' : 'Bu ünitenin tüm cevapları gizlendi.', 'info');
   }
 
   /* ---------- reset ---------- */
@@ -5127,9 +5480,8 @@ body.font-xl { font-size: 19px; }
     $$('.quiz-item').forEach(resetExercise);
     state.progress = {};
     saveProgress();
-    state.allAnswersVisible = false;
-    const mainBtn = $('#toggleAllAnswersBtn');
-    if (mainBtn) { mainBtn.classList.remove('on'); mainBtn.dataset.tip = 'Tüm cevapları göster'; }
+    state.answersVisible = {};
+    setAnswersButtonState(state.currentModule);
     $$('.toggle-ans-btn').forEach(btn => {
       btn.setAttribute('data-showing', 'false');
       btn.innerHTML = btn.getAttribute('data-label') || '👁️ Cevapları Göster';
@@ -5303,17 +5655,25 @@ body.font-xl { font-size: 19px; }
       if (feedback) { feedback.textContent = ''; feedback.classList.remove('good', 'bad'); }
     });
 
-    // restore font / turkish
+    // restore font scale / turkish
     try {
-      const f = parseInt(localStorage.getItem(STORE_FONT) || '0', 10);
-      fontIdx = Number.isFinite(f) ? Math.max(0, Math.min(2, f)) : 0;
-      if (FONT_MODES[fontIdx]) document.body.classList.add(FONT_MODES[fontIdx]);
+      const savedScale = parseInt(localStorage.getItem(STORE_FONT_SCALE) || '100', 10);
+      applyFontScale(Number.isFinite(savedScale) ? savedScale : 100);
       if (localStorage.getItem(STORE_TURKISH) === '1') {
         document.body.classList.add('hide-turkish');
         const btn = $('#toggleTurkishBtn');
         if (btn) { btn.classList.add('on'); btn.dataset.tip = 'Türkçeyi göster'; }
       }
     } catch (_) {}
+
+    const fontRange = $('#fontRange');
+    if (fontRange) fontRange.addEventListener('input', e => applyFontScale(e.target.value));
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.font-pop') && !e.target.closest('[data-font-btn]')) closeFontPanel();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeFontPanel();
+    });
 
     // initial module
     const hash = (location.hash || '').replace('#', '');
@@ -5353,7 +5713,9 @@ body.font-xl { font-size: 19px; }
   window.stopSpeech = stopSpeech;
   window.resetAll = resetAll;
   window.toggleFocus = toggleFocus;
-  window.cycleFont = cycleFont;
+  window.openFontPanel = openFontPanel;
+  window.closeFontPanel = closeFontPanel;
+  window.setFontScale = setFontScale;
   window.openHelp = openHelp;
   window.closeHelp = closeHelp;
   window.copyText = copyText;
