@@ -270,21 +270,24 @@ h2:after{content:"";display:block;position:absolute;left:0;bottom:-2px;width:76p
 #c1 .tw td:last-child,
 #c4 .tw td:last-child,
 #c9 .tw td:last-child,
+#c10 .tw td:last-child,
 #sozluk #dt td:nth-child(3){
   font-family:"ChineseKaiTi","Segoe UI",Inter,Roboto,Arial,sans-serif;
 }
 /* ==== C1/C4/C9 Kelimeler (生词): varsayılan daha büyük + kullanıcı ayarı ==== */
-#c1VocabTw,#c4VocabTw,#c9VocabTw{--vocab-scale:1.2}
-#c1VocabTw td,#c4VocabTw td,#c9VocabTw td{font-size:calc(1.25rem * var(--vocab-scale))}
-#c1VocabTw td.zh,#c4VocabTw td.zh,#c9VocabTw td.zh{font-size:calc(1.35rem * var(--vocab-scale))}
+#c1VocabTw,#c4VocabTw,#c9VocabTw,#c10VocabTw{--vocab-scale:1.2}
+#c1VocabTw td,#c4VocabTw td,#c9VocabTw td,#c10VocabTw td{font-size:calc(1.25rem * var(--vocab-scale))}
+#c1VocabTw td.zh,#c4VocabTw td.zh,#c9VocabTw td.zh,#c10VocabTw td.zh{font-size:calc(1.35rem * var(--vocab-scale))}
 /* ==== C1/C4/C9 Kelimeler: ferah sütunlar, kelime ve pinyin tek satırda ==== */
-#c1VocabTw table,#c4VocabTw table,#c9VocabTw table{min-width:920px}
+#c1VocabTw table,#c4VocabTw table,#c9VocabTw table,#c10VocabTw table{min-width:920px}
 #c1VocabTw th:first-child,#c1VocabTw td:first-child,
 #c4VocabTw th:first-child,#c4VocabTw td:first-child,
-#c9VocabTw th:first-child,#c9VocabTw td:first-child{width:56px;min-width:56px;text-align:center;white-space:nowrap;padding-left:8px;padding-right:8px}
+#c9VocabTw th:first-child,#c9VocabTw td:first-child,
+#c10VocabTw th:first-child,#c10VocabTw td:first-child{width:56px;min-width:56px;text-align:center;white-space:nowrap;padding-left:8px;padding-right:8px}
 #c1VocabTw th:nth-child(2),#c1VocabTw td:nth-child(2),
 #c4VocabTw th:nth-child(2),#c4VocabTw td:nth-child(2),
-#c9VocabTw th:nth-child(2),#c9VocabTw td:nth-child(2){width:1%;white-space:nowrap}
+#c9VocabTw th:nth-child(2),#c9VocabTw td:nth-child(2),
+#c10VocabTw th:nth-child(2),#c10VocabTw td:nth-child(2){width:1%;white-space:nowrap}
 .vocab-font-ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 12px;background:var(--in);border:1px solid var(--bd);border-radius:8px}
 .vocab-font-ctrl label{font-size:.88rem;color:var(--tx2);font-weight:600}
 .vocab-font-ctrl input[type="range"]{flex:1;min-width:150px;accent-color:var(--ac);cursor:pointer}
@@ -310,6 +313,7 @@ h2:after{content:"";display:block;position:absolute;left:0;bottom:-2px;width:76p
 <a data-id="c7"><i>📖</i><span>C7 · 西安小吃</span></a>
 <a data-id="c8"><i>📖</i><span>C8 · 孔子的故乡</span></a>
 <a data-id="c9"><i>📖</i><span>C9 · 自谦和敬人</span></a>
+<a data-id="c10"><i>📖</i><span>C10 · 找东西</span></a>
 <a data-id="isaretlenenler"><i>📌</i><span>İşaretlenen Kelimeler</span></a>
 <a data-id="notlar"><i>📝</i><span>Çeviri Notları</span></a>
 <a data-id="sozluk"><i>🔍</i><span>Sözlük</span></a>
@@ -2184,9 +2188,83 @@ D. 羊肉很容易吃饱
 </div>
 </div>
 </section>
+<section class="mod" id="c10" data-cwp="1">
+<h2>C10 · 找东西</h2>
+<p class="sub">Dördüncü ders: Kayıp eşya peşinde (找东西, anlatı)</p>
+<div class="bar">
+<button class="btn" onclick="tog('c10','en')">Türkçe çeviriyi göster / gizle</button>
+</div>
+<div class="bar"><button class="btn cwp-toggle" type="button" id="c10PracticeToggle" aria-pressed="false">Yazma pratiğini başlat</button><span class="sub">Her Çince cümleyi yazılı olarak çevir; Kontrol ile referans çeviriyi aç.</span></div>
+<div class="card">
+<div class="ct">Metin</div>
+<div class="zh" lang="zh">
+<div class="sh">一、找东西</div>
+<div class="pair">
+<p>小张的办公桌上整天乱七八糟的，报纸、香烟盒、发票、购物小票等五花八门的东西都有。不过，谁要是动了他的东西，他回来肯定能看出来，他自己说他这是“乱中有序”。有一次，新来的保洁员小黄不了解情况，忙活半天给他打扫干净。小张回来一看，不但不感谢，还大怒道：“我的香烟盒呢？” “里面是空的呀！”小黄委屈地回答。在小黄的帮助下，小张花了半个多小时终于找到了——原来，香烟盒上记着一位重要客户的电话号码。</p>
+<p class="en">Küçük Zhang'ın çalışma masası gün boyu dağınıktı; gazeteler, sigara paketleri, faturalar, alışveriş fişleri gibi her türlü şey üstündeydi. Ama biri onun eşyalarına dokunacak olsa, döndüğünde bunu mutlaka fark ederdi. Kendi deyimiyle bu, “dağınıklık içinde bir düzen”di. Bir gün yeni gelen temizlik görevlisi Küçük Huang durumu bilmediğinden yarım gün uğraşıp ortalığı tertemiz yaptı. Küçük Zhang dönüp bakınca teşekkür etmek bir yana, öfkeyle bağırdı: “Benim sigara paketim nerede?” “İçi boştu ki!” diye mazlum mazlum yanıtladı Küçük Huang. Küçük Huang'ın yardımıyla Küçük Zhang yarım saatten fazla uğraşıp sonunda buldu — meğer sigara paketinin üstüne önemli bir müşterinin telefon numarası yazılıymış.</p>
+</div>
+<div class="pair">
+<p>这天，小张又嚷嚷开了，问小黄是否帮他收拾过桌子。小黄嘟哝道：“我哪儿还敢啊？”小张气冲冲地四处问：“谁动了我的东西？”</p>
+<p class="en">O gün Küçük Zhang yine bağırıp çağırmaya başladı; Küçük Huang'a masasını toplayıp toplamadığını sordu. Küçük Huang homurdandı: “Benim buna cesaretim mi kalır?” Küçük Zhang öfkeyle ortalıkta dolaşıp sordu: “Kim benim eşyalarıma dokundu?”</p>
+</div>
+<div class="pair">
+<p>原来小张想尽办法打听到了一个女孩子的生日，好像就在最近几天，而他却把具体的时间随手记在了什么地方，一时想不起来了。过了一会儿，小黄过来低声说：“老总好像刚才在你那里！”小张一听赶紧跑过去，轻轻敲开老总的办公室问：“您是不是帮我整理桌子了？”老总奇怪地看着他说：“怎么？有什么问题吗？”</p>
+<p class="en">Meğer Küçük Zhang ne yapıp edip bir kızın doğum gününü öğrenmiş; günlerden biri olacakmış, ama tam tarihi oraya buraya not ettiği için bir türlü hatırlayamıyormuş. Bir süre sonra Küçük Huang gelip alçak sesle dedi: “Patron galiba az önce senin masandaydı!” Bunu duyan Küçük Zhang hemen oraya koştu, patronun kapısını usulca çalıp sordu: “Masamı benim için topladınız mı?” Patron ona şaşkın şaşkın bakıp dedi: “Ne oldu? Bir sorun mu var?”</p>
+</div>
+<div class="pair">
+<p>“啊……不，我是来谢谢您的！”小张说着，垂头丧气地退了出来。“小黄，垃圾桶里的垃圾呢？”“我刚才倒在楼下的垃圾站了，不知道他们拉走了没有。”</p>
+<p class="en">“Aa… yok, teşekkür etmeye gelmiştim!” diyen Küçük Zhang başı önünde geri çıktı. “Küçük Huang, çöp kutusundaki çöp nerede?” “Az önce aşağıdaki çöp istasyonuna döktüm; kamyonun götürüp götürmediğini bilmiyorum.”</p>
+</div>
+<div class="pair">
+<p>小张大叫一声：“我的幸福啊！”就飞奔了出去。小黄好像想起了什么，高举一块香蕉皮追了下去，“喂，你是不是在找它？我帮你捡出来了！”</p>
+<p class="en">Küçük Zhang yüksek sesle “Benim mutluluğum!” diye bağırıp dışarı fırladı. Küçük Huang sanki bir şey hatırlamış gibi eline bir muz kabuğu alıp peşinden koştu: “Hey, bunu mu arıyorsun? Senin için ben topladım!”</p>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="ct">Kelimeler (生词)</div>
+<div class="vocab-font-ctrl">
+<label for="c10FontRange">Yazı boyutu</label>
+<input type="range" id="c10FontRange" min="90" max="200" step="5" value="120" aria-label="C10 kelime tablosu yazı boyutu">
+<output id="c10FontVal" for="c10FontRange">120%</output>
+<button type="button" id="c10FontReset">Sıfırla</button>
+</div>
+<div class="tw" id="c10VocabTw">
+<table>
+<tr><th>#</th><th>词</th><th>Pinyin</th><th>Anlam / örnek</th></tr>
+<tr><td>1</td><td class="zh">乱七八糟（亂七八糟）</td><td>luànqībāzāo</td><td>[形容词词组] 很乱，没有秩序：办公桌上～的。（Çok dağınık, düzensiz）</td></tr>
+<tr><td>2</td><td class="zh">发票（發票）</td><td>fāpiào</td><td>[名] 买东西时收到的单据：买东西别忘了要～。（Fatura, makbuz）</td></tr>
+<tr><td>3</td><td class="zh">购物小票（購物小票）</td><td>gòuwù xiǎopiào</td><td>[名] 商店给的购物凭证：～上写着价格。（Alışveriş fişi）</td></tr>
+<tr><td>4</td><td class="zh">五花八门（五花八門）</td><td>wǔhuābāmén</td><td>[形容词词组] 种类很多，各种各样：东西～。（Çeşit çeşit, her türlü）</td></tr>
+<tr><td>5</td><td class="zh">动（動）</td><td>dòng</td><td>[动] 碰、移动：别～我的东西。（Dokunmak, yerini değiştirmek）</td></tr>
+<tr><td>6</td><td class="zh">乱中有序（亂中有序）</td><td>luàn zhōng yǒu xù</td><td>[形容词词组] 看起来乱，其实有规律：他说自己～。（Dağınıklık içinde düzen）</td></tr>
+<tr><td>7</td><td class="zh">保洁员（保潔員）</td><td>bǎojiéyuán</td><td>[名] 做清洁工作的人：新来的～很勤快。（Temizlik görevlisi）</td></tr>
+<tr><td>8</td><td class="zh">打扫（打掃）</td><td>dǎsǎo</td><td>[动] 清理，使干净：他每天～房间。（Temizlemek, süpürmek）</td></tr>
+<tr><td>9</td><td class="zh">委屈</td><td>wěiqu</td><td>[形] 受到不公平的对待，心里难过：小黄觉得很～。（Haksızlığa uğramış, mazlum）</td></tr>
+<tr><td>10</td><td class="zh">嘟哝（嘟噥）</td><td>dūnong</td><td>[动] 小声地自言自语：他～了几句。（Homurdanmak, mırıldanmak）</td></tr>
+<tr><td>11</td><td class="zh">气冲冲（氣沖沖）</td><td>qìchōngchōng</td><td>[形] 非常生气的样子：他～地走进来。（Öfkeyle, hışımla）</td></tr>
+<tr><td>12</td><td class="zh">打听（打聽）</td><td>dǎting</td><td>[动] 向别人问、了解情况：他到处～那个女孩的生日。（Öğrenmek için sormak）</td></tr>
+<tr><td>13</td><td class="zh">随手（隨手）</td><td>suíshǒu</td><td>[副] 顺便，不特意：他～把号码记在盒子上。（Eliyle, rastgele, o anda）</td></tr>
+<tr><td>14</td><td class="zh">老总（老總）</td><td>lǎozǒng</td><td>[名] 对经理、老板的称呼：～在办公室里。（Patron, genel müdür）</td></tr>
+<tr><td>15</td><td class="zh">垂头丧气（垂頭喪氣）</td><td>chuí tóu sàng qì</td><td>[形容词词组] 失望、没有精神的样子：他～地走了出去。（Başı önünde, morali bozuk）</td></tr>
+<tr><td>16</td><td class="zh">垃圾桶</td><td>lājītǒng</td><td>[名] 装垃圾的桶：把纸扔进～。（Çöp kutusu）</td></tr>
+<tr><td>17</td><td class="zh">垃圾站</td><td>lājīzhàn</td><td>[名] 集中放垃圾的地方：楼下的～很干净。（Çöp istasyonu）</td></tr>
+<tr><td>18</td><td class="zh">飞奔（飛奔）</td><td>fēibēn</td><td>[动] 很快地跑：他～下楼。（Hızla koşmak）</td></tr>
+<tr><td>19</td><td class="zh">香蕉皮</td><td>xiāngjiāopí</td><td>[名] 香蕉外面的皮：地上有一块～。（Muz kabuğu）</td></tr>
+<tr><td>20</td><td class="zh">捡（撿）</td><td>jiǎn</td><td>[动] 拾取：他～起地上的纸。（Toplamak, yerden almak）</td></tr>
+<tr><td>21</td><td class="zh">嚷嚷</td><td>rāngrang</td><td>[动] 大声说话、吵：他一大早就在～。（Bağırıp çağırmak）</td></tr>
+<tr><td>22</td><td class="zh">敢</td><td>gǎn</td><td>[动] 有勇气做某事：我哪儿～啊？（Cesaret etmek）</td></tr>
+<tr><td>23</td><td class="zh">客户（客戶）</td><td>kèhù</td><td>[名] 来买东西或谈生意的人：这是一位重要～。（Müşteri）</td></tr>
+<tr><td>24</td><td class="zh">忙活</td><td>mánghuo</td><td>[动] 忙着做（口语）：他～了半天。（Uğraşmak, koşturmak）</td></tr>
+<tr><td>25</td><td class="zh">空</td><td>kōng</td><td>[形] 里面没有东西：盒子里是～的。（Boş）</td></tr>
+</table>
+</div>
+</div>
+</section>
+
 <section class="mod" id="isaretlenenler">
 <h2>İşaretlenen Kelimeler / 重点词汇</h2>
-<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">9 metin · 157 kelime</span></p>
+<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">10 metin · 182 kelime</span></p>
 <nav class="ml-chips" aria-label="Metin seçimi">
 <button type="button" class="ml-chip active" data-m="ml-C1" onclick="mlScroll('ml-C1')"><b>C1</b><span>新朋友</span></button>
 <button type="button" class="ml-chip" data-m="ml-C2" onclick="mlScroll('ml-C2')"><b>C2</b><span>爱在身边</span></button>
@@ -2197,6 +2275,7 @@ D. 羊肉很容易吃饱
 <button type="button" class="ml-chip" data-m="ml-C7" onclick="mlScroll('ml-C7')"><b>C7</b><span>西安小吃</span></button>
 <button type="button" class="ml-chip" data-m="ml-C8" onclick="mlScroll('ml-C8')"><b>C8</b><span>孔子的故乡</span></button>
 <button type="button" class="ml-chip" data-m="ml-C9" onclick="mlScroll('ml-C9')"><b>C9</b><span>自谦和敬人</span></button>
+<button type="button" class="ml-chip" data-m="ml-C10" onclick="mlScroll('ml-C10')"><b>C10</b><span>找东西</span></button>
 </nav>
 <section class="ml-card" id="ml-C1">
 <header class="ml-head">
@@ -3475,6 +3554,216 @@ D. 羊肉很容易吃饱
 </ul>
 <div class="ml-foot"><a class="ml-goto" href="#c9" onclick="show('c9');return false;">Metne git <span>→</span></a></div>
 </section>
+<section class="ml-card" id="ml-C10">
+<header class="ml-head">
+<span class="ml-badge">C10</span>
+<div class="ml-titles"><h3 class="ml-zh" lang="zh">找东西</h3><p class="ml-tr">Kayıp Eşya Peşinde</p></div>
+<span class="ml-count">25 kelime</span>
+</header>
+<ul class="ml-list">
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">乱七八糟</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">luànqībāzāo</div>
+<div class="ml-mean">Çok dağınık, düzensiz</div>
+<div class="ml-ex">[形容词词组] 很乱，没有秩序：办公桌上～的。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">发票</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">fāpiào</div>
+<div class="ml-mean">Fatura, makbuz</div>
+<div class="ml-ex">[名] 买东西时收到的单据：买东西别忘了要～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">购物小票</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">gòuwù xiǎopiào</div>
+<div class="ml-mean">Alışveriş fişi</div>
+<div class="ml-ex">[名] 商店给的购物凭证：～上写着价格。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">五花八门</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">wǔhuābāmén</div>
+<div class="ml-mean">Çeşit çeşit, her türlü</div>
+<div class="ml-ex">[形容词词组] 种类很多，各种各样：东西～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">动</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">dòng</div>
+<div class="ml-mean">Dokunmak, yerini değiştirmek</div>
+<div class="ml-ex">[动] 碰、移动：别～我的东西。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">乱中有序</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">luàn zhōng yǒu xù</div>
+<div class="ml-mean">Dağınıklık içinde düzen</div>
+<div class="ml-ex">[形容词词组] 看起来乱，其实有规律：他说自己～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">保洁员</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">bǎojiéyuán</div>
+<div class="ml-mean">Temizlik görevlisi</div>
+<div class="ml-ex">[名] 做清洁工作的人：新来的～很勤快。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">打扫</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">dǎsǎo</div>
+<div class="ml-mean">Temizlemek, süpürmek</div>
+<div class="ml-ex">[动] 清理，使干净：他每天～房间。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">委屈</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">wěiqu</div>
+<div class="ml-mean">Haksızlığa uğramış, mazlum</div>
+<div class="ml-ex">[形] 受到不公平的对待，心里难过：小黄觉得很～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">嘟哝</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">dūnong</div>
+<div class="ml-mean">Homurdanmak, mırıldanmak</div>
+<div class="ml-ex">[动] 小声地自言自语：他～了几句。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">气冲冲</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">qìchōngchōng</div>
+<div class="ml-mean">Öfkeyle, hışımla</div>
+<div class="ml-ex">[形] 非常生气的样子：他～地走进来。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">打听</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">dǎting</div>
+<div class="ml-mean">Öğrenmek için sormak</div>
+<div class="ml-ex">[动] 向别人问、了解情况：他到处～那个女孩的生日。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">随手</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">suíshǒu</div>
+<div class="ml-mean">Eliyle, rastgele, o anda</div>
+<div class="ml-ex">[副] 顺便，不特意：他～把号码记在盒子上。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">老总</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">lǎozǒng</div>
+<div class="ml-mean">Patron, genel müdür</div>
+<div class="ml-ex">[名] 对经理、老板的称呼：～在办公室里。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">垂头丧气</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">chuí tóu sàng qì</div>
+<div class="ml-mean">Başı önünde, morali bozuk</div>
+<div class="ml-ex">[形容词词组] 失望、没有精神的样子：他～地走了出去。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">垃圾桶</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">lājītǒng</div>
+<div class="ml-mean">Çöp kutusu</div>
+<div class="ml-ex">[名] 装垃圾的桶：把纸扔进～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">垃圾站</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">lājīzhàn</div>
+<div class="ml-mean">Çöp istasyonu</div>
+<div class="ml-ex">[名] 集中放垃圾的地方：楼下的～很干净。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">飞奔</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">fēibēn</div>
+<div class="ml-mean">Hızla koşmak</div>
+<div class="ml-ex">[动] 很快地跑：他～下楼。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">香蕉皮</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">xiāngjiāopí</div>
+<div class="ml-mean">Muz kabuğu</div>
+<div class="ml-ex">[名] 香蕉外面的皮：地上有一块～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">捡</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">jiǎn</div>
+<div class="ml-mean">Toplamak, yerden almak</div>
+<div class="ml-ex">[动] 拾取：他～起地上的纸。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">嚷嚷</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">rāngrang</div>
+<div class="ml-mean">Bağırıp çağırmak</div>
+<div class="ml-ex">[动] 大声说话、吵：他一大早就在～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">敢</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">gǎn</div>
+<div class="ml-mean">Cesaret etmek</div>
+<div class="ml-ex">[动] 有勇气做某事：我哪儿～啊？</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">客户</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">kèhù</div>
+<div class="ml-mean">Müşteri</div>
+<div class="ml-ex">[名] 来买东西或谈生意的人：这是一位重要～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">忙活</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">mánghuo</div>
+<div class="ml-mean">Uğraşmak, koşturmak</div>
+<div class="ml-ex">[动] 忙着做（口语）：他～了半天。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">空</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">kōng</div>
+<div class="ml-mean">Boş</div>
+<div class="ml-ex">[形] 里面没有东西：盒子里是～的。</div>
+</div>
+</li>
+</ul>
+<div class="ml-foot"><a class="ml-goto" href="#c10" onclick="show('c10');return false;">Metne git <span>→</span></a></div>
+</section>
 </section>
 <section class="mod" id="notlar">
 <h2>Çeviri Notları</h2>
@@ -3566,7 +3855,7 @@ function toggleDetail(btn) {
     }
 }
 
-var IDS=["sinav", "practice", "karsilastirma", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "baglaclar", "edabc", "c9", "isaretlenenler", "notlar", "sozluk"],DICT=[{"l": "C1", "h": "客套", "p": "kètào", "d": "1 [名] 表示客气的话：我们是老朋友了，不用讲～。(polite expression) 2 [动] 说客气话：他们互相～了几句。(to greet politely)"}, {"l": "C1", "h": "礼节（禮節）", "p": "lǐjié", "d": "[名] 表示尊敬、祝愿等的各种惯用形式，如握手、鞠躬等：中国是很注意～的国家。(courtesy, etiquette)"}, {"l": "C1", "h": "总算（總算）", "p": "zǒngsuàn", "d": "[副] 经过花费时间、努力，最终达到一个结果：我等了他一个小时，他～来了。(at long last, finally)"}, {"l": "C1", "h": "一点儿（一點兒）", "p": "yìdiǎnr", "d": "[数量] 少量，与“有点儿，有一点儿”相同：我有～累。我还有～钱。(a little, a bit, a small amount)"}, {"l": "C1", "h": "闹笑话（鬧笑話）", "p": "nào xiàohua", "d": "[动词词组] 因粗心大意或不懂某些知识、习惯而发生可笑的错误：我刚到广州时，因为听不懂广州话，常常～。(to make a stupid mistake)"}, {"l": "C1", "h": "造成", "p": "zàochéng", "d": "[动] 产生：坏天气～交通困难。(to create, to cause, to bring about)"}, {"l": "C1", "h": "误解（誤解）", "p": "wùjiě", "d": "[动] 理解得不正确：我没这个意思，你～了。(to misunderstand)"}, {"l": "C1", "h": "同事", "p": "tóngshì", "d": "[名] 在同一单位工作的人：我和他是～。(colleague)"}, {"l": "C1", "h": "或是", "p": "huòshì", "d": "[连] 或者：大人～小孩儿都要买票。(or, perhaps)"}, {"l": "C1", "h": "直截了当（直截了當）", "p": "zhíjié liǎo dàng", "d": "[形容词词组] (言语、行动等)简单、直接、爽快：他说话～。(straight forward)"}, {"l": "C1", "h": "再说（再說）", "p": "zàishuō", "d": "[连] 表示推进一层：去叫他看戏，已经来不及了，～他也不一定有时间。(besides, what's more)"}, {"l": "C1", "h": "时（時）", "p": "shí", "d": "[名] ……的时候：上课～不要打电话。(when, at the time of)"}, {"l": "C1", "h": "挑选（挑選）", "p": "tiāoxuǎn", "d": "[动] 选择：请在这几个里面～一个。(to choose, to select, to pick out)"}, {"l": "C1", "h": "谢绝（謝絕）", "p": "xièjué", "d": "[动] 客气地表示不接受、拒绝：～参观。(to refuse in a polite way; to decline)"}, {"l": "C1", "h": "客气话（客氣話）", "p": "kèqihuà", "d": "[名] 客气的句子或表述：“哪里，哪里”是句～。(polite words, polite expression)"}, {"l": "C1", "h": "并非（並非）", "p": "bìngfēi", "d": "[动] 并不是：便宜的东西～不好。(really not)"}, {"l": "C1", "h": "真心", "p": "zhēnxīn", "d": "[名] 真实的心情：这是我的～话。(wholehearted, heartfelt)"}, {"l": "C1", "h": "好客", "p": "hàokè", "d": "[形] 欢迎客人：他很～，总是请我们去他家玩儿。(hospitable)"}, {"l": "C1", "h": "心意", "p": "xīnyì", "d": "[名] 对人的情意、感情：送你一件礼物表示我的～。(nice/kind feeling or regard)"}, {"l": "C1", "h": "总之（總之）", "p": "zǒngzhī", "d": "[连] 表示下文是总结性的话：我喜欢看电影，故事片、武打片、戏曲片……～，各种电影都爱看。(in a word, in short, in brief)"}, {"l": "C1", "h": "习俗（習俗）", "p": "xísú", "d": "[名] 习惯和风俗：过年吃饺子是中国很多地方的～。(custom, convention, tradition)"}, {"l": "C1", "h": "独特（獨特）", "p": "dútè", "d": "[形] 独有的、特别的：这件衣服的式样很～。(unique, distinctive, peculiar)"}, {"l": "C1", "h": "早就", "p": "zǎojiù", "d": "[副] 很早就已经：他～来了。(long ago/before)"}, {"l": "C1", "h": "什么样（什麼樣）", "p": "shénmeyàng", "d": "[代] 什么样子：她长～？(what kind, what sort)"}, {"l": "C1", "h": "告辞（告辞）", "p": "gàocí", "d": "[动] (向主人)告别、辞别：我看他很忙，在他家坐了一会儿就～了。(to say goodbye to, to part with)"}, {"l": "C1", "h": "哪儿（哪兒）", "p": "nǎr", "d": "[代] 哪里：你住在～？(where)"}, {"l": "C1", "h": "随口（隨口）", "p": "suíkǒu", "d": "[副] 随便说说，不当真：我只是～说说，不一定是对的。(to speak thoughtlessly, to speak carelessly)"}, {"l": "C1", "h": "西服", "p": "xīfú", "d": "[名] 西洋式的服装，这里特指男子穿的西式上衣、背心和裤子：他去出席宴会时总是穿～。(Western suit)"}, {"l": "C1", "h": "干吗（乾嗎）", "p": "gànmá", "d": "[疑问代词] 干什么，询问原因和目的：你～问这些事？/你～不告诉他？(why)"}, {"l": "C1", "h": "穿戴", "p": "chuāndài", "d": "1 [动] 穿衣打扮：我们要出门了，你～好了没有？(to wear clothes, to be dressed) 2 [名] 穿着：他的～总是很整齐。(apparel, dress)"}, {"l": "C1", "h": "焦急", "p": "jiāojí", "d": "[形] 着急：心里～/十分～(worried)"}, {"l": "C1", "h": "赶忙（趕忙）", "p": "gǎnmáng", "d": "[副] 赶紧、连忙：上课的时间到了，他～往教室跑。(hurriedly)"}, {"l": "C1", "h": "露出", "p": "lùchū", "d": "[动] 显示出，表现出：他的脸上～了笑容。(to show, to reveal)"}, {"l": "C1", "h": "表情", "p": "biǎoqíng", "d": "[名] 表现在脸上或姿态上的思想感情：他脸上露出兴奋的～。(expression)"}, {"l": "C1", "h": "赶跑（趕跑）", "p": "gǎnpǎo", "d": "[动] 用言语或动作让人离开：他用石头把狗～了。(to chase away, to make somebody leave)"}, {"l": "C1", "h": "预先（預先）", "p": "yùxiān", "d": "[副] 事先，在事情发生或进行之前：～通知/～安排(in advance, beforehand)"}, {"l": "C1", "h": "约定（約定）", "p": "yuèdìng", "d": "[动] 说定，事先说好：我跟他～三点钟见面。(to agree on, to appoint, to arrange)"}, {"l": "C1", "h": "串串门儿", "p": "chuàn chuan ménr", "d": "[动词词组] 随便到别人家去坐坐，聊聊天儿，也说“串门儿”：他总喜欢在傍晚时去朋友家～。(to drop in, to call at somebody's home)"}, {"l": "C1", "h": "聊聊天儿", "p": "liáo liáo tiānr", "d": "[动词词组] 随便交谈，也常用“聊天儿”：他们常常在一起～。(to chat)"}, {"l": "C1", "h": "难得（難得）", "p": "nándé", "d": "[形] ①不常常(发生)：这样大的雨～碰到。②不容易得到或办到：他取得这么好的成绩十分～。(seldom/difficult to do or get something)"}, {"l": "C1", "h": "明白", "p": "míngbai", "d": "1 [动] 懂，知道：我～了。(to understand) 2 [形] 清楚：这个问题书上说得很～。(clear, obvious, plain)"}, {"l": "C1", "h": "钥匙（鑰匙）", "p": "yàoshi", "d": "[名] 开锁的工具：这把～是开这把锁的。(key)"}, {"l": "C1", "h": "糟", "p": "zāo", "d": "[形] 坏，不好：这次考试我考得很～。(bad, awful)"}, {"l": "C1", "h": "哈", "p": "hā", "d": "[叹] 表示庆幸、惊奇等语气：～，这回我可做对了！(Aha)"}, {"l": "C1", "h": "哟（喲）", "p": "yō", "d": "[叹] 表示惊讶等语气：～，你怎么来了？(used to express slight surprise)"}, {"l": "C1", "h": "哎", "p": "hài", "d": "[叹] 表示后悔，伤心或惊奇：～，我怎么搞的。/～！真奇怪。(hey, to express regret, sadness or surprise)"}, {"l": "C1", "h": "哦", "p": "ò", "d": "[叹] 表示明白、答应等：～，我知道了。(used to express newly gained understanding; softly chant)"}, {"l": "C1", "h": "嗨", "p": "hāi", "d": "[叹] 引起注意或表示满意、惊奇等语气：～，你去哪儿？(hey, to show pride or satisfaction; used to express surprise)"}, {"l": "C4", "h": "常见（常見）", "p": "chángjiàn", "d": "[形] 常常见到的：～的事情 / ～的东西 (commonly seen or met, common)"}, {"l": "C4", "h": "话题（話題）", "p": "huàtí", "d": "[名] 谈话的主题，谈论的主要内容：最近人们的～都是关于选举的事。(topic, subject of conversation)"}, {"l": "C4", "h": "管闲事（管閑事）", "p": "guǎn xiánshì", "d": "[动词词组] 关心或过问跟自己没有关系的事：他喜欢～。(to mind others' business, to make everyone's business one's own)"}, {"l": "C4", "h": "棒", "p": "bàng", "d": "① [形] 很好，很强，很不错：你的中文很～。(very good, wonderful, excellent, strong) ② [名] 棍棒，棒子：他手里拿了根大～子。(stick, club)"}, {"l": "C4", "h": "愣", "p": "lèng", "d": "[动] 因吃惊而发呆：他～了半天没说话。(to be dumbfounded / stupified)"}, {"l": "C4", "h": "舍得（捨得）", "p": "shěde", "d": "[动] 愿意放弃或离开：你～把这本书送给他吗？(to be willing to part with, not to grudge)"}, {"l": "C4", "h": "舍不得（捨不得）", "p": "shěbude", "d": "[动] 很爱惜，不忍、不愿放弃或离开：他从来～乱花钱。(to hate to part with or use)"}, {"l": "C4", "h": "玩具", "p": "wánjù", "d": "[名] 专门给儿童玩儿的东西：这孩子每次上街都要买～。(toy)"}, {"l": "C4", "h": "隐私（隱私）", "p": "yǐnsī", "d": "[名] 不愿意告诉别人或不愿公开的个人的事：这是他的～，你别问。(privacy)"}, {"l": "C4", "h": "映照", "p": "yìngzhào", "d": "[动] 对照，对比，映衬：他们俩的话互相～。(to contrast, to compare)"}, {"l": "C4", "h": "讲究（講究）", "p": "jiǎngjiu", "d": "[动] 注重、重视：中国人很～吃。(to pay attention to, to stress)"}, {"l": "C4", "h": "长幼有序（長幼有序）", "p": "zhǎngyòu yǒuxù", "d": "[动词词组] 年纪较大的和年纪较小的有一定等级和次序；年纪轻的人要尊重老年人，这叫～。(old and young people are in some hierarchy or order)"}, {"l": "C4", "h": "称呼（稱呼）", "p": "chēnghu", "d": "① [动] 叫：你说我应该怎么～她？(to call, to address) ② [名] 当面招呼用的名称，如同志、老师、哥哥等。(term of address, appellation)"}, {"l": "C4", "h": "交谈（交談）", "p": "jiāotán", "d": "[动] 谈话：他们正在用英语～。(to talk, to talk with)"}, {"l": "C4", "h": "伤害（傷害）", "p": "shānghài", "d": "[动] 使身体或思想感情受到损害：过度疲劳会～身体。/ 不要说～别人的话。(to injure, to harm, to hurt)"}, {"l": "C4", "h": "初次", "p": "chūcì", "d": "[名] 第一次：这是我～来这里。(the first time)"}, {"l": "C4", "h": "询问（詢問）", "p": "xúnwèn", "d": "[动] 问，打听：你最好不要～他的年龄。(to ask, to inquire)"}, {"l": "C4", "h": "观念（觀念）", "p": "guānniàn", "d": "[名] 想法、看法、主意：思想～ / 老～ (idea, opinion)"}, {"l": "C4", "h": "背景", "p": "bèijǐng", "d": "[名] 指环境、条件等：这件事情的～是什么？/ 舞台～ (background, scenery, stage setting)"}, {"l": "C4", "h": "反问（反問）", "p": "fǎnwèn", "d": "[动] 对提问的人发问：他问我一个问题，我也～他一个问题。(to ask a question in reply)"}, {"l": "C4", "h": "是否", "p": "shìfǒu", "d": "[副] 是不是，要不要：他明天～能来？(whether or not, is it so or not, whether)"}, {"l": "C4", "h": "异性（異性）", "p": "yìxìng", "d": "[名] 性别不同的人：～朋友 (the opposite sex, person of the opposite sex)"}, {"l": "C4", "h": "打招呼", "p": "dǎ zhāohu", "d": "[动词词组] 用语言或行动问候别人：他看见我，走来跟我～。(to say hello, to greet a person)"}, {"l": "C4", "h": "竟然", "p": "jìngrán", "d": "[副] 竟，表示没想到：我们都认为他不会回来，谁知他～回来了。/ 这么厚的书，他～三天就看完了。(unexpectedly)"}, {"l": "C4", "h": "辈（輩）", "p": "bèi", "d": "[名] 辈分，家族、亲戚关系的一种长幼区别：我的父母比我长一～，我与兄弟姐妹同～，儿子比我小一～。/ 长～ / 晚～ (generation in the family)"}, {"l": "C4", "h": "亲热（親熱）", "p": "qīnrè", "d": "[形] 亲密而热情：他们俩又说又笑很～。(warm, nice and close)"}, {"l": "C4", "h": "尊重", "p": "zūnzhòng", "d": "[动] 尊敬或重视：～别人的意见 / ～他们的风俗习惯 (to respect, to hold (sb/sth) in esteem)"}, {"l": "C4", "h": "便于（便於）", "p": "biànyú", "d": "[动] 方便做某事：把门开大一点儿，～大家进来。(to be easy to, to be convenient for)"}, {"l": "C4", "h": "区分（區分）", "p": "qūfēn = 区别 qūbié", "d": "[动] 分开，分清：把好的和坏的～开。(to distinguish, to differentiate)"}, {"l": "C4", "h": "通常", "p": "tōngcháng", "d": "[形] 常常，经常：～的做法 / ～在八点上班 (in general, usually, regularly)"}, {"l": "C4", "h": "常用", "p": "chángyòng", "d": "[形] 常常用到的：这是一个～字。(in common usage, commonly used, common)"}, {"l": "C4", "h": "实际上（實際上）", "p": "shíjì shang", "d": "[名词词组] 事实上，真实情况：她看上去像个孩子，～已经快二十岁了。(in fact, in reality, as a matter of fact, actually)"}, {"l": "C4", "h": "难怪（難怪）", "p": "nánguài", "d": "① [动] 不应当责怪：这也～，他还是个不懂事的孩子。(should not blame, to be understandable, to be pardonable) ② [副] 怪不得、不奇怪：～他没来呢，原来他生病了。(no wonder)"}, {"l": "C4", "h": "冤枉", "p": "yuānwang", "d": "[动] 被人误解或受到不公平的待遇：不要～好人。(to be treated unfairly, to treat unfairly or unjustly)"}, {"l": "C4", "h": "好奇", "p": "hàoqí", "d": "[形] 对自己不了解的事觉得新奇而感兴趣：孩子们真～，什么都想知道。(curious)"}, {"l": "C4", "h": "围观（圍觀）", "p": "wéiguān", "d": "[动] 围着看：那儿不知发生了什么事，许多人在～。(to surround and watch, to encircle)"}, {"l": "C4", "h": "评头论足（評頭論足）", "p": "píng tóu lùn zú", "d": "[动词词组] 指在小事上议论别人：不要对别人～。(to find fault with, to criticize/comment from head to foot)"}, {"l": "C4", "h": "指点（指點）", "p": "zhǐdiǎn", "d": "[动] ① 在旁边找别人的缺点，在背后说别人的坏话，常用“指指点点”：你别在那儿指指点点。(to find somebody's shortcomings) ② 指出来使人知道，点明：我有一个问题，请你给我～～。(to give direction, to show how to do sth)"}, {"l": "C4", "h": "甚至", "p": "shènzhì", "d": "[连] 表示更进一层：他会说很多种语言，如中文、英文、日文，～会说法文。(even)"}, {"l": "C4", "h": "干涉", "p": "gānshè", "d": "[动]（不应该而去）过问或制止：不要～别人的自由。(to interfere, to intervene)"}, {"l": "C4", "h": "侵犯", "p": "qīnfàn", "d": "[动] 非法地干涉别人，损害别人的利益：人民的利益不容～。(to intrude into, to invade, to infringe upon)"}, {"l": "C4", "h": "无礼（無禮）", "p": "wúlǐ", "d": "[形] 没有礼貌的：他不排队，很～。(impolite, rude)"}, {"l": "C4", "h": "行为（行為）", "p": "xíngwéi", "d": "[名] 动作、举止：不排队是很坏的～。(action, conduct, behavior)"}, {"l": "C4", "h": "善恶（善惡）", "p": "shàn'è", "d": "[名] 善良和凶恶：他常常～不分。(good and evil)"}, {"l": "C4", "h": "1. 哥 = 哥哥", "p": "gē = gēge", "d": "elder brother"}, {"l": "C4", "h": "2. 父母", "p": "fùmǔ", "d": "parents, father and mother"}, {"l": "C4", "h": "3. 兄弟姐妹", "p": "xiōngdì jiěmèi", "d": "brothers and sisters, siblings"}, {"l": "C4", "h": "4. 儿女（兒女）", "p": "érnǚ", "d": "children, son and daughter"}, {"l": "C4", "h": "5. 爸 = 爸爸", "p": "bà = bàba", "d": "dad, papa"}, {"l": "C4", "h": "6. 妈（媽） = 妈妈", "p": "mā = māma", "d": "mum, mummy"}, {"l": "C4", "h": "7. 大伯", "p": "dàbó", "d": "father's elder brother"}, {"l": "C4", "h": "8. 大嫂", "p": "dàsǎo", "d": "elder brother's wife"}, {"l": "C4", "h": "9. 大哥", "p": "dàgē", "d": "elder brother"}, {"l": "C4", "h": "10. 大姐", "p": "dàjiě", "d": "elder sister"}, {"l": "C4", "h": "11. 小弟弟", "p": "xiǎodìdi", "d": "little younger brother"}, {"l": "C4", "h": "12. 小妹妹", "p": "xiǎomèimei", "d": "little younger sister"}, {"l": "C9", "h": "自谦（自謙）", "p": "zìqiān", "d": "[形] 词用到自己时, 所用的谦虚的表述: “在下”是一种~的说法。(modest, self-effacing)"}, {"l": "C9", "h": "敬", "p": "jìng", "d": "[动] 表示敬意: “您”是一个~词。(to respect, to salute)"}, {"l": "C9", "h": "而是", "p": "érshì", "d": "[连] 表示转折的连词: 他不是学生, ~老师。(but)"}, {"l": "C9", "h": "谦虚（謙虛）", "p": "qiānxū", "d": "[形] 不自满, 虚心, 肯接受批评: 他是个~的人。(modest)"}, {"l": "C9", "h": "美德", "p": "měidé", "d": "[名] 美好的品德: 谦虚和尊重别人都是~。(virtue, goodness, moral excellence)"}, {"l": "C9", "h": "流传（流傳）", "p": "liúchuán", "d": "[动] 故事、作品等传下来或传播开: 那个古代的故事一直~到今天。(to spread, to hand down)"}, {"l": "C9", "h": "成语（成語）", "p": "chéngyǔ", "d": "[名] 人们长期以来习用的、形式简单、含意丰富、定型的词组或短句。(idiom, proverb, set phrase)"}, {"l": "C9", "h": "自满（自滿）", "p": "zìmǎn", "d": "[形] 满足于自己已有的成绩: 他考上大学后就十分~。(complacent, self-satisfied)"}, {"l": "C9", "h": "夸（誇）", "p": "kuā", "d": "[动] 夸奖、称赞、赞美: 人人人~自己的家乡好。(to praise, to boast)"}, {"l": "C9", "h": "至于（至於）", "p": "zhìyú", "d": "1 [动] 表示达到某种程度 2 [介] 表示提起某一件事 (to go so far as to; as to)"}, {"l": "C9", "h": "用法", "p": "yòngfǎ", "d": "[名] 使用的方法: 这个工具的~, 他会告诉你。(use, usage, the way of using)"}, {"l": "C9", "h": "书籍（書籍）", "p": "shūjí", "d": "[名] 各种书的总称: ~是人类进步的阶梯。(books, literature, works)"}, {"l": "C9", "h": "信件", "p": "xìnjiàn", "d": "[名] 信和各类邮件的总称: 他们之间常有~往来。(letters, mails)"}, {"l": "C9", "h": "说法（說法）", "p": "shuōfa", "d": "[名] 说的方法: 这是口语的~。(expression, way of saying)"}, {"l": "C9", "h": "赞美（贊美）", "p": "zànměi", "d": "[动] 称赞、夸奖: 我~长江的伟大。(to praise, to eulogize)"}, {"l": "C9", "h": "丰盛（豐盛）", "p": "fēngshèng", "d": "[形] (物质方面)丰富: 宴会上准备了~的食品。(rich, sumptuous, abundant)"}, {"l": "C9", "h": "可口", "p": "kěkǒu", "d": "[形] 好吃: 这个菜很~。(tasty, delicious)"}, {"l": "C9", "h": "之类（之類）", "p": "zhīlèi", "d": "[名] 这一类, 指同类的情况、物品等 (and so on, and the like, etc.)"}, {"l": "C9", "h": "明明", "p": "míngmíng", "d": "[副] 确实, 分明(下文意思往往转折): 昨天~没有下雨, 他却说下了雨。(obviously, undoubtedly)"}, {"l": "C9", "h": "交往", "p": "jiāowǎng = láiwang", "d": "[动] 互相来往: 我跟他没有~。(to associate with, to contact)"}, {"l": "C9", "h": "以……为……", "p": "yǐ... wéi...", "d": "[介词词组] 拿……作为……, 把……作为…… (to take something as)"}, {"l": "C9", "h": "准则（準則）", "p": "zhǔnzé", "d": "[名] 原则、标准: 你的言论~是什么?(norm, standard, criterion)"}, {"l": "C9", "h": "吹捧", "p": "chuīpěng", "d": "[动] 夸大小优点、小成绩 (to flatter)"}, {"l": "C9", "h": "应聘（應聘）", "p": "yìngpìn", "d": "[动] 找工作: 我认为你可以去~。(to apply for an advertised post)"}, {"l": "C9", "h": "显示（顯示）", "p": "xiǎnshì", "d": "[动] 明显地表现出来: 他不喜欢~自己的优点。(to show)"}, {"l": "C9", "h": "优势（優勢）", "p": "yōushì", "d": "[名] 能压倒对方的有利形势 (dominant position, advantage)"}, {"l": "C9", "h": "似乎", "p": "sìhū", "d": "[副] 好像: 她脸色不太好, ~是病了。(it seems, as if, seemingly)"}, {"l": "C9", "h": "淡化", "p": "dànhuà", "d": "[动] 减轻事情的程度 (to fade out, to weaken)"}, {"l": "C9", "h": "团体（團體）", "p": "tuántǐ", "d": "[名] 一组人, 集体: 我们十个人来自同一个~。(group, organization, team)"}, {"l": "C9", "h": "忽略", "p": "hūlüè", "d": "[动] 忽视, 省略, 不/没注意 (to ignore, to overpass)"}, {"l": "C9", "h": "分明", "p": "fēnmíng", "d": "1 [副] 明明、显然 2 [形] 清楚 (obviously, clear, distinct)"}, {"l": "C9", "h": "功劳（功勞）", "p": "gōngláo", "d": "[名] 对事业的贡献 (contribution, credit)"}, {"l": "C9", "h": "有限", "p": "yǒuxiàn", "d": "[形] 有一定限度, 数量不多 (limited, finite)"}, {"l": "C9", "h": "归（歸）", "p": "guī", "d": "[动] 返回, 还给, 属于 (to belong to, to be attributed to)"}, {"l": "C9", "h": "自信", "p": "zìxìn", "d": "[动] 相信自己: 他~能够做好这件事。(to have self-confidence)"}, {"l": "C9", "h": "参考（參考）", "p": "cānkǎo", "d": "[动] ① 查阅有关资料了解情况 ② 借鉴、利用的有关材料 (to refer to, to use as reference)"}, {"l": "C9", "h": "把握", "p": "bǎwò", "d": "1 [名] 成功的可靠性 2 [动] 握、拿；抓住 (assurance, certainty, to grasp)"}, {"l": "C9", "h": "其实（其實）", "p": "qíshí", "d": "[副] 实际情况: 他嘴上说“没关系”, ~心里很着急。(actually, in fact)"}, {"l": "C9", "h": "若", "p": "ruò", "d": "1 [动] 好像、如同 2 [连] 如果, 要是 (like, seem, if)"}, {"l": "C9", "h": "差别（差別）", "p": "chābié", "d": "[名] 形式或内容上的不同: 他们俩~很大。(difference)"}, {"l": "C9", "h": "反而", "p": "fǎn'ér", "d": "[连] 表示跟上文意思相反或出现没想到的情况 (on the contrary)"}, {"l": "C9", "h": "不安", "p": "bù'ān", "d": "[形] 不安定, 不安宁: 他的话使我感到~。(worried, restless, uneasy)"}, {"l": "Not", "h": "亲切", "p": "qīnqiè", "d": "şefkatli (çevirirken)", "tr": 1}, {"l": "Not", "h": "在学习上", "p": "zài xuéxí shang", "d": "ders konusunda, çalışma konusunda", "tr": 1}, {"l": "Not", "h": "民情", "p": "mínqíng", "d": "halkın durumu", "tr": 1}, {"l": "Not", "h": "大饱口福", "p": "dà bǎo kǒufú", "d": "lezzetli yiyecekle karnını doyurmak; lezzetli yiyeceklerin tadına doymak", "tr": 1}, {"l": "Not", "h": "风味", "p": "fēngwèi", "d": "yerel lezzet", "tr": 1}, {"l": "Not", "h": "结实", "p": "jiēshi", "d": "sert", "tr": 1}, {"l": "Not", "h": "夜市", "p": "yèshì", "d": "gece pazarı", "tr": 1}];
+var IDS=["sinav", "practice", "karsilastirma", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "baglaclar", "edabc", "c9", "c10", "isaretlenenler", "notlar", "sozluk"],DICT=[{"l": "C1", "h": "客套", "p": "kètào", "d": "1 [名] 表示客气的话：我们是老朋友了，不用讲～。(polite expression) 2 [动] 说客气话：他们互相～了几句。(to greet politely)"}, {"l": "C1", "h": "礼节（禮節）", "p": "lǐjié", "d": "[名] 表示尊敬、祝愿等的各种惯用形式，如握手、鞠躬等：中国是很注意～的国家。(courtesy, etiquette)"}, {"l": "C1", "h": "总算（總算）", "p": "zǒngsuàn", "d": "[副] 经过花费时间、努力，最终达到一个结果：我等了他一个小时，他～来了。(at long last, finally)"}, {"l": "C1", "h": "一点儿（一點兒）", "p": "yìdiǎnr", "d": "[数量] 少量，与“有点儿，有一点儿”相同：我有～累。我还有～钱。(a little, a bit, a small amount)"}, {"l": "C1", "h": "闹笑话（鬧笑話）", "p": "nào xiàohua", "d": "[动词词组] 因粗心大意或不懂某些知识、习惯而发生可笑的错误：我刚到广州时，因为听不懂广州话，常常～。(to make a stupid mistake)"}, {"l": "C1", "h": "造成", "p": "zàochéng", "d": "[动] 产生：坏天气～交通困难。(to create, to cause, to bring about)"}, {"l": "C1", "h": "误解（誤解）", "p": "wùjiě", "d": "[动] 理解得不正确：我没这个意思，你～了。(to misunderstand)"}, {"l": "C1", "h": "同事", "p": "tóngshì", "d": "[名] 在同一单位工作的人：我和他是～。(colleague)"}, {"l": "C1", "h": "或是", "p": "huòshì", "d": "[连] 或者：大人～小孩儿都要买票。(or, perhaps)"}, {"l": "C1", "h": "直截了当（直截了當）", "p": "zhíjié liǎo dàng", "d": "[形容词词组] (言语、行动等)简单、直接、爽快：他说话～。(straight forward)"}, {"l": "C1", "h": "再说（再說）", "p": "zàishuō", "d": "[连] 表示推进一层：去叫他看戏，已经来不及了，～他也不一定有时间。(besides, what's more)"}, {"l": "C1", "h": "时（時）", "p": "shí", "d": "[名] ……的时候：上课～不要打电话。(when, at the time of)"}, {"l": "C1", "h": "挑选（挑選）", "p": "tiāoxuǎn", "d": "[动] 选择：请在这几个里面～一个。(to choose, to select, to pick out)"}, {"l": "C1", "h": "谢绝（謝絕）", "p": "xièjué", "d": "[动] 客气地表示不接受、拒绝：～参观。(to refuse in a polite way; to decline)"}, {"l": "C1", "h": "客气话（客氣話）", "p": "kèqihuà", "d": "[名] 客气的句子或表述：“哪里，哪里”是句～。(polite words, polite expression)"}, {"l": "C1", "h": "并非（並非）", "p": "bìngfēi", "d": "[动] 并不是：便宜的东西～不好。(really not)"}, {"l": "C1", "h": "真心", "p": "zhēnxīn", "d": "[名] 真实的心情：这是我的～话。(wholehearted, heartfelt)"}, {"l": "C1", "h": "好客", "p": "hàokè", "d": "[形] 欢迎客人：他很～，总是请我们去他家玩儿。(hospitable)"}, {"l": "C1", "h": "心意", "p": "xīnyì", "d": "[名] 对人的情意、感情：送你一件礼物表示我的～。(nice/kind feeling or regard)"}, {"l": "C1", "h": "总之（總之）", "p": "zǒngzhī", "d": "[连] 表示下文是总结性的话：我喜欢看电影，故事片、武打片、戏曲片……～，各种电影都爱看。(in a word, in short, in brief)"}, {"l": "C1", "h": "习俗（習俗）", "p": "xísú", "d": "[名] 习惯和风俗：过年吃饺子是中国很多地方的～。(custom, convention, tradition)"}, {"l": "C1", "h": "独特（獨特）", "p": "dútè", "d": "[形] 独有的、特别的：这件衣服的式样很～。(unique, distinctive, peculiar)"}, {"l": "C1", "h": "早就", "p": "zǎojiù", "d": "[副] 很早就已经：他～来了。(long ago/before)"}, {"l": "C1", "h": "什么样（什麼樣）", "p": "shénmeyàng", "d": "[代] 什么样子：她长～？(what kind, what sort)"}, {"l": "C1", "h": "告辞（告辞）", "p": "gàocí", "d": "[动] (向主人)告别、辞别：我看他很忙，在他家坐了一会儿就～了。(to say goodbye to, to part with)"}, {"l": "C1", "h": "哪儿（哪兒）", "p": "nǎr", "d": "[代] 哪里：你住在～？(where)"}, {"l": "C1", "h": "随口（隨口）", "p": "suíkǒu", "d": "[副] 随便说说，不当真：我只是～说说，不一定是对的。(to speak thoughtlessly, to speak carelessly)"}, {"l": "C1", "h": "西服", "p": "xīfú", "d": "[名] 西洋式的服装，这里特指男子穿的西式上衣、背心和裤子：他去出席宴会时总是穿～。(Western suit)"}, {"l": "C1", "h": "干吗（乾嗎）", "p": "gànmá", "d": "[疑问代词] 干什么，询问原因和目的：你～问这些事？/你～不告诉他？(why)"}, {"l": "C1", "h": "穿戴", "p": "chuāndài", "d": "1 [动] 穿衣打扮：我们要出门了，你～好了没有？(to wear clothes, to be dressed) 2 [名] 穿着：他的～总是很整齐。(apparel, dress)"}, {"l": "C1", "h": "焦急", "p": "jiāojí", "d": "[形] 着急：心里～/十分～(worried)"}, {"l": "C1", "h": "赶忙（趕忙）", "p": "gǎnmáng", "d": "[副] 赶紧、连忙：上课的时间到了，他～往教室跑。(hurriedly)"}, {"l": "C1", "h": "露出", "p": "lùchū", "d": "[动] 显示出，表现出：他的脸上～了笑容。(to show, to reveal)"}, {"l": "C1", "h": "表情", "p": "biǎoqíng", "d": "[名] 表现在脸上或姿态上的思想感情：他脸上露出兴奋的～。(expression)"}, {"l": "C1", "h": "赶跑（趕跑）", "p": "gǎnpǎo", "d": "[动] 用言语或动作让人离开：他用石头把狗～了。(to chase away, to make somebody leave)"}, {"l": "C1", "h": "预先（預先）", "p": "yùxiān", "d": "[副] 事先，在事情发生或进行之前：～通知/～安排(in advance, beforehand)"}, {"l": "C1", "h": "约定（約定）", "p": "yuèdìng", "d": "[动] 说定，事先说好：我跟他～三点钟见面。(to agree on, to appoint, to arrange)"}, {"l": "C1", "h": "串串门儿", "p": "chuàn chuan ménr", "d": "[动词词组] 随便到别人家去坐坐，聊聊天儿，也说“串门儿”：他总喜欢在傍晚时去朋友家～。(to drop in, to call at somebody's home)"}, {"l": "C1", "h": "聊聊天儿", "p": "liáo liáo tiānr", "d": "[动词词组] 随便交谈，也常用“聊天儿”：他们常常在一起～。(to chat)"}, {"l": "C1", "h": "难得（難得）", "p": "nándé", "d": "[形] ①不常常(发生)：这样大的雨～碰到。②不容易得到或办到：他取得这么好的成绩十分～。(seldom/difficult to do or get something)"}, {"l": "C1", "h": "明白", "p": "míngbai", "d": "1 [动] 懂，知道：我～了。(to understand) 2 [形] 清楚：这个问题书上说得很～。(clear, obvious, plain)"}, {"l": "C1", "h": "钥匙（鑰匙）", "p": "yàoshi", "d": "[名] 开锁的工具：这把～是开这把锁的。(key)"}, {"l": "C1", "h": "糟", "p": "zāo", "d": "[形] 坏，不好：这次考试我考得很～。(bad, awful)"}, {"l": "C1", "h": "哈", "p": "hā", "d": "[叹] 表示庆幸、惊奇等语气：～，这回我可做对了！(Aha)"}, {"l": "C1", "h": "哟（喲）", "p": "yō", "d": "[叹] 表示惊讶等语气：～，你怎么来了？(used to express slight surprise)"}, {"l": "C1", "h": "哎", "p": "hài", "d": "[叹] 表示后悔，伤心或惊奇：～，我怎么搞的。/～！真奇怪。(hey, to express regret, sadness or surprise)"}, {"l": "C1", "h": "哦", "p": "ò", "d": "[叹] 表示明白、答应等：～，我知道了。(used to express newly gained understanding; softly chant)"}, {"l": "C1", "h": "嗨", "p": "hāi", "d": "[叹] 引起注意或表示满意、惊奇等语气：～，你去哪儿？(hey, to show pride or satisfaction; used to express surprise)"}, {"l": "C4", "h": "常见（常見）", "p": "chángjiàn", "d": "[形] 常常见到的：～的事情 / ～的东西 (commonly seen or met, common)"}, {"l": "C4", "h": "话题（話題）", "p": "huàtí", "d": "[名] 谈话的主题，谈论的主要内容：最近人们的～都是关于选举的事。(topic, subject of conversation)"}, {"l": "C4", "h": "管闲事（管閑事）", "p": "guǎn xiánshì", "d": "[动词词组] 关心或过问跟自己没有关系的事：他喜欢～。(to mind others' business, to make everyone's business one's own)"}, {"l": "C4", "h": "棒", "p": "bàng", "d": "① [形] 很好，很强，很不错：你的中文很～。(very good, wonderful, excellent, strong) ② [名] 棍棒，棒子：他手里拿了根大～子。(stick, club)"}, {"l": "C4", "h": "愣", "p": "lèng", "d": "[动] 因吃惊而发呆：他～了半天没说话。(to be dumbfounded / stupified)"}, {"l": "C4", "h": "舍得（捨得）", "p": "shěde", "d": "[动] 愿意放弃或离开：你～把这本书送给他吗？(to be willing to part with, not to grudge)"}, {"l": "C4", "h": "舍不得（捨不得）", "p": "shěbude", "d": "[动] 很爱惜，不忍、不愿放弃或离开：他从来～乱花钱。(to hate to part with or use)"}, {"l": "C4", "h": "玩具", "p": "wánjù", "d": "[名] 专门给儿童玩儿的东西：这孩子每次上街都要买～。(toy)"}, {"l": "C4", "h": "隐私（隱私）", "p": "yǐnsī", "d": "[名] 不愿意告诉别人或不愿公开的个人的事：这是他的～，你别问。(privacy)"}, {"l": "C4", "h": "映照", "p": "yìngzhào", "d": "[动] 对照，对比，映衬：他们俩的话互相～。(to contrast, to compare)"}, {"l": "C4", "h": "讲究（講究）", "p": "jiǎngjiu", "d": "[动] 注重、重视：中国人很～吃。(to pay attention to, to stress)"}, {"l": "C4", "h": "长幼有序（長幼有序）", "p": "zhǎngyòu yǒuxù", "d": "[动词词组] 年纪较大的和年纪较小的有一定等级和次序；年纪轻的人要尊重老年人，这叫～。(old and young people are in some hierarchy or order)"}, {"l": "C4", "h": "称呼（稱呼）", "p": "chēnghu", "d": "① [动] 叫：你说我应该怎么～她？(to call, to address) ② [名] 当面招呼用的名称，如同志、老师、哥哥等。(term of address, appellation)"}, {"l": "C4", "h": "交谈（交談）", "p": "jiāotán", "d": "[动] 谈话：他们正在用英语～。(to talk, to talk with)"}, {"l": "C4", "h": "伤害（傷害）", "p": "shānghài", "d": "[动] 使身体或思想感情受到损害：过度疲劳会～身体。/ 不要说～别人的话。(to injure, to harm, to hurt)"}, {"l": "C4", "h": "初次", "p": "chūcì", "d": "[名] 第一次：这是我～来这里。(the first time)"}, {"l": "C4", "h": "询问（詢問）", "p": "xúnwèn", "d": "[动] 问，打听：你最好不要～他的年龄。(to ask, to inquire)"}, {"l": "C4", "h": "观念（觀念）", "p": "guānniàn", "d": "[名] 想法、看法、主意：思想～ / 老～ (idea, opinion)"}, {"l": "C4", "h": "背景", "p": "bèijǐng", "d": "[名] 指环境、条件等：这件事情的～是什么？/ 舞台～ (background, scenery, stage setting)"}, {"l": "C4", "h": "反问（反問）", "p": "fǎnwèn", "d": "[动] 对提问的人发问：他问我一个问题，我也～他一个问题。(to ask a question in reply)"}, {"l": "C4", "h": "是否", "p": "shìfǒu", "d": "[副] 是不是，要不要：他明天～能来？(whether or not, is it so or not, whether)"}, {"l": "C4", "h": "异性（異性）", "p": "yìxìng", "d": "[名] 性别不同的人：～朋友 (the opposite sex, person of the opposite sex)"}, {"l": "C4", "h": "打招呼", "p": "dǎ zhāohu", "d": "[动词词组] 用语言或行动问候别人：他看见我，走来跟我～。(to say hello, to greet a person)"}, {"l": "C4", "h": "竟然", "p": "jìngrán", "d": "[副] 竟，表示没想到：我们都认为他不会回来，谁知他～回来了。/ 这么厚的书，他～三天就看完了。(unexpectedly)"}, {"l": "C4", "h": "辈（輩）", "p": "bèi", "d": "[名] 辈分，家族、亲戚关系的一种长幼区别：我的父母比我长一～，我与兄弟姐妹同～，儿子比我小一～。/ 长～ / 晚～ (generation in the family)"}, {"l": "C4", "h": "亲热（親熱）", "p": "qīnrè", "d": "[形] 亲密而热情：他们俩又说又笑很～。(warm, nice and close)"}, {"l": "C4", "h": "尊重", "p": "zūnzhòng", "d": "[动] 尊敬或重视：～别人的意见 / ～他们的风俗习惯 (to respect, to hold (sb/sth) in esteem)"}, {"l": "C4", "h": "便于（便於）", "p": "biànyú", "d": "[动] 方便做某事：把门开大一点儿，～大家进来。(to be easy to, to be convenient for)"}, {"l": "C4", "h": "区分（區分）", "p": "qūfēn = 区别 qūbié", "d": "[动] 分开，分清：把好的和坏的～开。(to distinguish, to differentiate)"}, {"l": "C4", "h": "通常", "p": "tōngcháng", "d": "[形] 常常，经常：～的做法 / ～在八点上班 (in general, usually, regularly)"}, {"l": "C4", "h": "常用", "p": "chángyòng", "d": "[形] 常常用到的：这是一个～字。(in common usage, commonly used, common)"}, {"l": "C4", "h": "实际上（實際上）", "p": "shíjì shang", "d": "[名词词组] 事实上，真实情况：她看上去像个孩子，～已经快二十岁了。(in fact, in reality, as a matter of fact, actually)"}, {"l": "C4", "h": "难怪（難怪）", "p": "nánguài", "d": "① [动] 不应当责怪：这也～，他还是个不懂事的孩子。(should not blame, to be understandable, to be pardonable) ② [副] 怪不得、不奇怪：～他没来呢，原来他生病了。(no wonder)"}, {"l": "C4", "h": "冤枉", "p": "yuānwang", "d": "[动] 被人误解或受到不公平的待遇：不要～好人。(to be treated unfairly, to treat unfairly or unjustly)"}, {"l": "C4", "h": "好奇", "p": "hàoqí", "d": "[形] 对自己不了解的事觉得新奇而感兴趣：孩子们真～，什么都想知道。(curious)"}, {"l": "C4", "h": "围观（圍觀）", "p": "wéiguān", "d": "[动] 围着看：那儿不知发生了什么事，许多人在～。(to surround and watch, to encircle)"}, {"l": "C4", "h": "评头论足（評頭論足）", "p": "píng tóu lùn zú", "d": "[动词词组] 指在小事上议论别人：不要对别人～。(to find fault with, to criticize/comment from head to foot)"}, {"l": "C4", "h": "指点（指點）", "p": "zhǐdiǎn", "d": "[动] ① 在旁边找别人的缺点，在背后说别人的坏话，常用“指指点点”：你别在那儿指指点点。(to find somebody's shortcomings) ② 指出来使人知道，点明：我有一个问题，请你给我～～。(to give direction, to show how to do sth)"}, {"l": "C4", "h": "甚至", "p": "shènzhì", "d": "[连] 表示更进一层：他会说很多种语言，如中文、英文、日文，～会说法文。(even)"}, {"l": "C4", "h": "干涉", "p": "gānshè", "d": "[动]（不应该而去）过问或制止：不要～别人的自由。(to interfere, to intervene)"}, {"l": "C4", "h": "侵犯", "p": "qīnfàn", "d": "[动] 非法地干涉别人，损害别人的利益：人民的利益不容～。(to intrude into, to invade, to infringe upon)"}, {"l": "C4", "h": "无礼（無禮）", "p": "wúlǐ", "d": "[形] 没有礼貌的：他不排队，很～。(impolite, rude)"}, {"l": "C4", "h": "行为（行為）", "p": "xíngwéi", "d": "[名] 动作、举止：不排队是很坏的～。(action, conduct, behavior)"}, {"l": "C4", "h": "善恶（善惡）", "p": "shàn'è", "d": "[名] 善良和凶恶：他常常～不分。(good and evil)"}, {"l": "C4", "h": "1. 哥 = 哥哥", "p": "gē = gēge", "d": "elder brother"}, {"l": "C4", "h": "2. 父母", "p": "fùmǔ", "d": "parents, father and mother"}, {"l": "C4", "h": "3. 兄弟姐妹", "p": "xiōngdì jiěmèi", "d": "brothers and sisters, siblings"}, {"l": "C4", "h": "4. 儿女（兒女）", "p": "érnǚ", "d": "children, son and daughter"}, {"l": "C4", "h": "5. 爸 = 爸爸", "p": "bà = bàba", "d": "dad, papa"}, {"l": "C4", "h": "6. 妈（媽） = 妈妈", "p": "mā = māma", "d": "mum, mummy"}, {"l": "C4", "h": "7. 大伯", "p": "dàbó", "d": "father's elder brother"}, {"l": "C4", "h": "8. 大嫂", "p": "dàsǎo", "d": "elder brother's wife"}, {"l": "C4", "h": "9. 大哥", "p": "dàgē", "d": "elder brother"}, {"l": "C4", "h": "10. 大姐", "p": "dàjiě", "d": "elder sister"}, {"l": "C4", "h": "11. 小弟弟", "p": "xiǎodìdi", "d": "little younger brother"}, {"l": "C4", "h": "12. 小妹妹", "p": "xiǎomèimei", "d": "little younger sister"}, {"l": "C9", "h": "自谦（自謙）", "p": "zìqiān", "d": "[形] 词用到自己时, 所用的谦虚的表述: “在下”是一种~的说法。(modest, self-effacing)"}, {"l": "C9", "h": "敬", "p": "jìng", "d": "[动] 表示敬意: “您”是一个~词。(to respect, to salute)"}, {"l": "C9", "h": "而是", "p": "érshì", "d": "[连] 表示转折的连词: 他不是学生, ~老师。(but)"}, {"l": "C9", "h": "谦虚（謙虛）", "p": "qiānxū", "d": "[形] 不自满, 虚心, 肯接受批评: 他是个~的人。(modest)"}, {"l": "C9", "h": "美德", "p": "měidé", "d": "[名] 美好的品德: 谦虚和尊重别人都是~。(virtue, goodness, moral excellence)"}, {"l": "C9", "h": "流传（流傳）", "p": "liúchuán", "d": "[动] 故事、作品等传下来或传播开: 那个古代的故事一直~到今天。(to spread, to hand down)"}, {"l": "C9", "h": "成语（成語）", "p": "chéngyǔ", "d": "[名] 人们长期以来习用的、形式简单、含意丰富、定型的词组或短句。(idiom, proverb, set phrase)"}, {"l": "C9", "h": "自满（自滿）", "p": "zìmǎn", "d": "[形] 满足于自己已有的成绩: 他考上大学后就十分~。(complacent, self-satisfied)"}, {"l": "C9", "h": "夸（誇）", "p": "kuā", "d": "[动] 夸奖、称赞、赞美: 人人人~自己的家乡好。(to praise, to boast)"}, {"l": "C9", "h": "至于（至於）", "p": "zhìyú", "d": "1 [动] 表示达到某种程度 2 [介] 表示提起某一件事 (to go so far as to; as to)"}, {"l": "C9", "h": "用法", "p": "yòngfǎ", "d": "[名] 使用的方法: 这个工具的~, 他会告诉你。(use, usage, the way of using)"}, {"l": "C9", "h": "书籍（書籍）", "p": "shūjí", "d": "[名] 各种书的总称: ~是人类进步的阶梯。(books, literature, works)"}, {"l": "C9", "h": "信件", "p": "xìnjiàn", "d": "[名] 信和各类邮件的总称: 他们之间常有~往来。(letters, mails)"}, {"l": "C9", "h": "说法（說法）", "p": "shuōfa", "d": "[名] 说的方法: 这是口语的~。(expression, way of saying)"}, {"l": "C9", "h": "赞美（贊美）", "p": "zànměi", "d": "[动] 称赞、夸奖: 我~长江的伟大。(to praise, to eulogize)"}, {"l": "C9", "h": "丰盛（豐盛）", "p": "fēngshèng", "d": "[形] (物质方面)丰富: 宴会上准备了~的食品。(rich, sumptuous, abundant)"}, {"l": "C9", "h": "可口", "p": "kěkǒu", "d": "[形] 好吃: 这个菜很~。(tasty, delicious)"}, {"l": "C9", "h": "之类（之類）", "p": "zhīlèi", "d": "[名] 这一类, 指同类的情况、物品等 (and so on, and the like, etc.)"}, {"l": "C9", "h": "明明", "p": "míngmíng", "d": "[副] 确实, 分明(下文意思往往转折): 昨天~没有下雨, 他却说下了雨。(obviously, undoubtedly)"}, {"l": "C9", "h": "交往", "p": "jiāowǎng = láiwang", "d": "[动] 互相来往: 我跟他没有~。(to associate with, to contact)"}, {"l": "C9", "h": "以……为……", "p": "yǐ... wéi...", "d": "[介词词组] 拿……作为……, 把……作为…… (to take something as)"}, {"l": "C9", "h": "准则（準則）", "p": "zhǔnzé", "d": "[名] 原则、标准: 你的言论~是什么?(norm, standard, criterion)"}, {"l": "C9", "h": "吹捧", "p": "chuīpěng", "d": "[动] 夸大小优点、小成绩 (to flatter)"}, {"l": "C9", "h": "应聘（應聘）", "p": "yìngpìn", "d": "[动] 找工作: 我认为你可以去~。(to apply for an advertised post)"}, {"l": "C9", "h": "显示（顯示）", "p": "xiǎnshì", "d": "[动] 明显地表现出来: 他不喜欢~自己的优点。(to show)"}, {"l": "C9", "h": "优势（優勢）", "p": "yōushì", "d": "[名] 能压倒对方的有利形势 (dominant position, advantage)"}, {"l": "C9", "h": "似乎", "p": "sìhū", "d": "[副] 好像: 她脸色不太好, ~是病了。(it seems, as if, seemingly)"}, {"l": "C9", "h": "淡化", "p": "dànhuà", "d": "[动] 减轻事情的程度 (to fade out, to weaken)"}, {"l": "C9", "h": "团体（團體）", "p": "tuántǐ", "d": "[名] 一组人, 集体: 我们十个人来自同一个~。(group, organization, team)"}, {"l": "C9", "h": "忽略", "p": "hūlüè", "d": "[动] 忽视, 省略, 不/没注意 (to ignore, to overpass)"}, {"l": "C9", "h": "分明", "p": "fēnmíng", "d": "1 [副] 明明、显然 2 [形] 清楚 (obviously, clear, distinct)"}, {"l": "C9", "h": "功劳（功勞）", "p": "gōngláo", "d": "[名] 对事业的贡献 (contribution, credit)"}, {"l": "C9", "h": "有限", "p": "yǒuxiàn", "d": "[形] 有一定限度, 数量不多 (limited, finite)"}, {"l": "C9", "h": "归（歸）", "p": "guī", "d": "[动] 返回, 还给, 属于 (to belong to, to be attributed to)"}, {"l": "C9", "h": "自信", "p": "zìxìn", "d": "[动] 相信自己: 他~能够做好这件事。(to have self-confidence)"}, {"l": "C9", "h": "参考（參考）", "p": "cānkǎo", "d": "[动] ① 查阅有关资料了解情况 ② 借鉴、利用的有关材料 (to refer to, to use as reference)"}, {"l": "C9", "h": "把握", "p": "bǎwò", "d": "1 [名] 成功的可靠性 2 [动] 握、拿；抓住 (assurance, certainty, to grasp)"}, {"l": "C9", "h": "其实（其實）", "p": "qíshí", "d": "[副] 实际情况: 他嘴上说“没关系”, ~心里很着急。(actually, in fact)"}, {"l": "C9", "h": "若", "p": "ruò", "d": "1 [动] 好像、如同 2 [连] 如果, 要是 (like, seem, if)"}, {"l": "C9", "h": "差别（差別）", "p": "chābié", "d": "[名] 形式或内容上的不同: 他们俩~很大。(difference)"}, {"l": "C9", "h": "反而", "p": "fǎn'ér", "d": "[连] 表示跟上文意思相反或出现没想到的情况 (on the contrary)"}, {"l": "C9", "h": "不安", "p": "bù'ān", "d": "[形] 不安定, 不安宁: 他的话使我感到~。(worried, restless, uneasy)"}, {"l": "C10", "h": "乱七八糟（亂七八糟）", "p": "luànqībāzāo", "d": "[形容词词组] 很乱，没有秩序：办公桌上～的。（Çok dağınık, düzensiz）"}, {"l": "C10", "h": "发票（發票）", "p": "fāpiào", "d": "[名] 买东西时收到的单据：买东西别忘了要～。（Fatura, makbuz）"}, {"l": "C10", "h": "购物小票（購物小票）", "p": "gòuwù xiǎopiào", "d": "[名] 商店给的购物凭证：～上写着价格。（Alışveriş fişi）"}, {"l": "C10", "h": "五花八门（五花八門）", "p": "wǔhuābāmén", "d": "[形容词词组] 种类很多，各种各样：东西～。（Çeşit çeşit, her türlü）"}, {"l": "C10", "h": "动（動）", "p": "dòng", "d": "[动] 碰、移动：别～我的东西。（Dokunmak, yerini değiştirmek）"}, {"l": "C10", "h": "乱中有序（亂中有序）", "p": "luàn zhōng yǒu xù", "d": "[形容词词组] 看起来乱，其实有规律：他说自己～。（Dağınıklık içinde düzen）"}, {"l": "C10", "h": "保洁员（保潔員）", "p": "bǎojiéyuán", "d": "[名] 做清洁工作的人：新来的～很勤快。（Temizlik görevlisi）"}, {"l": "C10", "h": "打扫（打掃）", "p": "dǎsǎo", "d": "[动] 清理，使干净：他每天～房间。（Temizlemek, süpürmek）"}, {"l": "C10", "h": "委屈", "p": "wěiqu", "d": "[形] 受到不公平的对待，心里难过：小黄觉得很～。（Haksızlığa uğramış, mazlum）"}, {"l": "C10", "h": "嘟哝（嘟噥）", "p": "dūnong", "d": "[动] 小声地自言自语：他～了几句。（Homurdanmak, mırıldanmak）"}, {"l": "C10", "h": "气冲冲（氣沖沖）", "p": "qìchōngchōng", "d": "[形] 非常生气的样子：他～地走进来。（Öfkeyle, hışımla）"}, {"l": "C10", "h": "打听（打聽）", "p": "dǎting", "d": "[动] 向别人问、了解情况：他到处～那个女孩的生日。（Öğrenmek için sormak）"}, {"l": "C10", "h": "随手（隨手）", "p": "suíshǒu", "d": "[副] 顺便，不特意：他～把号码记在盒子上。（Eliyle, rastgele, o anda）"}, {"l": "C10", "h": "老总（老總）", "p": "lǎozǒng", "d": "[名] 对经理、老板的称呼：～在办公室里。（Patron, genel müdür）"}, {"l": "C10", "h": "垂头丧气（垂頭喪氣）", "p": "chuí tóu sàng qì", "d": "[形容词词组] 失望、没有精神的样子：他～地走了出去。（Başı önünde, morali bozuk）"}, {"l": "C10", "h": "垃圾桶", "p": "lājītǒng", "d": "[名] 装垃圾的桶：把纸扔进～。（Çöp kutusu）"}, {"l": "C10", "h": "垃圾站", "p": "lājīzhàn", "d": "[名] 集中放垃圾的地方：楼下的～很干净。（Çöp istasyonu）"}, {"l": "C10", "h": "飞奔（飛奔）", "p": "fēibēn", "d": "[动] 很快地跑：他～下楼。（Hızla koşmak）"}, {"l": "C10", "h": "香蕉皮", "p": "xiāngjiāopí", "d": "[名] 香蕉外面的皮：地上有一块～。（Muz kabuğu）"}, {"l": "C10", "h": "捡（撿）", "p": "jiǎn", "d": "[动] 拾取：他～起地上的纸。（Toplamak, yerden almak）"}, {"l": "C10", "h": "嚷嚷", "p": "rāngrang", "d": "[动] 大声说话、吵：他一大早就在～。（Bağırıp çağırmak）"}, {"l": "C10", "h": "敢", "p": "gǎn", "d": "[动] 有勇气做某事：我哪儿～啊？（Cesaret etmek）"}, {"l": "C10", "h": "客户（客戶）", "p": "kèhù", "d": "[名] 来买东西或谈生意的人：这是一位重要～。（Müşteri）"}, {"l": "C10", "h": "忙活", "p": "mánghuo", "d": "[动] 忙着做（口语）：他～了半天。（Uğraşmak, koşturmak）"}, {"l": "C10", "h": "空", "p": "kōng", "d": "[形] 里面没有东西：盒子里是～的。（Boş）"}, {"l": "Not", "h": "亲切", "p": "qīnqiè", "d": "şefkatli (çevirirken)", "tr": 1}, {"l": "Not", "h": "在学习上", "p": "zài xuéxí shang", "d": "ders konusunda, çalışma konusunda", "tr": 1}, {"l": "Not", "h": "民情", "p": "mínqíng", "d": "halkın durumu", "tr": 1}, {"l": "Not", "h": "大饱口福", "p": "dà bǎo kǒufú", "d": "lezzetli yiyecekle karnını doyurmak; lezzetli yiyeceklerin tadına doymak", "tr": 1}, {"l": "Not", "h": "风味", "p": "fēngwèi", "d": "yerel lezzet", "tr": 1}, {"l": "Not", "h": "结实", "p": "jiēshi", "d": "sert", "tr": 1}, {"l": "Not", "h": "夜市", "p": "yèshì", "d": "gece pazarı", "tr": 1}];
 var nav=document.getElementById("nav");
 nav.querySelectorAll("a").forEach(function(a){a.onclick=function(){show(a.dataset.id)}});
 function show(id){
@@ -4341,7 +4630,7 @@ section[data-cwp] .cwp-toggle[aria-pressed="true"]{background:var(--surface-2,rg
 
 <script id="vocab-font-script">
 (function(){
- var ids=['c1','c4','c9'];
+ var ids=['c1','c4','c9','c10'];
  var DEFAULT=120;
  function setup(key){
   var tw=document.getElementById(key+'VocabTw');
