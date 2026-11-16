@@ -2782,6 +2782,20 @@ body.hide-turkish .module-subtitle { display: none; }
   .cv-quiz .quiz-options button { width: 100%; }
 }
 
+/* ============================================================
+   Metin içi vurgular
+   ============================================================ */
+.zh mark.hl,
+.p-zh mark.hl {
+  background: rgba(246, 193, 119, 0.16);
+  color: #ffd79a;
+  padding: 1px 3px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(246, 193, 119, 0.45);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 </style>
 </head>
 <body>
@@ -2792,7 +2806,7 @@ body.hide-turkish .module-subtitle { display: none; }
 <div class="brand-mark">译</div>
 <div class="brand-text">
 <strong>Çeviri Dersi</strong>
-<span>中级翻译 · C1–C10</span>
+<span>中级翻译 · C1–C11</span>
 </div>
 <button class="icon-btn sidebar-close" onclick="toggleSidebar()" aria-label="Menüyü kapat">✕</button>
 </div>
@@ -2818,6 +2832,7 @@ body.hide-turkish .module-subtitle { display: none; }
 <a href="#c8" data-module="c8" data-search="c8 孔子的故乡 konfüçyüs memleket"><span class="nav-num">C8</span><span class="nav-body"><b>孔子的故乡</b><small>Konfüçyüs'ün Memleketi</small></span><span class="nav-dot"></span></a>
 <a href="#c9" data-module="c9" data-search="c9 自谦和敬人 alçakgönüllülük saygı"><span class="nav-num">C9</span><span class="nav-body"><b>自谦和敬人</b><small>Alçakgönüllülük ve Saygı</small></span><span class="nav-dot"></span></a>
 <a href="#c10" data-module="c10" data-search="c10 找东西 bir şey aramak"><span class="nav-num">C10</span><span class="nav-body"><b>找东西</b><small>Bir Şey Aramak</small></span><span class="nav-dot"></span></a>
+<a href="#c11" data-module="c11" data-search="c11 吃面条 erişte makarna noodle ek metin"><span class="nav-num">C11</span><span class="nav-body"><b>吃面条</b><small>Erişte Yemek</small></span><span class="nav-dot"></span></a>
 <div class="nav-group-label">Çalışma</div>
 <a href="#baglaclar" data-module="baglaclar" data-search="bağlaçlı cümleler connector"><span class="nav-num">🔗</span><span class="nav-body"><b>Bağlaçlı Cümleler</b><small>Bağlaç içeren cümleler</small></span><span class="nav-dot"></span></a>
 <a href="#edabc" data-module="edabc" data-search="eda bc çeviri"><span class="nav-num">译</span><span class="nav-body"><b>Eda BC</b><small>Eda'nın çevirileri</small></span><span class="nav-dot"></span></a>
@@ -2837,7 +2852,7 @@ body.hide-turkish .module-subtitle { display: none; }
 </div>
 <div>
 <b>Gezilen metinler</b>
-<small id="overallText">0 / 10 metin</small>
+<small id="overallText">0 / 11 metin</small>
 </div>
 </div>
 <div class="side-links">
@@ -2873,11 +2888,11 @@ body.hide-turkish .module-subtitle { display: none; }
 <section class="mod on" id="info">
 <section class="hero">
 <div class="hero-kicker">中级翻译 · Orta Seviye Çeviri</div>
-<h1>Çeviri Dersi<br>1–10</h1>
-<p>On metin, tek bir modern çalışma alanı. Çince metinleri okuyun, cümle cümle Türkçeye çevirin, işaretli kelimeleri ve bağlaçları tekrar edin; sınav pratiğiyle kendinizi ölçün. İlerlemeniz bu tarayıcıda saklanır.</p>
+<h1>Çeviri Dersi<br>1–11</h1>
+<p>On bir metin, tek bir modern çalışma alanı. Çince metinleri okuyun, cümle cümle Türkçeye çevirin, işaretli kelimeleri ve bağlaçları tekrar edin; sınav pratiğiyle kendinizi ölçün. İlerlemeniz bu tarayıcıda saklanır.</p>
 <div class="hero-chips">
 <span class="hero-chip"><b>10</b> metin</span>
-<span class="hero-chip"><b>182</b> işaretli kelime</span>
+<span class="hero-chip"><b>184</b> işaretli kelime</span>
 <span class="hero-chip"><b>263</b> alıştırma</span>
 <span class="hero-chip"><b>43</b> bağlaç cümlesi</span>
 <span class="hero-chip"><b>%100</b> çevrimdışı</span>
@@ -2885,8 +2900,8 @@ body.hide-turkish .module-subtitle { display: none; }
 </section>
 
 <div class="stat-grid">
-<div class="stat-card"><div class="num">10</div><div class="lbl">Metin · C1–C10</div></div>
-<div class="stat-card"><div class="num">182</div><div class="lbl">İşaretli kelime ve kalıp</div></div>
+<div class="stat-card"><div class="num">11</div><div class="lbl">Metin · C1–C11</div></div>
+<div class="stat-card"><div class="num">184</div><div class="lbl">İşaretli kelime ve kalıp</div></div>
 <div class="stat-card"><div class="num">171</div><div class="lbl">Sözlük kaydı</div></div>
 <div class="stat-card"><div class="num">263</div><div class="lbl">Kontrol edilebilir alıştırma</div></div>
 </div>
@@ -2932,6 +2947,7 @@ body.hide-turkish .module-subtitle { display: none; }
 <a class="unit-card" onclick="show('c8')"><span class="u-num">C8</span><span class="u-body"><b>孔子的故乡</b><small>Konfüçyüs'ün Memleketi · 5 cümle</small></span></a>
 <a class="unit-card" onclick="show('c9')"><span class="u-num">C9</span><span class="u-body"><b>自谦和敬人</b><small>Alçakgönüllülük ve Saygı · 21 cümle</small></span></a>
 <a class="unit-card" onclick="show('c10')"><span class="u-num">C10</span><span class="u-body"><b>找东西</b><small>Bir Şey Aramak · 5 cümle + 6 soru</small></span></a>
+<a class="unit-card" onclick="show('c11')"><span class="u-num">C11</span><span class="u-body"><b>吃面条</b><small>Erişte Yemek · 5 cümle</small></span></a>
 </div>
 </div>
 
@@ -2955,7 +2971,7 @@ body.hide-turkish .module-subtitle { display: none; }
 </div>
 <div class="note" style="margin-bottom:10px;">
 <span class="ico">📌</span>
-<span><strong>182 işaretli kelime:</strong> Her metnin altında kelime kartı; karta tıklayınca pinyin, anlam ve örnek açılır.</span>
+<span><strong>184 işaretli kelime:</strong> Her metnin altında kelime kartı; karta tıklayınca pinyin, anlam ve örnek açılır.</span>
 </div>
 <div class="note">
 <span class="ico">🔠</span>
@@ -4742,7 +4758,7 @@ D. 羊肉很容易吃饱
 <p class="en"><b>Mitchell</b>: Çinliler sosyal ilişkilerinde neden bu kadar alçakgönüllü davranırlar?</p>
 </div>
 <div class="pair">
-<p><b class="sp">汪天石</b>：因为中国的交际文化是一种双方互相映照的文化。说自己弱就好像在表示别人强; 而夸自己强则似乎是在说别人不行, 所以, 为了对别人表示礼貌和尊重, 中国人认为应该淡化个人的作用, 不要突出自己。另外, 中国人传统上比较重视团体, 忽略个体, 因此, 分明是作者一个人写的文章, 说的也是他(她)个人的观点, 但他(她)总是说“我们认为”, 用“我们”来代表“我”; 明明是自己取得了较大的成绩, 他(她)总是说:“我没有做什么, 是大家的功劳。”或者说:“在领导和大家帮助下, 我取得了一点儿有限的成绩……”总之, 不是吹捧自己, 而是淡化自己, 并把成绩归于领导和集体。</p>
+<p><b class="sp">汪天石</b>：因为中国的交际文化是一种双方互相映照的文化。说自己弱就好像在表示别人强; 而夸自己强则似乎是在说别人不行, 所以, 为了对别人表示礼貌和尊重, 中国人认为应该淡化个人的作用, 不要突出自己。另外, 中国人传统上比较重视团体, 忽略个体, <mark class="hl">因此, 分明是作者一个人写的文章, 说的也是他(她)个人的观点, 但他(她)总是说“我们认为”, 用“我们”来代表“我”; 明明是自己取得了较大的成绩, 他(她)总是说:“我没有做什么, 是大家的功劳。”</mark>或者说:“在领导和大家帮助下, 我取得了一点儿有限的成绩……”总之, 不是吹捧自己, 而是淡化自己, 并把成绩归于领导和集体。</p>
 <p class="en"><b>Wang Tianshi</b>: Çünkü Çin'in iletişim kültürü, iki tarafın birbirini karşılıklı olarak yansıttığı bir kültürdür. Kendinin zayıf olduğunu söylemek sanki karşı tarafın güçlü olduğunu ifade eder; kendini övmek ise sanki başkalarının yetersiz olduğunu ima eder. Bu yüzden başkalarına nezaket ve saygı göstermek adına Çinliler bireysel rolü arka plana atmaları, kendilerini ön plana çıkarmamaları gerektiğine inanırlar. Ayrıca Çinliler geleneksel olarak gruba daha çok önem verir, bireyi göz ardı ederler. Bu yüzden açıkça yazar kendi başına yazmış ve kendi kişisel görüşlerini belirtmiş olsa bile "Ben düşünüyorum" yerine "Biz düşünüyoruz" deyip kendisi yerine "biz" kullanır; büyük bir başarı elde eden de aslında kendisi olduğu halde hep şöyle diyor: "Ben bir şey yapmadım, hepsi herkesin emeği." veya "Yöneticilerin ve herkesin yardımı sayesinde, sınırlı da olsa biraz başarı elde ettim..." Kısacası kendini övmek yerine arka plana atar ve başarıyı yöneticilere ve ekibe/topluluğa mal eder.</p>
 </div>
 <div class="sh">IV. 自信与表达</div>
@@ -4761,11 +4777,11 @@ D. 羊肉很容易吃饱
 <div class="sh">V. 口语中的误用</div>
 <div class="pair">
 <p><b class="sp">汪天石</b>：哈哈哈, 我忘了告诉你, 朋友之间是直截了当的, 不需要这么客气, 你对我用“鄙人”这个词自称, 反而不好, 会让人奇怪而不安的。再说, 这个词在现代日常口语中已经很少用了。</p>
-<p class="en"><b>Wang Tianshi</b>: Hahaha, sana söylemeyi unuttum, arkadaşlar arasında doğrudan konuşulur, bu kadar resmiyete gerek yoktur; bana karşı kendini "bendeniz/değersiz kulunuz" (bǐrén) diye adlandırman tam tersine hoş olmaz, insanı garipsettirir ve rahatsız eder. Üstelik bu kelime modern günlük konuşma dilinde zaten neredeyse hiç kullanılmıyor.</p>
+<p class="en"><b>Wang Tianshi</b>: Sana söylemeyi unuttum, arkadaşlar arasında direkt olarak söylenir; bu kadar kibar olmaya gerek yoktur. Senin bana karşı kendini ben kulunuz olarak ifade etmen aksine iyi değil, insanı garip ve huzursuz hissettiriyor. Üstelik bu terim, modern günlük konuşma dilinde çok az kullanılır.</p>
 </div>
 <div class="pair">
 <p><b class="sp">米切尔</b>：是吗? 那我还得注意谦词和敬词的用法, 别用错了。</p>
-<p class="en"><b>Mitchell</b>: Öyle mi? O zaman alçakgönüllülük ve saygı kelimelerinin kullanımına dikkat etmeliyim ki yanlış kullanmayayım.</p>
+<p class="en"><b>Mitchell</b>: Öyle mi? O zaman alçakgönüllülük ve saygı ifadelerinin kullanımına dikkat etmeliyim, yanlış kullanmamalıyım.</p>
 </div>
 </div>
 </div>
@@ -4839,23 +4855,23 @@ D. 羊肉很容易吃饱
 <div class="sh">一、找东西</div>
 <div class="pair">
 <p>小张的办公桌上整天乱七八糟的，报纸、香烟盒、发票、购物小票等五花八门的东西都有。不过，谁要是动了他的东西，他回来肯定能看出来，他自己说他这是“乱中有序”。有一次，新来的保洁员小黄不了解情况，忙活半天给他打扫干净。小张回来一看，不但不感谢，还大怒道：“我的香烟盒呢？” “里面是空的呀！”小黄委屈地回答。在小黄的帮助下，小张花了半个多小时终于找到了——原来，香烟盒上记着一位重要客户的电话号码。</p>
-<p class="en">Küçük Zhang'ın çalışma masası gün boyu dağınıktı; gazeteler, sigara paketleri, faturalar, alışveriş fişleri gibi her türlü şey üstündeydi. Ama biri onun eşyalarına dokunacak olsa, döndüğünde bunu mutlaka fark ederdi. Kendi deyimiyle bu, “dağınıklık içinde bir düzen”di. Bir gün yeni gelen temizlik görevlisi Küçük Huang durumu bilmediğinden yarım gün uğraşıp ortalığı tertemiz yaptı. Küçük Zhang dönüp bakınca teşekkür etmek bir yana, öfkeyle bağırdı: “Benim sigara paketim nerede?” “İçi boştu ki!” diye mazlum mazlum yanıtladı Küçük Huang. Küçük Huang'ın yardımıyla Küçük Zhang yarım saatten fazla uğraşıp sonunda buldu — meğer sigara paketinin üstüne önemli bir müşterinin telefon numarası yazılıymış.</p>
+<p class="en">Xiao Zhang’ın ofis masası gün boyunca hep darmadağınıktı; üstünde gazete, sigara paketi, fatura, alışveriş fişi gibi çeşit çeşit eşya vardı. Ama biri eşyalarına dokunursa, o döndüğünde kesin fark ederdi. Kendisi buna karışıklığın/karmaşanın içinde düzen derdi. Bir keresinde yeni gelen temizlik işçisi Xiao Huang bunu bilmediği için masayı uzun süre uğraşarak temizledi. Xiao Zhang geri dönüp baktığında minnettar olmak bir yana, çok sinirlenerek konuştu: “Sigara paketim nerede?” “Onun için boş,” diyerek Xiao Huang gücenerek cevapladı. Xiao Huang’ın yardımıyla Xiao Zhang yarım saatten fazla zaman harcayıp sonunda paketi buldu. Aslında sigara paketinin üzerine önemli bir müşterinin telefon numarasını yazmıştı.</p>
 </div>
 <div class="pair">
 <p>这天，小张又嚷嚷开了，问小黄是否帮他收拾过桌子。小黄嘟哝道：“我哪儿还敢啊？”小张气冲冲地四处问：“谁动了我的东西？”</p>
-<p class="en">O gün Küçük Zhang yine bağırıp çağırmaya başladı; Küçük Huang'a masasını toplayıp toplamadığını sordu. Küçük Huang homurdandı: “Benim buna cesaretim mi kalır?” Küçük Zhang öfkeyle ortalıkta dolaşıp sordu: “Kim benim eşyalarıma dokundu?”</p>
+<p class="en">O gün Xiao Zhang yine yaygara çıkardı. Xiao Huang’a masayı toplamaya yardım edip etmediğini sordu. Xiao Huang mırıldanarak, “Buna nasıl cüret/cesaret edebilirim ki?” dedi. Xiao Zhang etrafına sinirli bir şekilde, “Kim benim eşyama dokundu?” diye sordu.</p>
 </div>
 <div class="pair">
-<p>原来小张想尽办法打听到了一个女孩子的生日，好像就在最近几天，而他却把具体的时间随手记在了什么地方，一时想不起来了。过了一会儿，小黄过来低声说：“老总好像刚才在你那里！”小张一听赶紧跑过去，轻轻敲开老总的办公室问：“您是不是帮我整理桌子了？”老总奇怪地看着他说：“怎么？有什么问题吗？”</p>
-<p class="en">Meğer Küçük Zhang ne yapıp edip bir kızın doğum gününü öğrenmiş; günlerden biri olacakmış, ama tam tarihi oraya buraya not ettiği için bir türlü hatırlayamıyormuş. Bir süre sonra Küçük Huang gelip alçak sesle dedi: “Patron galiba az önce senin masandaydı!” Bunu duyan Küçük Zhang hemen oraya koştu, patronun kapısını usulca çalıp sordu: “Masamı benim için topladınız mı?” Patron ona şaşkın şaşkın bakıp dedi: “Ne oldu? Bir sorun mu var?”</p>
+<p><mark class="hl">原来小张想尽办法打听到了一个女孩子的生日</mark>，好像就在最近几天，而他却把具体的时间随手记在了什么地方，一时想不起来了。过了一会儿，小黄过来低声说：“老总好像刚才在你那里！”小张一听赶紧跑过去，轻轻敲开老总的办公室问：“您是不是帮我整理桌子了？”老总奇怪地看着他说：“怎么？有什么问题吗？”</p>
+<p class="en">Aslında Xiao Zhang bir kızın doğum gününü öğrenmek için elinden gelen her yolu denemişti. Doğum günü önümüzdeki birkaç gün içindeydi, ancak tam tarihi gelişigüzel/rastgele bir yere not etmişti ve o an onu nereye koyduğunu hatırlayamıyordu. Bir süre sonra Xiao Huang yanına gelip alçak sesle dedi ki: “Patron/Müdür az önce senin oradaydı galiba.” Xiao Zhang bunu duyar duymaz hemen koştu, patronun ofisinin kapısını sakince tıklatıp açtı: “Masamı toplamaya siz mi yardım ettiniz?” diye sordu. Patron garip bir şekilde bakarak dedi ki: “Ne oldu? Sıkıntı mı var?”</p>
 </div>
 <div class="pair">
 <p>“啊……不，我是来谢谢您的！”小张说着，垂头丧气地退了出来。“小黄，垃圾桶里的垃圾呢？”“我刚才倒在楼下的垃圾站了，不知道他们拉走了没有。”</p>
-<p class="en">“Aa… yok, teşekkür etmeye gelmiştim!” diyen Küçük Zhang başı önünde geri çıktı. “Küçük Huang, çöp kutusundaki çöp nerede?” “Az önce aşağıdaki çöp istasyonuna döktüm; kamyonun götürüp götürmediğini bilmiyorum.”</p>
+<p class="en">“Ha... hayır, size teşekkür etmeye gelmiştim!” Xiao Zhang bunu söyleyip morali bozuk, başı önünde odadan geri geri çıktı. “Xiao Huang, çöp kutusundaki çöpler nerede?” “Ben az önce aşağı kattaki çöp toplama alanına döktüm, onların alıp çöpü götürüp götürmediğini bilmiyorum.”</p>
 </div>
 <div class="pair">
 <p>小张大叫一声：“我的幸福啊！”就飞奔了出去。小黄好像想起了什么，高举一块香蕉皮追了下去，“喂，你是不是在找它？我帮你捡出来了！”</p>
-<p class="en">Küçük Zhang yüksek sesle “Benim mutluluğum!” diye bağırıp dışarı fırladı. Küçük Huang sanki bir şey hatırlamış gibi eline bir muz kabuğu alıp peşinden koştu: “Hey, bunu mu arıyorsun? Senin için ben topladım!”</p>
+<p class="en">Xiao Zhang, “Mutluluğum!” diye yüksek sesle bağırdı ve dışarı fırladı. Xiao Huang sanki bir şey hatırlamış gibi bir muz kabuğunu kaldırarak peşinden koştu: “Hey, aradığın şey bu değil mi? Senin için çöpten aldım.”</p>
 </div>
 </div>
 </div>
@@ -4960,9 +4976,44 @@ D. 羊肉很容易吃饱
 
 </section>
 
+<section class="mod" id="c11" data-cwp="1">
+<h2>C11 · 吃面条</h2>
+<p class="sub">Ek metin: Erişte yemek (吃面条, anı)</p>
+<div class="bar">
+<button class="btn" onclick="tog('c11','en')">Türkçe çeviriyi göster / gizle</button>
+</div>
+<div class="bar"><button class="btn cwp-toggle" type="button" id="c11PracticeToggle" aria-pressed="false">Yazma pratiğini başlat</button><span class="sub">Her Çince cümleyi yazılı olarak çevir; Kontrol ile referans çeviriyi aç.</span></div>
+<div class="card">
+<div class="ct">Metin</div>
+<div class="zh" lang="zh">
+<div class="sh">吃面条</div>
+<div class="pair">
+<p>读研究生时，同学们几乎每晚都要到校门前的小吃店去吃面条。</p>
+<p class="en">Yüksek lisans yaparken sınıf arkadaşlarımız neredeyse her akşam okul kapısının önündeki küçük lokantaya gidip erişte yerdi.</p>
+</div>
+<div class="pair">
+<p>有一次，我们几个人手里没有钱，几个晚上都没吃面条了。大家一商量，决定让手里一向有钱却又极节省的小林请客。小林一听，先是一阵犹豫，然后爽快地说：“行啊。”大家立即高兴地说：“走啊，小林请客啦！”小林一看，有点儿后悔，但是也不好再说什么，只好犹犹豫豫地走在后面。</p>
+<p class="en">Bir keresinde birkaçımızın elinde para yoktu ve birkaç akşamdır erişte yiyemiyorduk. Hep birlikte konuşup, her zaman parası olan ama çok tutumlu olan Xiao Lin’e ısmarlamasını söylemeye karar verdik. Xiao Lin bunu duyunca önce bir tereddüt etti, sonra içtenlikle “Tamam!” dedi. Herkes hemen sevinçle “Hadi gidelim, Xiao Lin ısmarlıyor!” dedi. Xiao Lin bir an pişman oldu ama artık bir şey söyleyemedi; isteksizce arkadan yürüdü.</p>
+</div>
+<div class="pair">
+<p>到了小吃店，小林赶忙说：“我吃菜面就行了，你们呢？”菜面便宜，他本以为他这样说，大家一定会和他一样。没想到老王说：“那我就不客气了，来碗三鲜面吧。”小林的神色更加不自然了。为了“照顾”他，我和小李都点了菜面。吃面条时，小林一句话也不说，我们则忍着笑。出了小吃店，终于哈哈大笑起来。</p>
+<p class="en">Lokantaya varınca Xiao Lin aceleyle “Ben sebzeli erişte yesem yeter, siz ne alacaksınız?” dedi. Sebzeli erişte ucuzdu; böyle söyleyince herkesin de kendisi gibi sipariş vereceğini sanmıştı. Ama Xiao Wang “O zaman ben nazlanmayayım, bir kâse üç çeşitli erişte alayım” dedi. Xiao Lin’in yüzü daha da tuhaflaştı. Onu “kollamak” için Xiao Li ile ben de sebzeli erişte sipariş ettik. Erişte yerken Xiao Lin tek kelime etmedi, biz ise gülmemeye çalışıyorduk. Lokantadan çıkınca sonunda kahkahalarla güldük.</p>
+</div>
+<div class="pair">
+<p>后来我们才知道，小林正好这个月替女朋友买了条裙子，剩下的钱准备买本书，却被我们“吃”了。</p>
+<p class="en">Ancak sonradan öğrendik ki Xiao Lin tam o ay kız arkadaşına bir elbise almış; kalan parayla da bir kitap almayı planlıyormuş, ama o para bizim tarafımızdan “yenmiş”.</p>
+</div>
+<div class="pair">
+<p>现在，同学们都各奔东西了，但谁也忘不了校门前的那个小吃店，忘不了那一碗面条里装着的浓浓的同学情。小林来信说，连那回的“吃面条”，在记忆中也显得那么亲切呢！</p>
+<p class="en">Şimdi herkes dört bir yana dağıldı; ama kimse okul kapısının önündeki o küçük lokantayı, o bir kâse eriştenin içindeki sıcacık arkadaşlık duygusunu unutamıyor. Xiao Lin mektubunda, o günkü “erişte yeme” olayının bile hatıralarında ne kadar sıcak göründüğünü yazıyor!</p>
+</div>
+</div>
+</div>
+</section>
+
 <section class="mod" id="isaretlenenler">
 <h2>İşaretlenen Kelimeler / 重点词汇</h2>
-<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">10 metin · 182 kelime</span></p>
+<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">11 metin · 184 kelime</span></p>
 <nav class="ml-chips" aria-label="Metin seçimi">
 <button type="button" class="ml-chip active" data-m="ml-C1" onclick="mlScroll('ml-C1')"><b>C1</b><span>新朋友</span></button>
 <button type="button" class="ml-chip" data-m="ml-C2" onclick="mlScroll('ml-C2')"><b>C2</b><span>爱在身边</span></button>
@@ -4974,6 +5025,7 @@ D. 羊肉很容易吃饱
 <button type="button" class="ml-chip" data-m="ml-C8" onclick="mlScroll('ml-C8')"><b>C8</b><span>孔子的故乡</span></button>
 <button type="button" class="ml-chip" data-m="ml-C9" onclick="mlScroll('ml-C9')"><b>C9</b><span>自谦和敬人</span></button>
 <button type="button" class="ml-chip" data-m="ml-C10" onclick="mlScroll('ml-C10')"><b>C10</b><span>找东西</span></button>
+<button type="button" class="ml-chip" data-m="ml-C11" onclick="mlScroll('ml-C11')"><b>C11</b><span>吃面条</span></button>
 </nav>
 <section class="ml-card" id="ml-C1">
 <header class="ml-head">
@@ -6256,7 +6308,7 @@ D. 羊肉很容易吃饱
 <header class="ml-head">
 <span class="ml-badge">C10</span>
 <div class="ml-titles"><h3 class="ml-zh" lang="zh">找东西</h3><p class="ml-tr">Kayıp Eşya Peşinde</p></div>
-<span class="ml-count">25 kelime</span>
+<span class="ml-count">14 kelime</span>
 </header>
 <ul class="ml-list">
 <li class="ml-item">
@@ -6268,35 +6320,11 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">发票</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">fāpiào</div>
-<div class="ml-mean">Fatura, makbuz</div>
-<div class="ml-ex">[名] 买东西时收到的单据：买东西别忘了要～。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">购物小票</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">gòuwù xiǎopiào</div>
-<div class="ml-mean">Alışveriş fişi</div>
-<div class="ml-ex">[名] 商店给的购物凭证：～上写着价格。</div>
-</div>
-</li>
-<li class="ml-item">
 <div class="ml-item-top"><span class="ml-term" lang="zh">五花八门</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">wǔhuābāmén</div>
 <div class="ml-mean">Çeşit çeşit, her türlü</div>
 <div class="ml-ex">[形容词词组] 种类很多，各种各样：东西～。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">动</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">dòng</div>
-<div class="ml-mean">Dokunmak, yerini değiştirmek</div>
-<div class="ml-ex">[动] 碰、移动：别～我的东西。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6311,24 +6339,24 @@ D. 羊肉很容易吃饱
 <div class="ml-item-top"><span class="ml-term" lang="zh">保洁员</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">bǎojiéyuán</div>
-<div class="ml-mean">Temizlik görevlisi</div>
+<div class="ml-mean">Temizlik görevlisi (负责打扫卫生的清洁工)</div>
 <div class="ml-ex">[名] 做清洁工作的人：新来的～很勤快。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">打扫</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">dǎsǎo</div>
-<div class="ml-mean">Temizlemek, süpürmek</div>
-<div class="ml-ex">[动] 清理，使干净：他每天～房间。</div>
 </div>
 </li>
 <li class="ml-item">
 <div class="ml-item-top"><span class="ml-term" lang="zh">委屈</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">wěiqu</div>
-<div class="ml-mean">Haksızlığa uğramış, mazlum</div>
+<div class="ml-mean">Haksızlığa uğramış, içi burkulmuş</div>
 <div class="ml-ex">[形] 受到不公平的对待，心里难过：小黄觉得很～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">嚷嚷</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">rāngrang</div>
+<div class="ml-mean">Bağırıp çağırmak</div>
+<div class="ml-ex">[动] 大声说话、吵：他一大早就在～。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6348,27 +6376,11 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">打听</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">想尽办法</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">dǎting</div>
-<div class="ml-mean">Öğrenmek için sormak</div>
-<div class="ml-ex">[动] 向别人问、了解情况：他到处～那个女孩的生日。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">随手</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">suíshǒu</div>
-<div class="ml-mean">Eliyle, rastgele, o anda</div>
-<div class="ml-ex">[副] 顺便，不特意：他～把号码记在盒子上。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">老总</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">lǎozǒng</div>
-<div class="ml-mean">Patron, genel müdür</div>
-<div class="ml-ex">[名] 对经理、老板的称呼：～在办公室里。</div>
+<div class="ml-py">xiǎng jìn bànfǎ</div>
+<div class="ml-mean">Elinden gelen her yolu denemek</div>
+<div class="ml-ex">[动词词组] 用尽各种办法：他～找那本书。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6388,14 +6400,6 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">垃圾站</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">lājīzhàn</div>
-<div class="ml-mean">Çöp istasyonu</div>
-<div class="ml-ex">[名] 集中放垃圾的地方：楼下的～很干净。</div>
-</div>
-</li>
-<li class="ml-item">
 <div class="ml-item-top"><span class="ml-term" lang="zh">飞奔</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">fēibēn</div>
@@ -6404,11 +6408,11 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">香蕉皮</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">高举</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">xiāngjiāopí</div>
-<div class="ml-mean">Muz kabuğu</div>
-<div class="ml-ex">[名] 香蕉外面的皮：地上有一块～。</div>
+<div class="ml-py">gāojǔ</div>
+<div class="ml-mean">Yukarı kaldırmak</div>
+<div class="ml-ex">[动] 高高地举起：他～着一块香蕉皮。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6419,49 +6423,124 @@ D. 羊肉很容易吃饱
 <div class="ml-ex">[动] 拾取：他～起地上的纸。</div>
 </div>
 </li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">嚷嚷</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">rāngrang</div>
-<div class="ml-mean">Bağırıp çağırmak</div>
-<div class="ml-ex">[动] 大声说话、吵：他一大早就在～。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">敢</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">gǎn</div>
-<div class="ml-mean">Cesaret etmek</div>
-<div class="ml-ex">[动] 有勇气做某事：我哪儿～啊？</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">客户</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">kèhù</div>
-<div class="ml-mean">Müşteri</div>
-<div class="ml-ex">[名] 来买东西或谈生意的人：这是一位重要～。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">忙活</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">mánghuo</div>
-<div class="ml-mean">Uğraşmak, koşturmak</div>
-<div class="ml-ex">[动] 忙着做（口语）：他～了半天。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">空</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">kōng</div>
-<div class="ml-mean">Boş</div>
-<div class="ml-ex">[形] 里面没有东西：盒子里是～的。</div>
-</div>
-</li>
 </ul>
 <div class="ml-foot"><a class="ml-goto" href="#c10" onclick="show('c10');return false;">Metne git <span>→</span></a></div>
 </section>
+<section class="ml-card" id="ml-C11">
+<header class="ml-head">
+<span class="ml-badge">C11</span>
+<div class="ml-titles"><h3 class="ml-zh" lang="zh">吃面条</h3><p class="ml-tr">Erişte Yemek</p></div>
+<span class="ml-count">13 kelime</span>
+</header>
+<ul class="ml-list">
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">研究生</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">yánjiūshēng</div>
+<div class="ml-mean">Yüksek lisans öğrencisi</div>
+<div class="ml-ex">[名] 大学毕业后继续学习的学生：他正在读～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">小吃店</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">xiǎochīdiàn</div>
+<div class="ml-mean">Küçük lokanta, büfe</div>
+<div class="ml-ex">[名] 卖小吃的小店：校门口的～很热闹。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">商量</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">shāngliang</div>
+<div class="ml-mean">Danışmak, görüşüp karar vermek</div>
+<div class="ml-ex">[动] 交换意见：大家～了一下儿。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">节省</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">jiéshěng</div>
+<div class="ml-mean">Tutumlu olmak, idareli kullanmak</div>
+<div class="ml-ex">[形] 很少花钱：他花钱很～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">请客</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">qǐngkè</div>
+<div class="ml-mean">Ismarlamak, hesabı ödemek</div>
+<div class="ml-ex">[动] 出钱请别人吃饭：今天我～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">犹豫</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">yóuyù</div>
+<div class="ml-mean">Tereddüt etmek, kararsız kalmak</div>
+<div class="ml-ex">[形] 拿不定主意：他～了半天。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">爽快</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">shuǎngkuai</div>
+<div class="ml-mean">İçtenlikle, çabucak</div>
+<div class="ml-ex">[形] 直爽痛快：他～地答应了。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">后悔</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">hòuhuǐ</div>
+<div class="ml-mean">Pişman olmak</div>
+<div class="ml-ex">[动] 事后懊悔：他有点儿～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">菜面</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">càimiàn</div>
+<div class="ml-mean">Sebzeli erişte</div>
+<div class="ml-ex">[名] 加蔬菜的面：我吃～就行了。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">三鲜面</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">sānxiānmiàn</div>
+<div class="ml-mean">Üç çeşitli erişte</div>
+<div class="ml-ex">[名] 有三种配料的汤面：来碗～吧。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">神色</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">shénsè</div>
+<div class="ml-mean">Yüz ifadesi, hâl</div>
+<div class="ml-ex">[名] 脸上的表情：他的～不太自然。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">各奔东西</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">gè bēn dōngxī</div>
+<div class="ml-mean">Dört bir yana dağılmak</div>
+<div class="ml-ex">[动词词组] 各自走向不同的地方：毕业后大家～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">亲切</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">qīnqiè</div>
+<div class="ml-mean">Sıcak, samimi</div>
+<div class="ml-ex">[形] 热情而关心：他的话让人感到很～。</div>
+</div>
+</li>
+</ul>
+<div class="ml-foot"><a class="ml-goto" href="#c11" onclick="show('c11');return false;">Metne git <span>→</span></a></div>
+</section>
+
 </section>
 <section class="mod" id="notlar">
 <h2>Çeviri Notları</h2>
@@ -7334,6 +7413,7 @@ filt();
     c8: { eyebrow: 'METİN C8', tr: "Konfüçyüs'ün Memleketi" },
     c9: { eyebrow: 'METİN C9', tr: 'Alçakgönüllülük ve Saygı' },
     c10: { eyebrow: 'METİN C10', tr: 'Bir Şey Aramak' },
+    c11: { eyebrow: 'METİN C11', tr: 'Erişte Yemek' },
     baglaclar: { eyebrow: 'BAĞLAÇLAR', tr: 'Bağlaçlı Cümleler' },
     edabc: { eyebrow: 'EDA BC', tr: 'Eda BC Çevirileri' },
     isaretlenenler: { eyebrow: 'KELİMELER', tr: 'İşaretlenen Kelimeler' },
@@ -7341,7 +7421,7 @@ filt();
     sozluk: { eyebrow: 'SÖZLÜK', tr: 'Sözlük' }
   };
 
-  const LESSONS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10'];
+  const LESSONS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11'];
 
   const state = {
     current: 'info',
