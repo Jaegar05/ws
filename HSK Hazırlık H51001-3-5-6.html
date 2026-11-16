@@ -607,7 +607,7 @@
                 <!-- Reading / Section 2 -->
                 <div v-if="activeSection === 'reading'" class="space-y-6">
                     <!-- Passage / Cloze blocks -->
-                    <div v-for="passage in currentData.readingPassages" :key="passage.id" class="bg-gray-900 rounded-xl shadow-sm border border-gray-800 overflow-hidden">
+                    <div v-for="passage in readingPassagesPart1" :key="passage.id" class="bg-gray-900 rounded-xl shadow-sm border border-gray-800 overflow-hidden">
                         <div class="bg-gray-800/60 border-b border-gray-800 px-5 py-3 flex items-center justify-between">
                             <span class="text-base font-bold uppercase tracking-wider text-gray-400 font-kaiti">
                                 {{ passage.title }} (第 {{ passage.questions[0].num }}–{{ passage.questions[passage.questions.length-1].num }} 题)
@@ -676,6 +676,47 @@
                                         <span class="ml-3 font-semibold text-base mr-3 text-gray-400">{{ optKey }}.</span>
                                         <span class="text-[24px] leading-relaxed font-kaiti">{{ opt }}</span>
                                     </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reading Passages 71-90 (Part 3) -->
+                    <div v-for="passage in readingPassagesPart3" :key="passage.id" class="bg-gray-900 rounded-xl shadow-sm border border-gray-800 overflow-hidden">
+                        <div class="bg-gray-800/60 border-b border-gray-800 px-5 py-3 flex items-center justify-between">
+                            <span class="text-base font-bold uppercase tracking-wider text-gray-400 font-kaiti">
+                                {{ passage.title }} (第 {{ passage.questions[0].num }}–{{ passage.questions[passage.questions.length-1].num }} 题)
+                            </span>
+                        </div>
+                        <div class="p-5 space-y-6">
+                            <p class="text-gray-100 leading-relaxed text-[24px] font-kaiti bg-gray-800/50 p-5 rounded-lg border border-gray-800" v-html="passage.text"></p>
+
+                            <div class="space-y-4">
+                                <div v-for="q in passage.questions" :key="q.num" :id="'question-' + q.num" class="border-t border-gray-800 pt-4 first:border-0 first:pt-0">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="font-medium text-xl text-gray-200 font-kaiti">第 {{ q.num }} 题 {{ q.prompt ? ': ' + q.prompt : '' }}</div>
+                                        <span v-if="submittedSections.reading" :class="getAnswerStatusClass(q.num)">
+                                            {{ isQuestionCorrect(q.num) ? '✓ Correct' : '✗ Wrong (Answer: ' + currentData.officialAnswers[q.num] + ')' }}
+                                        </span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        <label 
+                                            v-for="(opt, optKey) in q.options" 
+                                            :key="optKey" 
+                                            :class="[
+                                                'flex items-center p-4 rounded-lg border cursor-pointer transition',
+                                                userAnswers[q.num] === optKey ? 'bg-red-950/60 border-red-600 text-red-200 font-medium' : 'border-gray-800 bg-gray-800/50 hover:bg-gray-800 text-gray-200'
+                                            ]">
+                                            <input 
+                                                type="radio" 
+                                                :name="'q_' + q.num" 
+                                                :value="optKey" 
+                                                v-model="userAnswers[q.num]"
+                                                class="text-red-600 focus:ring-red-500 h-5 w-5 border-gray-600 bg-gray-700">
+                                            <span class="ml-3 font-semibold text-base mr-3 text-gray-400">{{ optKey }}.</span>
+                                            <span class="text-[24px] leading-relaxed font-kaiti">{{ opt }}</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2764,6 +2805,18 @@
             computed: {
                 currentData() {
                     return examsData[this.selectedExamKey];
+                },
+                readingPassagesPart1() {
+                    return (this.currentData.readingPassages || []).filter(p => {
+                        const first = p.questions && p.questions[0];
+                        return first && first.num <= 60;
+                    });
+                },
+                readingPassagesPart3() {
+                    return (this.currentData.readingPassages || []).filter(p => {
+                        const first = p.questions && p.questions[0];
+                        return first && first.num > 60;
+                    });
                 },
                 currentSectionQuestions() {
                     return this.getSectionQuestions(this.activeSection);
