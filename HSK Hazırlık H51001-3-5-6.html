@@ -137,68 +137,86 @@
             <div v-show="showSidebar" class="w-full lg:w-1/4 space-y-4 shrink-0 transition-all duration-300">
                 <!-- Section Selector Tabs -->
                 <div class="bg-gray-900 rounded-xl shadow-sm border border-gray-800 p-4">
-                    <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Sections</h2>
-                    <div class="space-y-1">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                            Bölümler <span class="text-gray-600 font-normal normal-case tracking-normal">· 部分</span>
+                        </h2>
+                        <span class="text-[10px] font-semibold text-gray-500 bg-gray-800/70 border border-gray-700/60 rounded-full px-2 py-0.5">5</span>
+                    </div>
+                    <div class="space-y-1.5">
                         <button 
                             @click="selectSection('info')" 
-                            :class="['w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between', activeSection === 'info' ? 'bg-red-950/60 text-red-400 font-semibold border border-red-800/50' : 'text-gray-300 hover:bg-gray-800']">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-circle-info text-sm"></i>
-                                <span class="font-kaiti text-base">0. Sınav Bilgileri</span>
+                            :class="['group w-full text-left px-3 py-2.5 rounded-lg transition flex items-center justify-between gap-2 border', activeSection === 'info' ? 'bg-gradient-to-r from-red-950/70 to-gray-900 text-red-300 border-red-800/50' : 'text-gray-300 border-transparent hover:bg-gray-800/70 hover:border-gray-700/50']">
+                            <span class="flex items-center gap-2.5 min-w-0">
+                                <span :class="['w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center text-[11px] font-bold tabular-nums transition', activeSection === 'info' ? 'bg-red-500/15 border-red-500/40 text-red-300' : 'bg-gray-800/80 border-gray-700/70 text-gray-500 group-hover:text-gray-300']">00</span>
+                                <span class="min-w-0">
+                                    <span class="block font-kaiti text-[15px] leading-tight truncate">Sınav Bilgileri</span>
+                                    <span class="block text-[11px] text-gray-500 leading-tight truncate"><i class="fa-solid fa-circle-info mr-1 text-[9px]"></i>Genel bakış ve puan tablosu</span>
+                                </span>
                             </span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-red-900/40 text-red-300 border border-red-700/50">Info</span>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-900/40 text-red-300 border border-red-700/50 shrink-0">Info</span>
                         </button>
                         <button 
                             @click="selectSection('listening')" 
-                            :class="['w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between', activeSection === 'listening' ? 'bg-red-950/60 text-red-400 font-semibold border border-red-800/50' : 'text-gray-300 hover:bg-gray-800']">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-headphones text-sm"></i>
-                                <span class="font-kaiti text-base">1. 听力 (1–45)</span>
+                            :class="['group relative overflow-hidden w-full text-left px-3 py-2.5 rounded-lg transition flex items-center justify-between gap-2 border', activeSection === 'listening' ? 'bg-gradient-to-r from-red-950/70 to-gray-900 text-red-300 border-red-800/50' : 'text-gray-300 border-transparent hover:bg-gray-800/70 hover:border-gray-700/50']">
+                            <span class="flex items-center gap-2.5 min-w-0">
+                                <span :class="['w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center text-[11px] font-bold tabular-nums transition', activeSection === 'listening' ? 'bg-red-500/15 border-red-500/40 text-red-300' : 'bg-gray-800/80 border-gray-700/70 text-gray-500 group-hover:text-gray-300']">01</span>
+                                <span class="min-w-0">
+                                    <span class="block font-kaiti text-[15px] leading-tight truncate">1. 听力</span>
+                                    <span class="block text-[11px] text-gray-500 leading-tight truncate"><i class="fa-solid fa-headphones mr-1 text-[9px]"></i>Dinleme · 1–45</span>
+                                </span>
                             </span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-300 border border-gray-700">
-                                <template v-if="submittedSections.listening">
-                                    <span class="text-emerald-400 font-bold">{{ getSectionScore('listening').correct }}/45</span>
-                                </template>
-                                <template v-else>
-                                    {{ countAnswered('listening') }}/45
-                                </template>
+                            <span :class="['text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0 tabular-nums', submittedSections.listening ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50' : countAnswered('listening') > 0 ? 'bg-gray-800 text-gray-200 border-gray-700' : 'bg-gray-800/60 text-gray-500 border-gray-700/60']">
+                                <template v-if="submittedSections.listening">{{ getSectionScore('listening').correct }}/45</template>
+                                <template v-else>{{ countAnswered('listening') }}/45</template>
+                            </span>
+                            <span class="absolute inset-x-2 bottom-0.5 h-0.5 rounded-full bg-gray-800 overflow-hidden">
+                                <span class="block h-full rounded-full transition-all duration-500" :class="submittedSections.listening ? 'bg-emerald-500' : 'bg-red-500/80'" :style="{ width: (countAnswered('listening') / 45 * 100) + '%' }"></span>
                             </span>
                         </button>
                         <button 
                             @click="selectSection('reading')" 
-                            :class="['w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between', activeSection === 'reading' ? 'bg-red-950/60 text-red-400 font-semibold border border-red-800/50' : 'text-gray-300 hover:bg-gray-800']">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-book-open text-sm"></i>
-                                <span class="font-kaiti text-base">2. 阅读 (46–90)</span>
+                            :class="['group relative overflow-hidden w-full text-left px-3 py-2.5 rounded-lg transition flex items-center justify-between gap-2 border', activeSection === 'reading' ? 'bg-gradient-to-r from-red-950/70 to-gray-900 text-red-300 border-red-800/50' : 'text-gray-300 border-transparent hover:bg-gray-800/70 hover:border-gray-700/50']">
+                            <span class="flex items-center gap-2.5 min-w-0">
+                                <span :class="['w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center text-[11px] font-bold tabular-nums transition', activeSection === 'reading' ? 'bg-red-500/15 border-red-500/40 text-red-300' : 'bg-gray-800/80 border-gray-700/70 text-gray-500 group-hover:text-gray-300']">02</span>
+                                <span class="min-w-0">
+                                    <span class="block font-kaiti text-[15px] leading-tight truncate">2. 阅读</span>
+                                    <span class="block text-[11px] text-gray-500 leading-tight truncate"><i class="fa-solid fa-book-open mr-1 text-[9px]"></i>Okuma · 46–90</span>
+                                </span>
                             </span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-300 border border-gray-700">
-                                <template v-if="submittedSections.reading">
-                                    <span class="text-emerald-400 font-bold">{{ getSectionScore('reading').correct }}/45</span>
-                                </template>
-                                <template v-else>
-                                    {{ countAnswered('reading') }}/45
-                                </template>
+                            <span :class="['text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0 tabular-nums', submittedSections.reading ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50' : countAnswered('reading') > 0 ? 'bg-gray-800 text-gray-200 border-gray-700' : 'bg-gray-800/60 text-gray-500 border-gray-700/60']">
+                                <template v-if="submittedSections.reading">{{ getSectionScore('reading').correct }}/45</template>
+                                <template v-else>{{ countAnswered('reading') }}/45</template>
+                            </span>
+                            <span class="absolute inset-x-2 bottom-0.5 h-0.5 rounded-full bg-gray-800 overflow-hidden">
+                                <span class="block h-full rounded-full transition-all duration-500" :class="submittedSections.reading ? 'bg-emerald-500' : 'bg-red-500/80'" :style="{ width: (countAnswered('reading') / 45 * 100) + '%' }"></span>
                             </span>
                         </button>
                         <button 
                             @click="selectSection('memory')" 
-                            :class="['w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between', activeSection === 'memory' ? 'bg-amber-950/60 text-amber-300 font-semibold border border-amber-800/50' : 'text-gray-300 hover:bg-gray-800']">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-brain text-sm"></i>
-                                <span class="font-kaiti text-base">3. 记忆 Ezber Modu</span>
+                            :class="['group w-full text-left px-3 py-2.5 rounded-lg transition flex items-center justify-between gap-2 border', activeSection === 'memory' ? 'bg-gradient-to-r from-amber-950/70 to-gray-900 text-amber-300 border-amber-800/50' : 'text-gray-300 border-transparent hover:bg-gray-800/70 hover:border-gray-700/50']">
+                            <span class="flex items-center gap-2.5 min-w-0">
+                                <span :class="['w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center text-[11px] font-bold tabular-nums transition', activeSection === 'memory' ? 'bg-amber-500/15 border-amber-500/40 text-amber-300' : 'bg-gray-800/80 border-gray-700/70 text-gray-500 group-hover:text-gray-300']">03</span>
+                                <span class="min-w-0">
+                                    <span class="block font-kaiti text-[15px] leading-tight truncate">3. 记忆</span>
+                                    <span class="block text-[11px] text-gray-500 leading-tight truncate"><i class="fa-solid fa-brain mr-1 text-[9px]"></i>Ezber modu · kelime kartları</span>
+                                </span>
                             </span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-300 border border-gray-700">
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-800 border border-gray-700 shrink-0 tabular-nums">
                                 <span :class="memoryKnownCount === memoryPool.length ? 'text-emerald-400' : 'text-amber-300'">{{ memoryKnownCount }}/{{ memoryPool.length }}</span>
                             </span>
                         </button>
                         <button 
                             @click="selectSection('vocab')" 
-                            :class="['w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between', activeSection === 'vocab' ? 'bg-sky-950/60 text-sky-300 font-semibold border border-sky-800/50' : 'text-gray-300 hover:bg-gray-800']">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-language text-sm"></i>
-                                <span class="font-kaiti text-base">4. 词汇 Kelime Eşleştirme</span>
+                            :class="['group w-full text-left px-3 py-2.5 rounded-lg transition flex items-center justify-between gap-2 border', activeSection === 'vocab' ? 'bg-gradient-to-r from-sky-950/70 to-gray-900 text-sky-300 border-sky-800/50' : 'text-gray-300 border-transparent hover:bg-gray-800/70 hover:border-gray-700/50']">
+                            <span class="flex items-center gap-2.5 min-w-0">
+                                <span :class="['w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center text-[11px] font-bold tabular-nums transition', activeSection === 'vocab' ? 'bg-sky-500/15 border-sky-500/40 text-sky-300' : 'bg-gray-800/80 border-gray-700/70 text-gray-500 group-hover:text-gray-300']">04</span>
+                                <span class="min-w-0">
+                                    <span class="block font-kaiti text-[15px] leading-tight truncate">4. 词汇</span>
+                                    <span class="block text-[11px] text-gray-500 leading-tight truncate"><i class="fa-solid fa-language mr-1 text-[9px]"></i>Kelime eşleştirme · HSK 5</span>
+                                </span>
                             </span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-300 border border-gray-700">
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-800 border border-gray-700 shrink-0 tabular-nums">
                                 <span :class="vocabLearnedCount === hskVocab.length ? 'text-emerald-400' : 'text-sky-300'">{{ vocabLearnedCount }}/{{ hskVocab.length }}</span>
                             </span>
                         </button>
@@ -207,30 +225,65 @@
 
                 <!-- Answer Palette Matrix -->
                 <div v-if="activeSection !== 'memory' && activeSection !== 'vocab'" class="bg-gray-900 rounded-xl shadow-sm border border-gray-800 p-4">
-                    <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Status Palette</h2>
-                        <div class="text-right leading-tight">
-                            <span class="text-xs text-gray-400 block">{{ totalAnswered }}/90 Completed</span>
-                            <span v-if="allSubmitted" class="text-xs font-bold block">
-                                <span class="text-emerald-400">{{ totalCorrect }}/90 doğru</span>
-                                <span class="text-red-400">· {{ totalWrong }} yanlış</span>
-                            </span>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="min-w-0">
+                            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Cevap Tablosu</h2>
+                            <p class="text-[11px] text-gray-500 mt-0.5 truncate">答题卡 · {{ paletteScopeLabel }}</p>
+                        </div>
+                        <div class="relative w-12 h-12 shrink-0">
+                            <svg viewBox="0 0 44 44" class="w-12 h-12 -rotate-90">
+                                <circle cx="22" cy="22" r="18" fill="none" stroke="#1f2937" stroke-width="4"></circle>
+                                <circle cx="22" cy="22" r="18" fill="none" :class="allSubmitted ? 'text-emerald-500' : 'text-red-500'" :stroke-dasharray="113.1" :stroke-dashoffset="113.1 - (113.1 * palettePercent / 100)" stroke-width="4" stroke-linecap="round" class="transition-all duration-500"></circle>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-gray-200 tabular-nums">{{ palettePercent }}%</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-5 gap-1.5 max-h-64 overflow-y-auto p-1">
-                        <button 
-                            v-for="qNum in currentSectionQuestions" 
-                            :key="qNum"
-                            @click="scrollToQuestion(qNum)"
-                            :class="[
-                                'h-8 text-xs font-medium rounded border transition flex items-center justify-center',
-                                isSectionSubmitted(qNum) ? 
-                                    (isQuestionCorrect(qNum) ? 'bg-emerald-900/80 border-emerald-600 text-emerald-200' : 'bg-red-950/80 border-red-600 text-red-200') :
-                                    (isAnswered(qNum) ? 'bg-red-600 border-red-600 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700')
-                            ]">
-                            {{ qNum }}
-                        </button>
+                    <div class="flex items-center justify-between text-[11px] mb-2.5">
+                        <span class="text-gray-400"><b class="text-gray-200 tabular-nums">{{ paletteAnswered }}</b> / {{ paletteTotal }} işaretli</span>
+                        <span v-if="allSubmitted" class="flex items-center gap-1.5 font-semibold tabular-nums">
+                            <span class="text-emerald-400">✓ {{ paletteCorrect }}</span>
+                            <span class="text-red-400">✕ {{ paletteWrong }}</span>
+                            <span class="text-gray-500">{{ paletteBlank }} boş</span>
+                        </span>
+                        <span v-else class="text-gray-500 tabular-nums">{{ paletteTotal - paletteAnswered }} boş</span>
+                    </div>
+
+                    <div class="max-h-72 overflow-y-auto pr-1">
+                        <div class="grid grid-cols-6 gap-1">
+                            <template v-for="qNum in paletteQuestions" :key="qNum">
+                                <div v-if="activeSection === 'info' && (qNum === 1 || qNum === 46)" class="col-span-6 flex items-center justify-between text-[10px] uppercase tracking-wider text-gray-500 mt-2 first:mt-0">
+                                    <span>{{ qNum === 1 ? 'Dinleme · 1–45' : 'Okuma · 46–90' }}</span>
+                                    <span class="tabular-nums">{{ qNum === 1 ? countAnswered('listening') + '/45' : countAnswered('reading') + '/45' }}</span>
+                                </div>
+                                <button 
+                                    @click="scrollToQuestion(qNum)"
+                                    :title="'Soru ' + qNum"
+                                    :class="[
+                                        'relative h-8 rounded-md border text-[11px] font-semibold tabular-nums transition flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
+                                        isSectionSubmitted(qNum) ?
+                                            (!isAnswered(qNum) ? 'bg-gray-900 border-gray-700/70 text-gray-600' :
+                                                (isQuestionCorrect(qNum) ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/25' : 'bg-red-500/15 border-red-500/50 text-red-300 hover:bg-red-500/25')) :
+                                            (isAnswered(qNum) ? 'bg-amber-400/15 border-amber-400/50 text-amber-200 hover:bg-amber-400/25' : 'bg-gray-800/60 border-gray-700/70 text-gray-400 hover:bg-gray-700 hover:text-gray-200'),
+                                        paletteActive === qNum ? 'ring-2 ring-sky-400/80 ring-offset-1 ring-offset-gray-900' : ''
+                                    ]">
+                                    {{ qNum }}
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-3 border-t border-gray-800 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] text-gray-400">
+                        <template v-if="allSubmitted">
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500/25 border border-emerald-500/70"></span>Doğru</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-red-500/25 border border-red-500/70"></span>Yanlış</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-gray-800 border border-gray-600"></span>Boş</span>
+                        </template>
+                        <template v-else>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-amber-400/25 border border-amber-400/70"></span>İşaretli</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-gray-800 border border-gray-700"></span>Boş</span>
+                        </template>
+                        <span class="ml-auto flex items-center gap-1 text-gray-500"><i class="fa-solid fa-arrow-pointer text-[9px]"></i>soruya git</span>
                     </div>
                 </div>
 
@@ -2738,6 +2791,7 @@
                     audioRate: 1,
                     showSidebar: true,
                     activeSection: 'listening',
+                    paletteActive: null,
                     showSummary: false,
                     userAnswers: {},
                     openTranscripts: {},
@@ -2820,6 +2874,35 @@
                 },
                 currentSectionQuestions() {
                     return this.getSectionQuestions(this.activeSection);
+                },
+                paletteQuestions() {
+                    if (this.activeSection === 'listening' || this.activeSection === 'reading') {
+                        return this.getSectionQuestions(this.activeSection);
+                    }
+                    return this.getSectionQuestions('listening').concat(this.getSectionQuestions('reading'));
+                },
+                paletteTotal() {
+                    return this.paletteQuestions.length;
+                },
+                paletteAnswered() {
+                    return this.paletteQuestions.filter(n => this.isAnswered(n)).length;
+                },
+                paletteCorrect() {
+                    return this.paletteQuestions.filter(n => this.isSectionSubmitted(n) && this.isAnswered(n) && this.isQuestionCorrect(n)).length;
+                },
+                paletteWrong() {
+                    return this.paletteQuestions.filter(n => this.isSectionSubmitted(n) && this.isAnswered(n) && !this.isQuestionCorrect(n)).length;
+                },
+                paletteBlank() {
+                    return this.paletteQuestions.filter(n => !this.isAnswered(n)).length;
+                },
+                palettePercent() {
+                    return Math.round(this.paletteAnswered / Math.max(1, this.paletteTotal) * 100);
+                },
+                paletteScopeLabel() {
+                    if (this.activeSection === 'listening') return '1–45 · Dinleme';
+                    if (this.activeSection === 'reading') return '46–90 · Okuma';
+                    return '1–90 · Tüm sınav';
                 },
                 totalAnswered() {
                     const qNums = this.getSectionQuestions('listening').concat(this.getSectionQuestions('reading'));
@@ -3025,6 +3108,7 @@
                     this.audioError = false;
                     this.audioAutoRetried = false;
                     this.openTranscripts = {};
+                    this.paletteActive = null;
                     this.resultFilter = { listening: 'all', reading: 'all' };
                     this.loadExamState(this.selectedExamKey);
                 },
@@ -3154,6 +3238,7 @@
                     }
                 },
                 scrollToQuestion(qNum) {
+                    this.paletteActive = qNum;
                     if (qNum <= 45) this.activeSection = 'listening';
                     else this.activeSection = 'reading';
 
@@ -3188,6 +3273,7 @@
                         localStorage.removeItem(`hsk5_${this.selectedExamKey}_submittedSections`);
                         this.userAnswers = {};
                         this.openTranscripts = {};
+                        this.paletteActive = null;
                         this.submittedSections = { listening: false, reading: false };
                     }
                 },
