@@ -176,6 +176,10 @@
             z-index: 19;
             background: rgba(0,0,0,.62);
         }
+        body.mobile-menu-open #mobile-menu-toggle {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         @media (max-width: 900px) {
             html, body {
@@ -199,6 +203,7 @@
                 z-index: 20;
                 box-shadow: 12px 0 32px rgba(0,0,0,.38);
                 padding-bottom: env(safe-area-inset-bottom);
+                overscroll-behavior: contain;
             }
             #master-sidebar.mobile-open { transform: translateX(0); }
             #master-sidebar.collapsed {
@@ -214,7 +219,16 @@
                 border-left: 4px solid transparent;
             }
             #master-sidebar nav { min-height: 0; }
-            #master-sidebar nav a { min-height: 48px; padding-top: 13px; padding-bottom: 13px; }
+            #master-sidebar nav a {
+                min-height: 48px;
+                padding: 13px 20px;
+                white-space: normal;
+                overflow: visible;
+                line-height: 1.35;
+                gap: 10px;
+            }
+            #master-sidebar nav a i { flex: 0 0 auto; font-size: 1.1rem; }
+            #master-sidebar .header { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
             #master-sidebar .toggle-btn { min-width: 44px; min-height: 44px; }
             #master-content {
                 position: fixed;
@@ -229,8 +243,14 @@
         }
 
         @media (max-width: 480px) {
-            #master-sidebar { width: min(88vw, 320px) !important; }
-            .header { padding: 12px; font-size: .95rem; }
+            #master-sidebar { width: min(90vw, 330px) !important; }
+            #master-sidebar .header {
+                padding: 10px 12px;
+                padding-top: calc(10px + env(safe-area-inset-top, 0px));
+                font-size: .92rem;
+            }
+            #master-sidebar nav a { padding: 12px 16px; font-size: .88rem; }
+            #mobile-menu-toggle { top: max(10px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left)); }
         }
 
         @media (prefers-reduced-motion: reduce) {
