@@ -98,20 +98,41 @@ textarea:focus{outline:none;border-color:var(--ac)}
 }
 @media(max-width:800px){
   body{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
-  #side{width:100% !important;height:auto;max-height:250px;border-right:0;border-bottom:1px solid var(--bd)}
+  #side{width:100% !important;height:auto;max-height:220px;border-right:0;border-bottom:1px solid var(--bd)}
+  #side .header-box{padding:10px 14px}
+  #side h1{font-size:1rem}
   #side.collapsed #nav{display:none}
   #side.collapsed h1{display:inline-block}
-  #nav{display:flex;flex-direction:row;overflow-x:auto;padding:0}
-  #nav a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:10px 14px;font-size:0.88rem}
+  #nav{display:flex;flex-direction:row;overflow-x:auto;overscroll-behavior-x:contain;padding:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #nav::-webkit-scrollbar{display:none}
+  #nav a{flex:0 0 auto;min-height:48px;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:visible;text-overflow:clip;border-left:0;border-bottom:3px solid transparent;padding:10px 14px;font-size:0.88rem}
   #nav a.on,#nav a:hover{border-left-color:transparent;border-bottom-color:var(--ac)}
-  #main{padding:16px;flex:1;overflow-y:auto}
-  h2{font-size:1.4rem}
+  #nav a i{font-size:1rem}
+  #main{padding:14px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));flex:1;overflow-y:auto;overscroll-behavior-y:contain}
+  h2{font-size:1.35rem}
+  .ct{font-size:1.15rem}
+  .card{padding:14px}
   .saved{margin-left:0}
   .cbtns{width:100%}
-  .cbtns .btn{flex:1}
-  textarea{height:300px}
-  .toast{left:16px;right:16px;bottom:16px;transform:translateY(12px)}
+  .cbtns .btn{flex:1;min-height:40px}
+  .tcard{min-height:44px}
+  textarea{height:280px;font-size:1.1rem}
+  .read p{text-indent:1.5em;font-size:1.1rem;line-height:1.75}
+  .glossary li{padding:8px 10px}
+  .toast{left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateY(12px)}
   .toast.show{transform:translateY(0)}
+}
+@media(max-width:480px){
+  #side .header-box{padding:8px 12px}
+  #side h1{font-size:0.92rem}
+  #nav a{font-size:0.82rem;padding:10px 12px}
+  #main{padding:12px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  h2{font-size:1.2rem}
+  .ct{font-size:1.05rem}
+  .info-box{font-size:0.9rem;padding:10px 12px}
+  .read p{font-size:1.05rem;text-indent:1.2em}
+  .glossary b{font-size:1.05rem}
+  textarea{height:260px}
 }
 </style>
 </head>
