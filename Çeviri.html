@@ -303,42 +303,6 @@ a { color: var(--jade); }
   gap: 10px;
 }
 
-.progress-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 14px;
-  background: rgba(148, 184, 214, 0.05);
-  border: 1px solid var(--line);
-}
-.progress-card > div:last-child { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
-.progress-card b { font-size: 0.78rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
-.progress-card small { font-size: 0.68rem; color: var(--muted-2); overflow: hidden; text-overflow: ellipsis; }
-
-.progress-ring { position: relative; width: 46px; height: 46px; flex: 0 0 46px; }
-.progress-ring svg { transform: rotate(-90deg); width: 46px; height: 46px; }
-.progress-ring circle { fill: none; stroke-width: 4; }
-.progress-ring .track { stroke: rgba(148, 184, 214, 0.12); }
-.progress-ring .fill {
-  stroke: var(--jade);
-  stroke-linecap: round;
-  stroke-dasharray: 113.1;
-  stroke-dashoffset: 113.1;
-  transition: stroke-dashoffset 0.5s var(--ease);
-  filter: drop-shadow(0 0 4px rgba(79, 209, 197, 0.45));
-}
-.progress-ring span {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: 0.64rem;
-  font-weight: 700;
-  color: var(--jade);
-  font-family: var(--font-mono);
-}
-
 .side-links { display: flex; gap: 6px; }
 .side-links a {
   flex: 1;
@@ -392,8 +356,6 @@ body.sidebar-collapsed .scroll-progress { left: 78px; }
   backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid var(--line);
 }
-
-.menu-btn { display: none; }
 
 .topbar-title { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
 .topbar-title span {
@@ -1512,7 +1474,6 @@ body.focus-mode #sidebar { display: none; }
 body.focus-mode .scroll-progress { left: 0; }
 body.focus-mode .topbar { padding-left: 20px; }
 body.focus-mode #main { width: min(1320px, 100%); }
-body.focus-mode .menu-btn { display: inline-grid; }
 
 body.font-lg { font-size: 17.5px; }
 body.font-xl { font-size: 19px; }
@@ -1547,7 +1508,6 @@ body.font-xl { font-size: 19px; }
   #sidebar.collapsed .brand { justify-content: flex-start; padding: 20px 18px 18px; }
   #sidebar.collapsed nav a { justify-content: flex-start; padding: 10px 11px; }
   .scroll-progress { left: 0 !important; }
-  .menu-btn { display: inline-grid; }
   .sidebar-close { display: inline-grid; }
   #main { padding: 22px 20px 70px; }
   .topbar { padding: 12px 18px; }
@@ -1907,7 +1867,11 @@ td.zh,
 .mod tr:last-child td { border-bottom: 0; }
 .mod tbody tr:hover td { background: rgba(79, 209, 197, 0.045); }
 .mod td.zh,
-.mod td.vz { font-size: 1.22rem; line-height: 1.5; }
+.mod td.vz {
+  font-family: "KaitiCJK", var(--font-cjk);
+  font-size: 1.22rem;
+  line-height: 1.5;
+}
 
 /* ---------- kelime tablosu yazı boyutu ---------- */
 #c1VocabTw, #c4VocabTw, #c9VocabTw { --vocab-scale: 1.2; }
@@ -2645,6 +2609,7 @@ section[data-cwp] .cwp-item .p-ref { white-space: normal; }
 #sozluk .tw { max-height: 68vh; overflow: auto; }
 #sozluk table { min-width: 760px; }
 #sozluk #dt td:first-child { font-size: 1.28rem; color: var(--amber); }
+#sozluk table th:first-child { font-family: "KaitiCJK", var(--font-cjk); }
 
 /* ---------- Notlar ---------- */
 #notlar .card > b.t { color: var(--amber); }
@@ -2808,7 +2773,7 @@ body.hide-turkish .module-subtitle { display: none; }
 <strong>Çeviri Dersi</strong>
 <span>中级翻译 · C1–C12</span>
 </div>
-<button class="icon-btn sidebar-close" onclick="toggleSidebar()" aria-label="Menüyü kapat">✕</button>
+<button class="icon-btn sidebar-close" onclick="toggleSidebar()" aria-label="Menü">☰</button>
 </div>
 
 <div class="side-search">
@@ -2818,9 +2783,8 @@ body.hide-turkish .module-subtitle { display: none; }
 <nav id="nav">
 <div class="nav-group-label">Genel</div>
 <a href="#info" data-module="info" data-search="genel bakış özet istatistik harita info"><span class="nav-num">i</span><span class="nav-body"><b>Genel Bakış</b><small>Kapsam, istatistik ve ders haritası</small></span><span class="nav-dot"></span></a>
-<a href="#sinav" data-module="sinav" data-search="sınav bilgileri ara sınav puan formatı"><span class="nav-num">🎓</span><span class="nav-body"><b>Sınav Bilgileri</b><small>Format ve puan dağılımı</small></span><span class="nav-dot"></span></a>
-<a href="#practice" data-module="practice" data-search="pratik cümle çevirisi kelime bağlaç alıştırma"><span class="nav-num">🎯</span><span class="nav-body"><b>Sınav Pratiği</b><small>Cümle, kelime ve bağlaç</small></span><span class="nav-dot"></span></a>
-<a href="#karsilastirma" data-module="karsilastirma" data-search="metin karşılaştırması düzeltilmiş çeviri eda notları"><span class="nav-num">译</span><span class="nav-body"><b>Metin Karşılaştırması</b><small>Düzeltilmiş çeviriler</small></span><span class="nav-dot"></span></a>
+<a href="#isaretlenenler" data-module="isaretlenenler" data-search="işaretlenen kelimeler kelime havuzu"><span class="nav-num">📌</span><span class="nav-body"><b>İşaretlenen Kelimeler</b><small>Kelime havuzu</small></span><span class="nav-dot"></span></a>
+<a href="#sozluk" data-module="sozluk" data-search="sözlük arama kelime"><span class="nav-num">🔍</span><span class="nav-body"><b>Sözlük</b><small>171 kayıt arama</small></span><span class="nav-dot"></span></a>
 <div class="nav-group-label">Metinler</div>
 <a href="#c1" data-module="c1" data-search="c1 客套和礼节 nezaket görgü yeni arkadaş"><span class="nav-num">C1</span><span class="nav-body"><b>客套和礼节</b><small>Nezaket ve Görgü Kuralları</small></span><span class="nav-dot"></span></a>
 <a href="#c2" data-module="c2" data-search="c2 爱在身边 aşk yanı başında"><span class="nav-num">C2</span><span class="nav-body"><b>爱在身边</b><small>Aşk Yanı Başında</small></span><span class="nav-dot"></span></a>
@@ -2834,28 +2798,16 @@ body.hide-turkish .module-subtitle { display: none; }
 <a href="#c10" data-module="c10" data-search="c10 找东西 bir şey aramak"><span class="nav-num">C10</span><span class="nav-body"><b>找东西</b><small>Bir Şey Aramak</small></span><span class="nav-dot"></span></a>
 <a href="#c11" data-module="c11" data-search="c11 吃面条 erişte makarna noodle ek metin"><span class="nav-num">C11</span><span class="nav-body"><b>吃面条</b><small>Erişte Yemek</small></span><span class="nav-dot"></span></a>
 <a href="#c12" data-module="c12" data-search="c12 初为妻子的时候 eş evlilik anı ek metin"><span class="nav-num">C12</span><span class="nav-body"><b>初为妻子的时候</b><small>İlk Kez Eş Olduğumda</small></span><span class="nav-dot"></span></a>
-<div class="nav-group-label">Çalışma</div>
+<div class="nav-group-label">Sınav</div>
+<a href="#sinav" data-module="sinav" data-search="ara sınav bilgileri sınav puan formatı"><span class="nav-num">🎓</span><span class="nav-body"><b>Ara Sınav Bilgileri</b><small>Format ve puan dağılımı</small></span><span class="nav-dot"></span></a>
+<a href="#practice" data-module="practice" data-search="ara sınav pratiği pratik cümle çevirisi kelime bağlaç alıştırma"><span class="nav-num">🎯</span><span class="nav-body"><b>Ara Sınav Pratiği</b><small>Cümle, kelime ve bağlaç</small></span><span class="nav-dot"></span></a>
+<a href="#karsilastirma" data-module="karsilastirma" data-search="metin karşılaştırması düzeltilmiş çeviri eda notları"><span class="nav-num">译</span><span class="nav-body"><b>Metin Karşılaştırması</b><small>Düzeltilmiş çeviriler</small></span><span class="nav-dot"></span></a>
 <a href="#baglaclar" data-module="baglaclar" data-search="bağlaçlı cümleler connector"><span class="nav-num">🔗</span><span class="nav-body"><b>Bağlaçlı Cümleler</b><small>Bağlaç içeren cümleler</small></span><span class="nav-dot"></span></a>
 <a href="#edabc" data-module="edabc" data-search="eda bc çeviri"><span class="nav-num">译</span><span class="nav-body"><b>Eda BC</b><small>Eda'nın çevirileri</small></span><span class="nav-dot"></span></a>
-<a href="#isaretlenenler" data-module="isaretlenenler" data-search="işaretlenen kelimeler kelime havuzu"><span class="nav-num">📌</span><span class="nav-body"><b>İşaretlenen Kelimeler</b><small>Kelime havuzu</small></span><span class="nav-dot"></span></a>
 <a href="#notlar" data-module="notlar" data-search="çeviri notları hoca notları"><span class="nav-num">📝</span><span class="nav-body"><b>Çeviri Notları</b><small>Hocanın vurguları</small></span><span class="nav-dot"></span></a>
-<a href="#sozluk" data-module="sozluk" data-search="sözlük arama kelime"><span class="nav-num">🔍</span><span class="nav-body"><b>Sözlük</b><small>171 kayıt arama</small></span><span class="nav-dot"></span></a>
 </nav>
 
 <div class="side-footer">
-<div class="progress-card">
-<div class="progress-ring">
-<svg viewBox="0 0 46 46" aria-hidden="true">
-<circle class="track" cx="23" cy="23" r="18"></circle>
-<circle class="fill" id="overallRing" cx="23" cy="23" r="18"></circle>
-</svg>
-<span id="overallPct">0%</span>
-</div>
-<div>
-<b>Gezilen metinler</b>
-<small id="overallText">0 / 12 metin</small>
-</div>
-</div>
 <div class="side-links">
 <a href="#" onclick="openHelp();return false;">Kısayollar</a>
 <a href="#" onclick="resetAll();return false;">Sıfırla</a>
@@ -2865,7 +2817,6 @@ body.hide-turkish .module-subtitle { display: none; }
 
 <main id="content">
 <header class="topbar">
-<button class="icon-btn menu-btn" onclick="toggleSidebar()" aria-label="Menü">☰</button>
 <div class="topbar-title">
 <span id="topbarEyebrow">GENEL BAKIŞ</span>
 <h2 id="topbarTitle">Genel Bakış</h2>
@@ -2893,7 +2844,7 @@ body.hide-turkish .module-subtitle { display: none; }
 <p>On iki metin, tek bir modern çalışma alanı. Çince metinleri okuyun, cümle cümle Türkçeye çevirin, işaretli kelimeleri ve bağlaçları tekrar edin; sınav pratiğiyle kendinizi ölçün. İlerlemeniz bu tarayıcıda saklanır.</p>
 <div class="hero-chips">
 <span class="hero-chip"><b>12</b> metin</span>
-<span class="hero-chip"><b>191</b> işaretli kelime</span>
+<span class="hero-chip"><b>199</b> işaretli kelime</span>
 <span class="hero-chip"><b>274</b> alıştırma</span>
 <span class="hero-chip"><b>43</b> bağlaç cümlesi</span>
 <span class="hero-chip"><b>%100</b> çevrimdışı</span>
@@ -2902,7 +2853,7 @@ body.hide-turkish .module-subtitle { display: none; }
 
 <div class="stat-grid">
 <div class="stat-card"><div class="num">12</div><div class="lbl">Metin · C1–C12</div></div>
-<div class="stat-card"><div class="num">191</div><div class="lbl">İşaretli kelime ve kalıp</div></div>
+<div class="stat-card"><div class="num">199</div><div class="lbl">İşaretli kelime ve kalıp</div></div>
 <div class="stat-card"><div class="num">171</div><div class="lbl">Sözlük kaydı</div></div>
 <div class="stat-card"><div class="num">274</div><div class="lbl">Kontrol edilebilir alıştırma</div></div>
 </div>
@@ -2973,7 +2924,7 @@ body.hide-turkish .module-subtitle { display: none; }
 </div>
 <div class="note" style="margin-bottom:10px;">
 <span class="ico">📌</span>
-<span><strong>191 işaretli kelime:</strong> Her metnin altında kelime kartı; karta tıklayınca pinyin, anlam ve örnek açılır.</span>
+<span><strong>199 işaretli kelime:</strong> Her metnin altında kelime kartı; karta tıklayınca pinyin, anlam ve örnek açılır.</span>
 </div>
 <div class="note">
 <span class="ico">🔠</span>
@@ -5074,7 +5025,7 @@ D. 羊肉很容易吃饱
 
 <section class="mod" id="isaretlenenler">
 <h2>İşaretlenen Kelimeler / 重点词汇</h2>
-<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">12 metin · 191 kelime</span></p>
+<p class="sub">Hanzi açık; Pinyin ve Türkçe anlam için kelimedeki <b>Anlam</b> düğmesine bas. <span class="ml-meta">12 metin · 199 kelime</span></p>
 <nav class="ml-chips" aria-label="Metin seçimi">
 <button type="button" class="ml-chip active" data-m="ml-C1" onclick="mlScroll('ml-C1')"><b>C1</b><span>新朋友</span></button>
 <button type="button" class="ml-chip" data-m="ml-C2" onclick="mlScroll('ml-C2')"><b>C2</b><span>爱在身边</span></button>
@@ -6566,31 +6517,31 @@ D. 羊肉很容易吃饱
 <header class="ml-head">
 <span class="ml-badge">C12</span>
 <div class="ml-titles"><h3 class="ml-zh" lang="zh">初为妻子的时候</h3><p class="ml-tr">İlk Kez Eş Olduğumda</p></div>
-<span class="ml-count">12 kelime</span>
+<span class="ml-count">20 kelime</span>
 </header>
 <ul class="ml-list">
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">妻子</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">qīzi</div>
-<div class="ml-mean">Eş, karı</div>
-<div class="ml-ex">[名] 男性的配偶：他的～是一名医生。</div>
-</div>
-</li>
-<li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">书架</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">shūjià</div>
-<div class="ml-mean">Kitaplık</div>
-<div class="ml-ex">[名] 放书的架子：～上摆满了书。</div>
-</div>
-</li>
 <li class="ml-item">
 <div class="ml-item-top"><span class="ml-term" lang="zh">熟悉</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">shúxī</div>
 <div class="ml-mean">Tanıdık, aşina</div>
 <div class="ml-ex">[形] 知道得清楚：这条路我很～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">独自</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">dúzì</div>
+<div class="ml-mean">Tek başına, yalnız</div>
+<div class="ml-ex">[副] 自己一个人：我～坐在家里。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">环视四处</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">huánshì sìchù</div>
+<div class="ml-mean">Etrafa bakınmak, çevreyi gözden geçirmek</div>
+<div class="ml-ex">[动词词组] 向四周看：他走进房间，～。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6602,14 +6553,6 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">渴望</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
-<div class="ml-info">
-<div class="ml-py">kěwàng</div>
-<div class="ml-mean">Şiddetle arzu etmek, özlemek</div>
-<div class="ml-ex">[动] 迫切地希望：他～得到一次机会。</div>
-</div>
-</li>
-<li class="ml-item">
 <div class="ml-item-top"><span class="ml-term" lang="zh">气枪</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
 <div class="ml-py">qìqiāng</div>
@@ -6618,27 +6561,75 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">女权</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">麻雀</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">nǚquán</div>
-<div class="ml-mean">Kadın hakları</div>
-<div class="ml-ex">[名] 妇女在社会上应享有的权利：她们谈论～运动。</div>
+<div class="ml-py">máquè</div>
+<div class="ml-mean">Serçe</div>
+<div class="ml-ex">[名] 一种小鸟：树上有几只～。</div>
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">遥远</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">哇哇</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">yáoyuǎn</div>
-<div class="ml-mean">Uzak</div>
-<div class="ml-ex">[形] 距离很远：那是一个～的地方。</div>
+<div class="ml-py">wāwā</div>
+<div class="ml-mean">Avaz avaz (ağlama sesi)</div>
+<div class="ml-ex">[拟声] 形容大声哭：孩子～地哭。</div>
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">阻挡</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">悄悄</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">zǔdǎng</div>
-<div class="ml-mean">Engel olmak, durdurmak</div>
-<div class="ml-ex">[动] 阻止：没有什么能～我们前进。</div>
+<div class="ml-py">qiāoqiāo</div>
+<div class="ml-mean">Sessizce, gizlice</div>
+<div class="ml-ex">[副] 没有声音或声音很低：她～地走进来。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">比高低</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">bǐ gāodī</div>
+<div class="ml-mean">Boy ölçüşmek, yarışmak</div>
+<div class="ml-ex">[动词词组] 比较本领或水平的高低：他们总是暗暗～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">男女平等</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">nánnǚ píngděng</div>
+<div class="ml-mean">Kadın-erkek eşitliği</div>
+<div class="ml-ex">[名词词组] 男女在社会上地位相同：我们谈论～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">女权运动</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">nǚquán yùndòng</div>
+<div class="ml-mean">Kadın hakları hareketi</div>
+<div class="ml-ex">[名词词组] 争取妇女权利的运动：她参加了～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">理</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">lǐ</div>
+<div class="ml-mean">İlgilenmek, aldırış etmek; yüz vermek</div>
+<div class="ml-ex">[动] 理睬：他生气了，不～我。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">波涛</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">bōtāo</div>
+<div class="ml-mean">Dalgalar, büyük dalgalar</div>
+<div class="ml-ex">[名] 大波浪：大海的～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">不可阻挡</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">bùkě zǔdǎng</div>
+<div class="ml-mean">Önüne geçilemez, durdurulamaz</div>
+<div class="ml-ex">[动词词组] 不能阻止：时代潮流～。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6650,11 +6641,19 @@ D. 羊肉很容易吃饱
 </div>
 </li>
 <li class="ml-item">
-<div class="ml-item-top"><span class="ml-term" lang="zh">聚会</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-item-top"><span class="ml-term" lang="zh">衣袖</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
 <div class="ml-info">
-<div class="ml-py">jùhuì</div>
-<div class="ml-mean">Buluşma, toplantı</div>
-<div class="ml-ex">[名/动] 多人聚在一起的活动：今晚有一个同学～。</div>
+<div class="ml-py">yīxiù</div>
+<div class="ml-mean">Kol yeniri, elbise kolu</div>
+<div class="ml-ex">[名] 衣服的袖子：他闻了闻～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">纯</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">chún</div>
+<div class="ml-mean">Saf, tamamen</div>
+<div class="ml-ex">[形] 单纯，不掺别的：这是一个～男人的聚会。</div>
 </div>
 </li>
 <li class="ml-item">
@@ -6663,6 +6662,22 @@ D. 羊肉很容易吃饱
 <div class="ml-py">fènnù</div>
 <div class="ml-mean">Öfke, hiddet</div>
 <div class="ml-ex">[形/名] 非常生气：他心中充满了～。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">昏昏欲睡</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">hūnhūn yù shuì</div>
+<div class="ml-mean">Uykulu, uyuklamak üzere</div>
+<div class="ml-ex">[形容词词组] 形容非常困倦：他～地骑着车。</div>
+</div>
+</li>
+<li class="ml-item">
+<div class="ml-item-top"><span class="ml-term" lang="zh">末班车</span><button type="button" class="ml-btn" aria-expanded="false" onclick="mlReveal(this)">Anlam <span class="ml-chev">▾</span></button></div>
+<div class="ml-info">
+<div class="ml-py">mòbānchē</div>
+<div class="ml-mean">Son sefer, son otobüs</div>
+<div class="ml-ex">[名] 一天中最后一班车：～早就开走了。</div>
 </div>
 </li>
 </ul>
@@ -6759,9 +6774,9 @@ D. 羊肉很容易吃饱
 <h3>Veriler</h3>
 <div class="note" style="margin-bottom:14px;">
 <span class="ico">💾</span>
-<span>Gezilen metinler ve görünüm ayarları yalnızca bu cihazda saklanır. Tarayıcı verilerini temizlerseniz sıfırlanır.</span>
+<span>Görünüm ayarları yalnızca bu cihazda saklanır. Tarayıcı verilerini temizlerseniz sıfırlanır.</span>
 </div>
-<button class="reset-btn" onclick="resetAll()">↺ Gezilen metinleri sıfırla</button>
+<button class="reset-btn" onclick="resetAll()">↺ Ayarları sıfırla</button>
 </div>
 </div>
 
@@ -7750,7 +7765,7 @@ filt();
 
   /* ---------- reset ---------- */
   function resetAll() {
-    if (!confirm('Gezilen metinler, açık çeviriler ve görünüm ayarları sıfırlanacak. Emin misiniz?')) return;
+    if (!confirm('Açık çeviriler ve görünüm ayarları sıfırlanacak. Emin misiniz?')) return;
 
     state.visits = {};
     saveVisits();
