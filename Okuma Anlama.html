@@ -1916,6 +1916,16 @@ a { color: var(--jade); }
 .brand-text span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
 .sidebar-close { display: none; margin-left: auto; }
+.icon-btn.mobile-menu-btn { display: none; }
+#sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 38;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+body.sidebar-mobile-open #sidebar-backdrop { display: block; }
 
 .side-search { padding: 14px 16px 6px; }
 .side-search input {
@@ -3246,6 +3256,7 @@ body.font-xl { font-size: 19px; }
   #sidebar.collapsed nav a { justify-content: flex-start; padding: 10px 11px; }
   .scroll-progress { left: 0 !important; }
   .sidebar-close { display: inline-grid; }
+  .icon-btn.mobile-menu-btn { display: inline-grid; margin-right: 8px; }
   #main { padding: 22px 20px 70px; }
   .topbar { padding: 12px 18px; }
   .module-progress-pill { display: none; }
@@ -3464,6 +3475,7 @@ body {
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
 
+<div id="sidebar-backdrop" onclick="closeMobileSidebar()" aria-hidden="true"></div>
 <aside id="sidebar">
 <div class="brand">
 <div class="brand-mark">读</div>
@@ -3471,7 +3483,7 @@ body {
 <strong>Okuma Anlama</strong>
 <span>阅读理解 · M1–M8</span>
 </div>
-<button class="icon-btn sidebar-close" onclick="toggleSidebar()" aria-label="Menü">☰</button>
+<button class="icon-btn sidebar-close" onclick="toggleSidebar()" aria-label="Menüyü kapat">☰</button>
 </div>
 
 <div class="side-search">
@@ -3505,6 +3517,7 @@ body {
 
 <main id="content">
 <header class="topbar">
+<button class="icon-btn mobile-menu-btn" type="button" aria-label="Menüyü aç" aria-controls="sidebar" aria-expanded="false" onclick="toggleSidebar()">☰</button>
 <div class="topbar-title">
 <span id="topbarEyebrow">SINAV BİLGİSİ</span>
 <h2 id="topbarTitle">Sınav Bilgileri</h2>
@@ -5630,6 +5643,11 @@ function toggleTurkish() {
   }
 
   /* ---------- sidebar / mobile ---------- */
+  function syncMobileMenuButton() {
+    var btn = document.querySelector('.mobile-menu-btn');
+    var sb = $('#sidebar');
+    if (btn && sb) btn.setAttribute('aria-expanded', String(sb.classList.contains('mobile-open')));
+  }
   function toggleSidebar() {
     var sidebar = $('#sidebar');
     if (!sidebar) return;
@@ -5640,11 +5658,13 @@ function toggleTurkish() {
       sidebar.classList.toggle('collapsed');
       document.body.classList.toggle('sidebar-collapsed', sidebar.classList.contains('collapsed'));
     }
+    syncMobileMenuButton();
   }
   function closeMobileSidebar() {
     var sidebar = $('#sidebar');
     if (sidebar) sidebar.classList.remove('mobile-open');
     document.body.classList.remove('sidebar-mobile-open');
+    syncMobileMenuButton();
   }
 
   /* ---------- global modes ---------- */
@@ -5862,6 +5882,7 @@ function toggleTurkish() {
 
   /* expose inline handlers */
   window.toggleSidebar = toggleSidebar;
+  window.closeMobileSidebar = closeMobileSidebar;
   window.toggleTurkish = toggleTurkish;
   window.toggleFocus = toggleFocus;
   window.openFontPanel = openFontPanel;
