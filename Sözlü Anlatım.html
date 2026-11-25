@@ -209,8 +209,47 @@ blockquote.zh{font-size:1.08rem;color:var(--tx2)}
 .practice-list b{color:var(--ac);font-weight:700}
 .practice-list>li:hover{border-color:rgba(187,134,252,.28)}
 
-/* Fill-in blanks (decorated by JS) */
-.blank{display:inline-block;min-width:5.2em;height:1.05em;border-bottom:2px dashed rgba(187,134,252,.55);vertical-align:-.08em;margin:0 .12em}
+/* Fill-in blanks (editable inputs created by JS) */
+.blank{
+  display:inline-block;width:5.2em;min-width:5.2em;max-width:100%;height:1.05em;
+  margin:0 .12em;padding:0;border:0;border-bottom:2px dashed rgba(187,134,252,.55);border-radius:0;
+  background:transparent;color:var(--tx);font:inherit;font-family:var(--zh);font-size:1em;line-height:1.05;
+  vertical-align:-.08em;outline:none;box-shadow:none;appearance:none;-webkit-appearance:none;
+  overflow:hidden;white-space:nowrap;
+}
+.blank::placeholder{color:transparent}
+.blank:hover{border-bottom-color:rgba(187,134,252,.78)}
+.blank:focus{border-bottom-color:var(--ac);background:rgba(187,134,252,.09)}
+
+/* Answer tools */
+.answer-tools{
+  position:fixed;right:clamp(12px,2vw,24px);bottom:clamp(12px,2vw,24px);z-index:60;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+  max-width:calc(100vw - 24px);padding:7px 9px;
+  background:var(--card);border:1px solid rgba(187,134,252,.3);border-radius:999px;
+  box-shadow:0 14px 34px rgba(0,0,0,.42);backdrop-filter:blur(10px);
+}
+.answer-tool-btn{
+  border:1px solid rgba(251,113,133,.35);background:rgba(251,113,133,.09);color:var(--no);
+  border-radius:999px;padding:6px 12px;font-size:.72rem;font-weight:750;cursor:pointer;white-space:nowrap;
+}
+.answer-tool-btn:hover{background:rgba(251,113,133,.18);border-color:rgba(251,113,133,.55)}
+.autosave-toggle{
+  display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;
+  color:var(--tx2);font-size:.72rem;font-weight:650;white-space:nowrap;
+}
+.autosave-toggle input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.autosave-track{
+  position:relative;flex:none;width:34px;height:19px;border-radius:999px;
+  background:var(--bd2);transition:background .18s;
+}
+.autosave-thumb{
+  position:absolute;top:3px;left:3px;width:13px;height:13px;border-radius:50%;
+  background:var(--tx2);transition:transform .18s,background .18s;
+}
+.autosave-toggle input:checked + .autosave-track{background:var(--ac2)}
+.autosave-toggle input:checked + .autosave-track .autosave-thumb{transform:translateX(15px);background:#fff}
+.autosave-toggle input:focus-visible + .autosave-track{outline:2px solid var(--ac);outline-offset:2px}
 
 /* ================= WORD CARDS (Çeviri style) ================= */
 .wb-card{
@@ -343,11 +382,14 @@ blockquote.zh{font-size:1.08rem;color:var(--tx2)}
   .exercise li{font-size:.98rem}
 }
 @media (max-width:520px){
-  #main{padding:16px 12px 48px}
+  #main{padding:16px 12px 104px}
   .page-head{margin-bottom:15px}
   .lead{font-size:.87rem}
   .wb-badge{display:none}
   .practice-list>li{font-size:.96rem;padding:10px 12px}
+  .answer-tools{left:12px;right:12px;bottom:12px;justify-content:center;border-radius:16px;padding:8px}
+  .answer-tool-btn,.autosave-toggle{font-size:.68rem}
+  .answer-tool-btn{padding:6px 10px}
 }
 /* ============================================================
    ÇİNCE METİN BOYUTU
@@ -424,6 +466,15 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
 </div>
 
 <div id="main">
+
+  <div id="answerTools" class="answer-tools" aria-label="Cevap kontrolleri">
+    <button type="button" id="clearAnswersBtn" class="answer-tool-btn">Cevapları Temizle</button>
+    <label class="autosave-toggle" title="Yazdığın cevapları tarayıcıya kaydetmeyi açar/kapatır">
+      <input type="checkbox" id="autosaveToggle" checked>
+      <span class="autosave-track"><span class="autosave-thumb"></span></span>
+      <span>Otomatik Kaydet</span>
+    </label>
+  </div>
 
   <!-- Sınav Bilgileri -->
   <section class="mod on" id="m-bilgi">
@@ -1438,12 +1489,64 @@ function wbSearchSetup() {
   });
 }
 
-/* ============ Boşluk çizgileri ============ */
+/* ============ Boşluklar: düzenlenebilir alan + localStorage ============ */
+var BLANK_STORAGE_KEY = "sozluAnlatimBlankAnswers_v1";
+var AUTOSAVE_STORAGE_KEY = "sozluAnlatimAutosave_v1";
+
+function blankStore() {
+  try {
+    var raw = localStorage.getItem(BLANK_STORAGE_KEY);
+    var data = raw ? JSON.parse(raw) : {};
+    return (data && typeof data === "object") ? data : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveBlankStore(store) {
+  try {
+    localStorage.setItem(BLANK_STORAGE_KEY, JSON.stringify(store));
+  } catch (e) {}
+}
+
+function autosaveEnabled() {
+  try {
+    return localStorage.getItem(AUTOSAVE_STORAGE_KEY) !== "0";
+  } catch (e) {
+    return true;
+  }
+}
+
+function saveAllBlanks() {
+  var store = {};
+  document.querySelectorAll("input.blank[id]").forEach(function (input) {
+    store[input.id] = input.value;
+  });
+  saveBlankStore(store);
+}
+
+function resizeBlank(input) {
+  var w = 0;
+  Array.from(input.value).forEach(function (ch) {
+    w += /[\u3400-\u9fff\uff00-\uffef]/.test(ch) ? 1 : 0.56;
+  });
+  input.style.width = Math.min(40, Math.max(5.2, w + 1.2)) + "em";
+}
+
+function persistBlank(input) {
+  if (!autosaveEnabled()) return;
+  var store = blankStore();
+  store[input.id] = input.value;
+  saveBlankStore(store);
+}
+
 function decorateBlanks(root) {
-  if (!root) return;
+  if (!root || (root.querySelector && root.querySelector("input.blank"))) return;
   var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
   var nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
+  var saved = blankStore();
+  var blankIndex = 0;
   nodes.forEach(function (n) {
     if (!/_{4,}/.test(n.nodeValue)) return;
     var parent = n.parentNode;
@@ -1452,9 +1555,21 @@ function decorateBlanks(root) {
     var frag = document.createDocumentFragment();
     parts.forEach(function (part) {
       if (/^_{4,}$/.test(part)) {
-        var sp = document.createElement("span");
-        sp.className = "blank";
-        frag.appendChild(sp);
+        blankIndex += 1;
+        var input = document.createElement("input");
+        input.type = "text";
+        input.className = "blank";
+        input.id = "blank-" + blankIndex;
+        input.setAttribute("autocomplete", "off");
+        input.setAttribute("spellcheck", "false");
+        input.setAttribute("aria-label", "Boşluk " + blankIndex);
+        input.value = typeof saved[input.id] === "string" ? saved[input.id] : "";
+        input.addEventListener("input", function () {
+          resizeBlank(this);
+          persistBlank(this);
+        });
+        resizeBlank(input);
+        frag.appendChild(input);
       } else if (part) {
         frag.appendChild(document.createTextNode(part));
       }
@@ -1463,10 +1578,40 @@ function decorateBlanks(root) {
   });
 }
 
+function clearAnswers() {
+  if (!window.confirm("Tüm cevapları sıfırlamak istediğinize emin misiniz? Bu işlem geri alınamaz.")) return;
+  document.querySelectorAll("input.blank[id]").forEach(function (input) {
+    input.value = "";
+    resizeBlank(input);
+  });
+  try {
+    localStorage.removeItem(BLANK_STORAGE_KEY);
+  } catch (e) {}
+}
+
+function setAutosave(on) {
+  try {
+    localStorage.setItem(AUTOSAVE_STORAGE_KEY, on ? "1" : "0");
+  } catch (e) {}
+  var toggle = document.getElementById("autosaveToggle");
+  if (toggle) toggle.checked = !!on;
+  if (on) saveAllBlanks();
+}
+
 /* ============ Başlat ============ */
 renderWordCards();
 wbSearchSetup();
 decorateBlanks(document.getElementById("main"));
+
+var autosaveToggle = document.getElementById("autosaveToggle");
+if (autosaveToggle) {
+  autosaveToggle.checked = autosaveEnabled();
+  autosaveToggle.addEventListener("change", function () {
+    setAutosave(this.checked);
+  });
+}
+var clearAnswersBtn = document.getElementById("clearAnswersBtn");
+if (clearAnswersBtn) clearAnswersBtn.addEventListener("click", clearAnswers);
 
 var startHash = decodeURIComponent(location.hash.slice(1));
 show(IDS.indexOf(startHash) >= 0 ? startHash : IDS[0]);
