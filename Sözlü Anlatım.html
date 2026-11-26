@@ -219,6 +219,24 @@ blockquote.zh{font-size:1.08rem;color:var(--tx2)}
 .page-shot figcaption{margin-top:7px;text-align:center;font-size:.76rem;color:var(--tx2)}
 @media (max-width:900px){.page-grid{grid-template-columns:1fr}}
 
+/* Hocanın Özeti · paragraf altı gizle/göster çeviri */
+.tr-toggle{
+  border:1px solid rgba(187,134,252,.45);background:var(--ac-soft);color:var(--ac);
+  border-radius:999px;padding:7px 14px;font-size:.76rem;font-weight:750;cursor:pointer;
+  margin-bottom:14px;font-family:inherit;
+}
+.tr-toggle:hover{background:rgba(187,134,252,.2);border-color:var(--ac)}
+.tr-toggle:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.tr-title{font-size:.9rem;font-weight:750;color:var(--tx);margin:0 0 12px}
+.tr-pair{margin:0 0 18px}
+.tr-pair:last-child{margin-bottom:0}
+.tr-pair .zh{margin:0}
+.tr-pair .tr{
+  display:none;margin-top:8px;padding:10px 13px;color:var(--tx2);font-size:.92rem;line-height:1.8;
+  background:var(--in);border-left:3px solid var(--ac);border-radius:0 10px 10px 0;
+}
+.tr-on .tr-pair .tr{display:block}
+
 /* Fill-in blanks (contenteditable spans so Zhongwen can read/copy the text) */
 .blank{
   display:inline-block;width:5.2em;min-width:5.2em;max-width:100%;min-height:1.05em;
@@ -1382,24 +1400,43 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
 
     <div class="card">
       <div class="ct zh">支付方式的变化与我们的生活</div>
-      <p class="zh" style="margin:0 0 14px">随着科技的发展和社会的进步，我们的生活发生了很大的变化。其中，支付方式的变化尤其明显。从过去使用现金，到后来使用银行卡，再到如今普遍使用手机支付，我们的生活变得越来越方便。</p>
-      <p class="zh" style="margin:0 0 14px">首先，我想谈谈目前最常见的几种支付方式。</p>
-      <p class="zh" style="margin:0 0 14px">第一种是现金支付。虽然现在很多人出门时已经不习惯带现金了，但是现金仍然有它存在的价值。比如，在一些小商店或者偏远地区，现金支付依然十分重要。另外，使用现金可以让我们更加清楚地了解自己的消费情况，避免因为没有实际的花钱感觉而过度消费。</p>
-      <p class="zh" style="margin:0 0 14px">第二种是银行卡支付。与现金相比，银行卡不仅方便携带，而且可以减少携带大量现金的风险。尤其是在购买价格比较高的商品时，银行卡支付更加安全、方便。</p>
-      <p class="zh" style="margin:0 0 14px">第三种，也是目前越来越受欢迎的一种方式，就是手机支付。无论是购物、吃饭，还是乘坐公共交通工具，我们只需要拿出手机，扫描二维码，就可以完成付款。可以说，手机支付已经成为很多人日常生活中不可缺少的一部分。当然，每一种支付方式都有自己的优点和缺点。手机支付虽然方便快捷，但是也存在一定的问题。比如，如果手机没有电，或者网络出现故障，我们就可能无法完成付款。此外，随着网络诈骗越来越普遍，个人信息和财产安全也值得我们关注。</p>
-      <p class="zh" style="margin:0 0 14px">在我看来，支付方式本身并没有绝对的好坏，关键在于我们如何选择。对于年轻人来说，手机支付可能更加符合他们的生活习惯；而对于一些不太熟悉智能手机的人来说，现金或银行卡也许更加合适。因此，我们不应该只追求方便，而忽视安全和实际需要。</p>
-      <p class="zh" style="margin:0">总而言之，支付方式的变化不仅反映了科技的发展，也体现了社会生活水平的提高。未来，随着科技不断进步，支付方式可能还会发生更多变化。但是，无论支付方式如何改变，我们都应该养成合理消费的习惯，提高安全意识，让科技真正为我们的生活带来便利。</p>
-    </div>
+      <button class="tr-toggle" type="button" onclick="toggleHocaTranslation(this)" aria-pressed="false">Türkçe çeviriyi göster / gizle</button>
+      <p class="tr-title">Ödeme Yöntemlerindeki Değişim</p>
 
-    <div class="card">
-      <div class="ct">Ödeme Yöntemlerindeki Değişim</div>
-      <p style="margin:0 0 14px;line-height:1.8">Teknolojinin gelişmesi ve toplumun ilerlemesiyle birlikte hayatımızda büyük değişiklikler yaşandı. Bunlar arasında ödeme yöntemlerindeki değişim özellikle dikkat çekicidir. Geçmişte nakit kullanmaktan, sonraları banka kartı kullanmaya, bugün ise cep telefonuyla ödemenin yaygın olarak kullanılmasına kadar hayatımız giderek daha kolay hâle geldi.</p>
-      <p style="margin:0 0 14px;line-height:1.8">Öncelikle, şu anda en yaygın olan birkaç ödeme yönteminden söz etmek istiyorum.</p>
-      <p style="margin:0 0 14px;line-height:1.8">Birincisi nakit ödemedir. Günümüzde birçok insan evden çıkarken yanında nakit taşımaya alışkın olmasa da nakdin hâlâ kendine ait bir değeri vardır. Örneğin bazı küçük dükkânlarda ya da uzak bölgelerde nakit ödeme hâlâ çok önemlidir. Ayrıca nakit kullanmak, harcamalarımızı daha net görmemizi sağlar ve gerçekte para harcıyormuş gibi hissetmediğimiz için aşırı harcama yapmamızı önler.</p>
-      <p style="margin:0 0 14px;line-height:1.8">İkincisi banka kartıyla ödemedir. Nakitle karşılaştırıldığında banka kartı yalnızca taşıması kolay değildir, aynı zamanda çok miktarda nakit taşımanın riskini de azaltır. Özellikle fiyatı yüksek ürünler satın alırken banka kartıyla ödeme daha güvenli ve kolaydır.</p>
-      <p style="margin:0 0 14px;line-height:1.8">Üçüncüsü, ki giderek daha çok rağbet gören bir yöntemdir, cep telefonuyla ödemedir. Alışveriş yaparken, yemek yerken ya da toplu taşımaya binerken olsun, yalnızca telefonumuzu çıkarıp QR kodu okutarak ödemeyi tamamlayabiliriz. Cep telefonuyla ödeme, birçok insanın günlük hayatının vazgeçilmez bir parçası hâline gelmiştir denebilir. Elbette her ödeme yönteminin kendine göre avantajları ve dezavantajları vardır. Cep telefonuyla ödeme pratik ve hızlı olsa da bazı sorunlar da barındırır. Örneğin telefonun şarjı bittiğinde ya da internet bağlantısında arıza olduğunda ödeme yapamayabiliriz. Bunun yanı sıra internet dolandırıcılığı giderek yaygınlaştığından kişisel bilgilerin ve mal varlığının güvenliği de dikkat etmemiz gereken bir konudur.</p>
-      <p style="margin:0 0 14px;line-height:1.8">Bana göre ödeme yöntemlerinin kendi içinde mutlak bir iyisi ya da kötüsü yoktur; önemli olan nasıl seçim yaptığımızdır. Gençler için cep telefonuyla ödeme yaşam alışkanlıklarına daha uygun olabilir; akıllı telefonlara pek aşina olmayanlar için ise nakit ya da banka kartı belki daha uygundur. Bu nedenle yalnızca kolaylığın peşinden koşup güvenliği ve gerçek ihtiyaçları göz ardı etmemeliyiz.</p>
-      <p style="margin:0;line-height:1.8">Kısacası ödeme yöntemlerindeki değişim yalnızca teknolojinin gelişimini yansıtmakla kalmaz, toplumsal yaşam düzeyinin yükselmesini de gösterir. Gelecekte teknoloji ilerledikçe ödeme yöntemleri belki daha da değişecektir. Ancak ödeme yöntemleri nasıl değişirse değişsin, makul harcama alışkanlığı edinmeli, güvenlik bilincimizi artırmalı ve teknolojinin hayatımıza gerçekten kolaylık getirmesini sağlamalıyız.</p>
+      <div class="tr-pair">
+        <p class="zh">随着科技的发展和社会的进步，我们的生活发生了很大的变化。其中，支付方式的变化尤其明显。从过去使用现金，到后来使用银行卡，再到如今普遍使用手机支付，我们的生活变得越来越方便。</p>
+        <p class="tr">Teknolojinin gelişmesi ve toplumun ilerlemesiyle birlikte hayatımızda büyük değişiklikler yaşandı. Bunlar arasında ödeme yöntemlerindeki değişim özellikle dikkat çekicidir. Geçmişte nakit kullanmaktan, sonraları banka kartı kullanmaya, bugün ise cep telefonuyla ödemenin yaygın olarak kullanılmasına kadar hayatımız giderek daha kolay hâle geldi.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">首先，我想谈谈目前最常见的几种支付方式。</p>
+        <p class="tr">Öncelikle, şu anda en yaygın olan birkaç ödeme yönteminden söz etmek istiyorum.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">第一种是现金支付。虽然现在很多人出门时已经不习惯带现金了，但是现金仍然有它存在的价值。比如，在一些小商店或者偏远地区，现金支付依然十分重要。另外，使用现金可以让我们更加清楚地了解自己的消费情况，避免因为没有实际的花钱感觉而过度消费。</p>
+        <p class="tr">Birincisi nakit ödemedir. Günümüzde birçok insan evden çıkarken yanında nakit taşımaya alışkın olmasa da nakdin hâlâ kendine ait bir değeri vardır. Örneğin bazı küçük dükkânlarda ya da uzak bölgelerde nakit ödeme hâlâ çok önemlidir. Ayrıca nakit kullanmak, harcamalarımızı daha net görmemizi sağlar ve gerçekte para harcıyormuş gibi hissetmediğimiz için aşırı harcama yapmamızı önler.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">第二种是银行卡支付。与现金相比，银行卡不仅方便携带，而且可以减少携带大量现金的风险。尤其是在购买价格比较高的商品时，银行卡支付更加安全、方便。</p>
+        <p class="tr">İkincisi banka kartıyla ödemedir. Nakitle karşılaştırıldığında banka kartı yalnızca taşıması kolay değildir, aynı zamanda çok miktarda nakit taşımanın riskini de azaltır. Özellikle fiyatı yüksek ürünler satın alırken banka kartıyla ödeme daha güvenli ve kolaydır.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">第三种，也是目前越来越受欢迎的一种方式，就是手机支付。无论是购物、吃饭，还是乘坐公共交通工具，我们只需要拿出手机，扫描二维码，就可以完成付款。可以说，手机支付已经成为很多人日常生活中不可缺少的一部分。当然，每一种支付方式都有自己的优点和缺点。手机支付虽然方便快捷，但是也存在一定的问题。比如，如果手机没有电，或者网络出现故障，我们就可能无法完成付款。此外，随着网络诈骗越来越普遍，个人信息和财产安全也值得我们关注。</p>
+        <p class="tr">Üçüncüsü, ki giderek daha çok rağbet gören bir yöntemdir, cep telefonuyla ödemedir. Alışveriş yaparken, yemek yerken ya da toplu taşımaya binerken olsun, yalnızca telefonumuzu çıkarıp QR kodu okutarak ödemeyi tamamlayabiliriz. Cep telefonuyla ödeme, birçok insanın günlük hayatının vazgeçilmez bir parçası hâline gelmiştir denebilir. Elbette her ödeme yönteminin kendine göre avantajları ve dezavantajları vardır. Cep telefonuyla ödeme pratik ve hızlı olsa da bazı sorunlar da barındırır. Örneğin telefonun şarjı bittiğinde ya da internet bağlantısında arıza olduğunda ödeme yapamayabiliriz. Bunun yanı sıra internet dolandırıcılığı giderek yaygınlaştığından kişisel bilgilerin ve mal varlığının güvenliği de dikkat etmemiz gereken bir konudur.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">在我看来，支付方式本身并没有绝对的好坏，关键在于我们如何选择。对于年轻人来说，手机支付可能更加符合他们的生活习惯；而对于一些不太熟悉智能手机的人来说，现金或银行卡也许更加合适。因此，我们不应该只追求方便，而忽视安全和实际需要。</p>
+        <p class="tr">Bana göre ödeme yöntemlerinin kendi içinde mutlak bir iyisi ya da kötüsü yoktur; önemli olan nasıl seçim yaptığımızdır. Gençler için cep telefonuyla ödeme yaşam alışkanlıklarına daha uygun olabilir; akıllı telefonlara pek aşina olmayanlar için ise nakit ya da banka kartı belki daha uygundur. Bu nedenle yalnızca kolaylığın peşinden koşup güvenliği ve gerçek ihtiyaçları göz ardı etmemeliyiz.</p>
+      </div>
+
+      <div class="tr-pair">
+        <p class="zh">总而言之，支付方式的变化不仅反映了科技的发展，也体现了社会生活水平的提高。未来，随着科技不断进步，支付方式可能还会发生更多变化。但是，无论支付方式如何改变，我们都应该养成合理消费的习惯，提高安全意识，让科技真正为我们的生活带来便利。</p>
+        <p class="tr">Kısacası ödeme yöntemlerindeki değişim yalnızca teknolojinin gelişimini yansıtmakla kalmaz, toplumsal yaşam düzeyinin yükselmesini de gösterir. Gelecekte teknoloji ilerledikçe ödeme yöntemleri belki daha da değişecektir. Ancak ödeme yöntemleri nasıl değişirse değişsin, makul harcama alışkanlığı edinmeli, güvenlik bilincimizi artırmalı ve teknolojinin hayatımıza gerçekten kolaylık getirmesini sağlamalıyız.</p>
+      </div>
     </div>
   </section>
 
@@ -1414,6 +1451,12 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
 /* ============ Genel gezinme ============ */
 function toggleSidebar() {
   document.getElementById('side').classList.toggle('collapsed');
+}
+
+function toggleHocaTranslation(btn) {
+  var mod = btn.closest(".mod");
+  var on = mod.classList.toggle("tr-on");
+  btn.setAttribute("aria-pressed", on ? "true" : "false");
 }
 
 var IDS = ["m-bilgi", "m-kaliplar", "m-kelimeler", "m-19", "m-21", "m-23-24", "m-25-26", "m-27-28", "m-32", "m-34", "m-36", "m-38", "m-26-27", "m-28-29", "m-30-31", "m-32-33", "m-hoca-ozeti"];
