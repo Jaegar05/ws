@@ -209,6 +209,16 @@ blockquote.zh{font-size:1.08rem;color:var(--tx2)}
 .practice-list b{color:var(--ac);font-weight:700}
 .practice-list>li:hover{border-color:rgba(187,134,252,.28)}
 
+/* Source page scans */
+.page-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.page-shot{margin:0}
+.page-shot img{
+  display:block;width:100%;height:auto;border:1px solid var(--bd);border-radius:12px;
+  background:var(--in);box-shadow:0 12px 30px -20px rgba(0,0,0,.7);
+}
+.page-shot figcaption{margin-top:7px;text-align:center;font-size:.76rem;color:var(--tx2)}
+@media (max-width:900px){.page-grid{grid-template-columns:1fr}}
+
 /* Fill-in blanks (contenteditable spans so Zhongwen can read/copy the text) */
 .blank{
   display:inline-block;width:5.2em;min-width:5.2em;max-width:100%;min-height:1.05em;
@@ -221,6 +231,7 @@ blockquote.zh{font-size:1.08rem;color:var(--tx2)}
 .blank:empty::before{content:"";display:inline-block;width:0}
 .blank:hover{border-bottom-color:rgba(187,134,252,.78)}
 .blank:focus{border-bottom-color:var(--ac);background:rgba(187,134,252,.09)}
+.blank.wide{min-width:18em}
 
 /* Answer tools */
 .answer-tools{
@@ -456,11 +467,11 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
     <a data-id="m-36"><i class="ico">36</i><span class="txt"><b>Sayfa 34</b><small>Evlilik Modelleri</small></span></a>
     <a data-id="m-38"><i class="ico">🎯</i><span class="txt"><b>Sayfa 38</b><small>Tepki pratiği</small></span></a>
 
-    <div class="nav-label">Unit 3 · Sayfa 43–52</div>
+    <div class="nav-label">Unit 3 · Sayfa 43–54</div>
     <a data-id="m-26-27"><i class="ico">43</i><span class="txt"><b>Sayfa 43–44</b><small>Kredi kartı</small></span></a>
     <a data-id="m-28-29"><i class="ico">45</i><span class="txt"><b>Sayfa 45–46</b><small>Üyelik kartları</small></span></a>
     <a data-id="m-30-31"><i class="ico">47</i><span class="txt"><b>Sayfa 47–48</b><small>Kart çağı</small></span></a>
-    <a data-id="m-32-33"><i class="ico">49</i><span class="txt"><b>Sayfa 49–50</b><small>Kelime &amp; gramer</small></span></a>
+    <a data-id="m-32-33"><i class="ico">49</i><span class="txt"><b>Sayfa 49–54</b><small>Kelime &amp; gramer</small></span></a>
     <a data-id="m-34-35"><i class="ico">🎯</i><span class="txt"><b>Sayfa 51–52</b><small>İşlev &amp; iletişim</small></span></a>
   </nav>
   <div class="side-foot"><span>93 kelime</span><span>9 bölüm</span><span>3 ünite</span></div>
@@ -1202,10 +1213,10 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
   <!-- Unit 3 · Sayfa 49-50 -->
   <section class="mod" id="m-32-33">
     <header class="page-head">
-      <div class="eyebrow">Unit 3 · Sayfa 49–50 · Kelime Çalışması</div>
+      <div class="eyebrow">Unit 3 · Sayfa 49–54 · Kelime Çalışması</div>
       <h2>Kelime ve Dilbilgisi Alıştırmaları</h2>
-      <p class="lead">Boşluk doldurma, pinyin–hanzi eşleştirme ve günlük hayatta işine yarayacak kalıp ifadeler.</p>
-      <div class="chips"><span class="chip"><b>6</b> boşluk</span><span class="chip"><b>5</b> pinyin</span><span class="chip"><b>6</b> kalıp</span></div>
+      <p class="lead">Boşluk doldurma, pinyin–hanzi eşleştirme, günlük hayatta işine yarayacak kalıp ifadeler ve 51–54. sayfa taramaları.</p>
+      <div class="chips"><span class="chip"><b>13</b> boşluk</span><span class="chip"><b>5</b> pinyin</span><span class="chip"><b>6</b> kalıp</span><span class="chip"><b>4</b> kaynak sayfa</span></div>
     </header>
 
     <div class="card">
@@ -1249,6 +1260,51 @@ blockquote.zh{font-size:calc(1.08rem * var(--zh-scale))}
         <li><b>5.</b> 你想得太简单了。</li>
         <li><b>6.</b> 弄得我一晚上都没睡好。</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <div class="ct zh">交际活动与任务 · 小组讨论</div>
+      <p class="zh" style="margin:0 0 10px">两人一组进行讨论：</p>
+      <ul class="zh practice-list">
+        <li><b>1.</b> 请说出你办信用卡的五个理由。</li>
+        <li><b>2.</b> 谈谈你对下面这几幅漫画的理解。</li>
+      </ul>
+      <p class="stage" style="margin-top:12px">Karikatürler: “办卡的诱惑” (kart başvurusunun cazibesi) ve “卡奴” (kart kölesi).</p>
+    </div>
+
+    <div class="card exercise">
+      <div class="ex-title zh">小组活动 · 劝说顾客办信用卡</div>
+      <p class="zh" style="margin:0 0 12px">如果你是银行职员，如何劝说顾客办信用卡？请两人一组进行对话，尽量使用下面的词语，并把对话内容写出来。</p>
+      <div class="chips" style="margin-bottom:14px">
+        <span class="chip">时尚</span><span class="chip">赠送</span><span class="chip">透支</span><span class="chip">此外</span>
+        <span class="chip">额度（credit line）</span><span class="chip">积分</span><span class="chip">便利</span><span class="chip">利息</span><span class="chip">还款</span>
+        <span class="chip">刷卡消费</span><span class="chip">短信提醒</span><span class="chip">卡奴</span><span class="chip">怎么会……呢</span>
+      </div>
+      <ul class="zh">
+        <li><b>职员：</b> <span data-blank-id="p53-1">____________________</span></li>
+        <li><b>顾客：</b> <span data-blank-id="p53-2">____________________</span></li>
+        <li><b>职员：</b> <span data-blank-id="p53-3">____________________</span></li>
+        <li><b>顾客：</b> <span data-blank-id="p53-4">____________________</span></li>
+        <li><b>职员：</b> <span data-blank-id="p53-5">____________________</span></li>
+        <li><b>顾客：</b> <span data-blank-id="p53-6">____________________</span></li>
+      </ul>
+    </div>
+
+    <div class="card exercise">
+      <div class="ex-title zh">记一记 · 最有用的词语、句子、文化知识</div>
+      <p class="zh" style="margin:0 0 12px">用汉字、拼音或你的母语，记下你觉得最有用的词语、句子、文化知识等。</p>
+      <div><span class="wide" data-blank-id="p54-1">____________________</span></div>
+    </div>
+
+    <div class="card">
+      <div class="ct zh">51–54. sayfalar · Kaynak taramalar</div>
+      <p class="sub" style="margin-bottom:14px">Ders kitabındaki ilgili sayfaların taramaları.</p>
+      <div class="page-grid">
+        <figure class="page-shot"><img src="pages/sayfa-51.png" alt="Ders kitabı sayfa 51" loading="lazy"><figcaption>Sayfa 51</figcaption></figure>
+        <figure class="page-shot"><img src="pages/sayfa-52.png" alt="Ders kitabı sayfa 52" loading="lazy"><figcaption>Sayfa 52</figcaption></figure>
+        <figure class="page-shot"><img src="pages/sayfa-53.png" alt="Ders kitabı sayfa 53" loading="lazy"><figcaption>Sayfa 53</figcaption></figure>
+        <figure class="page-shot"><img src="pages/sayfa-54.png" alt="Ders kitabı sayfa 54" loading="lazy"><figcaption>Sayfa 54</figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -1531,7 +1587,10 @@ function resizeBlank(blank) {
   Array.from(blank.textContent).forEach(function (ch) {
     w += /[\u3400-\u9fff\uff00-\uffef]/.test(ch) ? 1 : 0.56;
   });
-  blank.style.width = Math.min(40, Math.max(5.2, w + 1.2)) + "em";
+  var wide = blank.classList.contains("wide");
+  var min = wide ? 18 : 5.2;
+  var max = wide ? 60 : 40;
+  blank.style.width = Math.min(max, Math.max(min, w + 1.2)) + "em";
 }
 
 function persistBlank(blank) {
@@ -1569,13 +1628,19 @@ function decorateBlanks(root) {
     var frag = document.createDocumentFragment();
     parts.forEach(function (part) {
       if (/^_{4,}$/.test(part)) {
-        blankIndex += 1;
         var blank = document.createElement("span");
         blank.className = "blank";
-        blank.id = "blank-" + blankIndex;
+        var customId = parent.getAttribute && parent.getAttribute("data-blank-id");
+        if (customId) {
+          blank.id = customId;
+          if (parent.classList.contains("wide")) blank.classList.add("wide");
+        } else {
+          blankIndex += 1;
+          blank.id = "blank-" + blankIndex;
+        }
         blank.setAttribute("contenteditable", "true");
         blank.setAttribute("role", "textbox");
-        blank.setAttribute("aria-label", "Boşluk " + blankIndex);
+        blank.setAttribute("aria-label", "Boşluk " + blank.id);
         blank.setAttribute("spellcheck", "false");
         blank.setAttribute("autocorrect", "off");
         blank.setAttribute("autocapitalize", "off");
